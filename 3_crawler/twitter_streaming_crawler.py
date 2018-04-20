@@ -6,6 +6,7 @@ import couchdb
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
+import json
 
 #Variables that contains the user credentials to access Twitter API
 access_token = "879998896352641024-ICJRUTFvj1ob72f6v6bSOv20jkYa8l4"
@@ -14,13 +15,25 @@ consumer_key = "ajaUmkuRsyLsT8DiAUirS0Sml"
 consumer_secret = "jS68ANvd3UYpSQEnHlXZJpRyPxI3QGpaAyirtIQDwszLhVp2ag"
 
 
-hostname = "couchdb"
+hostname = "localhost"
 user = "admin"
 password = "admin"
 couchserver = couchdb.Server("http://%s:%s@%s:5984/" % (user, password, hostname))
 
-# for dbname in couchserver:
-#     print(dbname)
+
+def save_to_couchdb(document, dbname):
+    """
+    :param document:
+    :param dbname:
+    :return:
+    """
+
+    if dbname in couchserver:
+        db = couchserver[dbname]
+    else:
+        db = couchserver.create(dbname)
+    db.save(document)
+
 
 # def save_orignal_to_couchdb():
 #
@@ -30,8 +43,10 @@ couchserver = couchdb.Server("http://%s:%s@%s:5984/" % (user, password, hostname
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
-        # 将数据存入到couchDB中
-        print(data)
+        # save data to couchdb
+        document = json.loads(data)
+        save_to_couchdb(document, 'twitter_all_au_0420')
+        # save_to_couchdb(document, 'test')
         return True
 
     def on_error(self, status):
@@ -47,4 +62,6 @@ if __name__ == '__main__':
     stream = Stream(auth, l)
 
     #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
-    stream.filter(track=['python', 'javascript', 'ruby'])
+    # longitude and latitude pairs
+    # stream.filter(track=['Austrlia'])
+    stream.filter(locations=[113.6594, -43.00311, 153.61194, -12.46113])
