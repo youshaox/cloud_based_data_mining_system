@@ -75,6 +75,7 @@ while True:
             ntime = doc['created_at']
             nplace = doc['place']
             nentities = doc['entities']
+            nsource = doc['source']
             ndoc = {'_id': nid, 'text': ntext, 'user': nuser,
                     'coordinates': ncoordinates, 'create_time': ntime,
                     'place': nplace, 'entities': nentities, 'source':nsource,
