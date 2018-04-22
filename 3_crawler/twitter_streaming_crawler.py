@@ -34,18 +34,14 @@ def save_to_couchdb(document, dbname):
         db = couchserver.create(dbname)
     db.save(document)
 
-
-# def save_orignal_to_couchdb():
-#
-#
-#
-#This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
         # save data to couchdb
         document = json.loads(data)
-        save_to_couchdb(document, 'twitter_all_au_0420')
+        print(document)
+        save_to_couchdb(document, 'test_1')
+        print(document)
         # save_to_couchdb(document, 'test')
         return True
 
