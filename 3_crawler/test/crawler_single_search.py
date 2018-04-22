@@ -17,11 +17,6 @@ consumer_secret = "GGKrP8Xo8a4yLMwN5o94NvpyMFIQfDdDYxIGRHFo5pnmVRnthN"
 access_token = "987903261196734465-bm06Nhe1ryit2F3lJA3pS0tvdJQWZeX"
 access_token_secret = "dwmaKwY2vTUmiayrRXN4o8kdeHxd4dFASEcMiQuG8ehzJ"
 
-# Variables that contains the user credentials to access Twitter API (lina)
-consumer_key = "DydHyhqn7ATRGqqrlTHW4Scxx"
-consumer_secret = "orhq5C4UDNYBSn4LlvSfivZJ1qekb1mR7bAB5PtdBxMmvJoFXi"
-access_token = "987903311595520000-5d1Ys7LFxmV6J3cFEF5hdTicu3TFroR"
-access_token_secret = "d603J716wneTf3EqFCdtUILRqL5HEpOOOTvFRFug9paj0"
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
