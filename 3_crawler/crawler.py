@@ -125,10 +125,9 @@ if __name__ == "__main__":
         stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
         stream.filter(locations=box)
     elif mode == 'search':
-        pass
-        # geo = get_geocode(config)
-        # api = tweepy.API(
-        #     auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True
-        # )
-        # searcher = TwitterSearcher(api, db, geo, "*")
-        # searcher.search()
+        geo = get_geocode(config)
+        api = tweepy.API(
+            auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True
+        )
+        searcher = TwitterSearcher(api, db, geo, "Chinese")
+        searcher.search()
