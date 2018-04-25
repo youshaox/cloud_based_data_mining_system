@@ -12,7 +12,7 @@ import couchdb
 import tweepy
 
 config="./configure.json"
-auth_index=3
+auth_index=4
 ERROR='2'
 
 def get_geocode(config):
@@ -68,7 +68,7 @@ class TwitterSearcher():
     def search(self):
         print('start')
         lower_id = None
-        upper_id = 988672428988485633
+        upper_id = -1
         if (upper_id <= 0):
             if (not lower_id):
                 new_tweets = self.api.search(
@@ -100,10 +100,11 @@ class TwitterSearcher():
                     upper_id=str(upper_id - 1),
                     since_id=lower_id
                 )
-        print(new_tweets)
+        # print(new_tweets)
         upper_id = new_tweets[-1].id
         for tweet in new_tweets:
             print(tweet.id)
+            print(tweet._json)
 
 
 if __name__ == "__main__":
@@ -112,14 +113,9 @@ if __name__ == "__main__":
     auth.set_access_token(a_token, a_secret)
     api = tweepy.API(auth)
 
+    print(c_key)
 
     geo = get_geocode(config)
     api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
-    # searcher = TwitterSearcher(api, geo, "*")
-    # new_tweets = api.search(q="Chinese", geocode=get_geocode(config), count=3)
-    # print(new_tweets)
-    # for tweet in new_tweets:
-    #     print(tweet)
-
     searcher = TwitterSearcher(api, geo, "Chinese")
     searcher.search()
