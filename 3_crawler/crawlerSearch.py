@@ -42,7 +42,6 @@ class TwitterSearcher():
                 if (upper_id <= 0):
                     # if there is no lower bound
                     if (not lower_id):
-                        logging.info('进入循环1')
                         new_tweets = self.api.search(
                             q=self.query,
                             geocode=self.geo,
@@ -50,7 +49,6 @@ class TwitterSearcher():
                         )
                     # if there is lower bound
                     else:
-                        logging.info('进入循环2')
                         new_tweets = self.api.search(
                             q=self.query,
                             geocode=self.geo,
@@ -60,7 +58,6 @@ class TwitterSearcher():
                 else:
                     # if there is no lower bound
                     if (not lower_id):
-                        logging.info('进入循环3')
                         new_tweets = self.api.search(
                             q=self.query,
                             geocode=self.geo,
@@ -69,7 +66,6 @@ class TwitterSearcher():
                         )
                     # if there is lower bounder.
                     else:
-                        logging.info('进入循环4')
                         new_tweets = self.api.search(
                             q=self.query,
                             geocode=self.geo,
@@ -82,26 +78,20 @@ class TwitterSearcher():
                 if not new_tweets:
                     logging.info("No more tweets to read.")
                     break
-                count = count + 1
-                logging.info("收获"+str(count) + "数据集:")
+
                 # Process received tweets.
                 for tweet in new_tweets:
 
                     jtweet = tweet._json
 
-                    logging.info(jtweet['id'])
                     # logging.info(jtweet)
 
-                    # Only store tweets that have location we can use.
-                    if tweet.coordinates or tweet.place:
-                        jtweet['_id'] = str(jtweet['id'])
-                        try:
-                            # logging.info(jtweet['_id'])
-                            # logging.info(jtweet)
-                            logging.info("有坐标的有数据了")
-                            # self.db.save(jtweet)
-                        except couchdb.http.ResourceConflict:
-                            logging.info("Ignored duplicate tweet.")
+                    # store any tweets.
+                    jtweet['_id'] = str(jtweet['id'])
+                    try:
+                        self.db.save(jtweet)
+                    except couchdb.http.ResourceConflict:
+                        logging.info("Ignored duplicate tweet.")
 
                 # Output current number of tweets.
                 tweet_count += len(new_tweets)
@@ -109,11 +99,6 @@ class TwitterSearcher():
 
                 # Track upper id. Use the id of last tweet in the previous return result as the new upper_id.
                 upper_id = new_tweets[-1].id
-                print('下一个id:' + str(upper_id))
-
-                if count >=2:
-                    break
-
             # Exit upon error.
             except tweepy.TweepError as e:
                 logging.error(str(e))
