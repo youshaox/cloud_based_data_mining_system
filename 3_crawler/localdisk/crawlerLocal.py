@@ -9,39 +9,12 @@ Where: <config>     -- A json file with configuration information.
 import sys
 import logging
 import json
-import couchdb
 import tweepy
-from crawlerStream import TwitterStreamListener
-from crawlerSearch import TwitterSearcher
+from crawlerStreamLocal import TwitterStreamListener
+from crawlerSearchLocal import TwitterSearcher
 
-NUM_ARGS = 4
+NUM_ARGS = 5
 ERROR = 2
-
-
-def get_database(config):
-    """Return handle to couchdb as defined in config file."""
-    with open(config) as fp:
-        jconfig = json.load(fp)
-
-        try:
-            # Pull server information from config.
-            server = jconfig['Servers'][0]
-            couch = couchdb.Server(server)
-
-            # Check if databse exists, create if not.
-            db_name = jconfig['DatabaseName']
-            if db_name in couch:
-                logging.info("Database {} already exists.".format(db_name))
-                db = couch[db_name]
-            else:
-                logging.info("Created databse {}".format(db_name))
-                db = couch.create(db_name)
-
-        except Exception as e:
-            logging.error(str(e))
-            sys.exit(2)
-
-    return db
 
 
 def get_credentials(config, auth_index):
@@ -104,15 +77,14 @@ if __name__ == "__main__":
     if len(sys.argv) != NUM_ARGS:
         logging.error(
             'invalid number of arguments: <harvester.py> <config.json> <mode> '
-            '<auth_index>'
+            '<auth_index> <filename>'
             )
         sys.exit(ERROR)
 
     config = sys.argv[1]
     mode = sys.argv[2]
     auth_index = int(sys.argv[3])
-
-    db = get_database(config)
+    filename = sys.argv[4]
 
     c_key, c_secret, a_token, a_secret = get_credentials(config, auth_index)
     auth = tweepy.OAuthHandler(c_key, c_secret)
@@ -121,7 +93,7 @@ if __name__ == "__main__":
 
     if mode == 'stream':
         box = get_box(config)
-        stream_listener = TwitterStreamListener(db)
+        stream_listener = TwitterStreamListener(filename)
         stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
         stream.filter(locations=box)
     elif mode == 'search':
@@ -129,5 +101,5 @@ if __name__ == "__main__":
         api = tweepy.API(
             auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True
         )
-        searcher = TwitterSearcher(api, db, geo, "*")
+        searcher = TwitterSearcher(api, filename, geo, "*")
         searcher.search()

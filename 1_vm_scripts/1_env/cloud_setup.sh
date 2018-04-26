@@ -6,7 +6,7 @@ sudo touch /data/test
 sudo mkfs.ext4 /dev/vdc
 
 # 不可用
-sudo echo "/dev/vdc /data ext4 0 0" >> /etc/fstab
+sudo su;echo "/dev/vdc /data ext4 0 0" >> /etc/fstab
 
 
 sudo mount /dev/vdc /data

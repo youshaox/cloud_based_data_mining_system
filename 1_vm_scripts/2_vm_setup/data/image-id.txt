@@ -1,0 +1,640 @@
+/Users/youshaoxiao/.virtualenvs/py3/bin/python /Users/youshaoxiao/PycharmProjects/cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/test.py
+Connecting to Nectar
+Connecting to Nectar finshed
+Image id: ami-bf7a51e3, image name: 爬虫最开始测试
+Image id: ami-cf046e68, image name: CirrOS 0.4.0 x86_64
+Image id: ami-92292d1d, image name: NeCTAR R-Studio (Ubuntu 16.04 LTS Xenial)
+Image id: ami-8174b393, image name: GVL 4.4.0 Alpha 2
+Image id: ami-3e2d8049, image name: NeCTAR R-Studio (Ubuntu 16.04 LTS Xenial)
+Image id: ami-32ee884f, image name: Quick Setup with Python Packages, BS4, Byobu and Screen
+Image id: ami-2bd79702, image name: space-reporting-20180307
+Image id: ami-7b0f3fa6, image name: EMUStack_Ubuntu_14.04_TW040318
+Image id: ami-35142d7a, image name: PPGISbeforephpmyadmin
+Image id: ami-430e1319, image name: pyLIMA_default
+Image id: ami-68f566f8, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64 (pre-installed murano-agent)
+Image id: ami-8aac485a, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-16030760, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-installed murano-agent)
+Image id: ami-190a1773, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-e2d5e55e, image name: NeCTAR Ubuntu 17.10 (Artful) amd64
+Image id: ami-3c7e2b25, image name: NeCTAR Scientific Linux 6 x86_64
+Image id: ami-b481405b, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-1e73acf7, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-7c3cee0e, image name: NeCTAR CentOS 7 x86_64 (pre-installed murano-agent)
+Image id: ami-3651c729, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-b18a660c, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-495cefd0, image name: NeCTAR Debian 9 (Stretch) amd64
+Image id: ami-0501a934, image name: NeCTAR Fedora 26 x86_64
+Image id: ami-8eab479f, image name: NeCTAR Fedora 26 x86_64
+Image id: ami-53bb4225, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-installed murano-agent)
+Image id: ami-c0f06eae, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64 (pre-installed murano-agent)
+Image id: ami-9084a71f, image name: NeCTAR openSUSE Leap 42.3 x86_64
+Image id: ami-3b05f3d3, image name: NeCTAR Ubuntu 17.10 (Artful) amd64
+Image id: ami-55b69101, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-ddbcf123, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-9f09958e, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-606c6ffc, image name: MediaFlux-for-NCI
+Image id: ami-d142ba30, image name: Sahara Vanilla 2.7.1 (Beta)
+Image id: ami-c5095600, image name: Sahara Spark 1.6.0 (Beta)
+Image id: ami-dc8eecce, image name: Sahara Spark 2.1.0 (Beta)
+Image id: ami-92abd477, image name: ubuntu14.04-x64-kubernetes.qcow2
+Image id: ami-ca24ffe4, image name: debian8-x64-kubernetes.qcow2
+Image id: ami-5f12295f, image name: research_cat
+Image id: ami-bb918743, image name: GVL 4.3.0
+Image id: ami-9f589ca1, image name: GVL 4.3.0 Beta 2
+Image id: ami-ba18f2d7, image name: GVL 4.3.0 Alpha 10
+Image id: ami-f530be3e, image name: Ubuntu 16.04 + Docker + rclone
+Image id: ami-8b01a158, image name: kali-linux-xfce-2017.3-amd64
+Image id: ami-eec68a93, image name: ppgis_serious
+Image id: ami-1aac6df1, image name: centos 7.4 template intersect
+Image id: ami-3ae1fe54, image name: alpine-3.6
+Image id: ami-04a4c636, image name: NXR-R-training_20171123
+Image id: ami-998d4a50, image name: CarersCare 22-11-2017
+Image id: ami-2db3d219, image name: stadspprd01-disk1
+Image id: ami-ab0e8608, image name: rancheros v1.1.0
+Image id: ami-96ee881d, image name: NXR-Apollo-Master_20171101
+Image id: ami-f3d9c818, image name: GVL 4.2.0
+Image id: ami-3651752d, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64 (pre-installed murano-agent)
+Image id: ami-d35da020, image name: mediaflux-NeCTAR-Ubuntu-16.04-LTS-Xenial-amd64-m1.small-snapshot
+Image id: ami-8093bdc8, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-1e73d6af, image name: NeCTAR Debian 9 (Stretch) amd64
+Image id: ami-d18f3ffa, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-45ef72ee, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-a9d574bc, image name: NeCTAR Ubuntu 17.10 (Artful) amd64
+Image id: ami-39137f7d, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-392d6097, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-e8e1c6f1, image name: NeCTAR Fedora 26 x86_64
+Image id: ami-254d667a, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-14f4a575, image name: csiro-health-search-SNAPSHOT
+Image id: ami-f9563390, image name: TPAC core.014 Ubuntu 16.04 LTS (Xenial) amd64 1508215844
+Image id: ami-89310b49, image name: Ubuntu 16.04 + Docker + Rocker/Verse
+Image id: ami-b65f06d6, image name: TPAC core.014 Ubuntu 16.04 LTS (Xenial) amd64 1508117585
+Image id: ami-22f082c1, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-096bfeeb, image name: NeCTAR Debian 9 (Stretch) amd64
+Image id: ami-2861b4b6, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-installed murano-agent)
+Image id: ami-da0a99ba, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-b42e6bc2, image name: CoreOS-stable-v1520.5.0
+Image id: ami-72e7ff93, image name: Wicking fMRI Ubuntu 16.04 fsl-complete & fsleyes python install
+Image id: ami-3c140730, image name: NeCTAR CentOS 7 x86_64 (pre-installed murano-agent)
+Image id: ami-5085f910, image name: Docker Workshop Template
+Image id: ami-7f960287, image name: CoreOS-stable-v1465.8.0
+Image id: ami-8396c324, image name: 20170926 SPREAD Jenkins
+Image id: ami-019d6692, image name: TPAC rstudio.012 Ubuntu 16.04 LTS (Xenial) amd64 1505958284
+Image id: ami-b0593dc3, image name: TPAC core.014 Ubuntu 16.04 LTS (Xenial) amd64 1505795574
+Image id: ami-06427bcd, image name: Spark-Data-Snapshot
+Image id: ami-77a915ba, image name: Spark-Master-Snapshot
+Image id: ami-ed7382e4, image name: Ubuntu 16.04 Ruby 2.4.2
+Image id: ami-51c17931, image name: FreeBSD 11.1 Ruby 2.4.2
+Image id: ami-74903146, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-5d666e50, image name: NeCTAR Debian 9 (Stretch) amd64
+Image id: ami-ae0e4df0, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-78bc31e8, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-8514eb28, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-62f0536e, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-ff1fab12, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-256aad96, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-df5c7af2, image name: NeCTAR Debian 9 (Stretch) amd64
+Image id: ami-8b2294be, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-71c9b77f, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-2fb5f952, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-674e468a, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-48dcde23, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-3df084fa, image name: NeCTAR Debian 9 (Stretch) amd64
+Image id: ami-b41661d3, image name: intersect sp
+Image id: ami-c18eabfe, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-cbb0b672, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-44ae1fa4, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-959b4af6, image name: EuAnnotation
+Image id: ami-9c659f6c, image name: IndonesiaMapWeb
+Image id: ami-fcf91c37, image name: 20170731 Ngangi Staging
+Image id: ami-f702fb0c, image name: NeCTAR Trove MySQL 5.7 (Ubuntu 16.04 LTS amd64)
+Image id: ami-6c84b0a2, image name: Cancer-20170723
+Image id: ami-f51d4af2, image name: ends-snap4
+Image id: ami-7b50e09a, image name: MG-Trusty-Setup3
+Image id: ami-0f37cabb, image name: MG-Trusty-Setup2
+Image id: ami-2bf08a70, image name: crams-racmon-frontend0617
+Image id: ami-50694ed8, image name: NeCTAR Debian 9 (Stretch) amd64
+Image id: ami-00c0fcea, image name: GVL 4.2.0 Beta 1
+Image id: ami-c602e9cf, image name: dataportal-dev-nimbus
+Image id: ami-231d5308, image name: LLAFINAL
+Image id: ami-412ff358, image name: KIT418WorkernodeMirror
+Image id: ami-64cf337d, image name: BTP-20170603
+Image id: ami-06abad4d, image name: utas_ncforbes_freqCountWorkerV2
+Image id: ami-a558ae95, image name: LLABaseUpdated
+Image id: ami-d8d00ac2, image name: RAMPDEV-Nimbus
+Image id: ami-d4b35d6d, image name: utas_ncforbes_freqCountWorker
+Image id: ami-6fa8738a, image name: A4Base
+Image id: ami-0958d925, image name: GRHANITE Windows 2016 Std Edition x64 (with cloudbase init)
+Image id: ami-6e931517, image name: UAVProject
+Image id: ami-e3cb07b2, image name: TPAC core.012 Ubuntu 16.04 LTS (Xenial) amd64 1493766454
+Image id: ami-70d342d0, image name: TPAC rstudio.011 Ubuntu 16.04 LTS (Xenial) amd64 1493610909
+Image id: ami-64f0ddcc, image name: Ubuntu 16.04 LTS (Xenial) amd64 + Docker
+Image id: ami-2c835cce, image name: NewCostFunc
+Image id: ami-26ca99d2, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-5ccd0bad, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-a2830dd5, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-86f4a44c, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-df1ff7ec, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-a9f647c0, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64 (pre-installed murano-agent)
+Image id: ami-b9c2c652, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-7b76aa3a, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-c6c7b39e, image name: NeCTAR CentOS 7 x86_64 (pre-installed murano-agent)
+Image id: ami-c163b887, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-installed murano-agent)
+Image id: ami-cc1e4586, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-5ca400e3, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-installed murano-agent)
+Image id: ami-732076fd, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-5c7bcfd8, image name: CoreOS-alpha-v1367.5.0
+Image id: ami-348d5ada, image name: My Own Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-40ced3ee, image name: NeCTAR Fedora 25 x86_64
+Image id: ami-1434712c, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-da5271a0, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-74132129, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-38f6b049, image name: NeCTAR CentOS 7 x86_64 (pre-installed murano-agent)
+Image id: ami-71ffa1c2, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64 (pre-installed murano-agent)
+Image id: ami-78f0fa58, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-aea95259, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-fe917e46, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-installed murano-agent)
+Image id: ami-1208875c, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64 (pre-installed murano-agent)
+Image id: ami-27a382a2, image name: NeCTAR CentOS 7 x86_64 (pre-installed murano-agent)
+Image id: ami-3922cdab, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64 (pre-installed murano-agent)
+Image id: ami-181ed582, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-faac7f62, image name: finalstudentmpiimage
+Image id: ami-5fbb628e, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-c596c663, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-903ba1ce, image name: NeCTAR CentOS 7 x86_64 (pre-installed murano-agent)
+Image id: ami-21c8dddc, image name: Hadoop+Spark
+Image id: ami-44d86ab4, image name: Bates-22.03.17
+Image id: ami-41326723, image name: NeCTAR Fedora 25 x86_64
+Image id: ami-4293b23c, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64 (pre-installed murano-agent)
+Image id: ami-7e2a9bd2, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-408411ae, image name: NeCTAR CentOS 7 x86_64 (pre-installed murano-agent)
+Image id: ami-8957339d, image name: NABUStaging
+Image id: ami-00003c74, image name: Intersect_Ubuntu 16.04_LTS_V1.0
+Image id: ami-00003c4d, image name: QMS512-Ferret
+Image id: ami-00003c4a, image name: mgvl_4.1.0_clean_20170214
+Image id: ami-00003c59, image name: cgenome
+Image id: ami-00003c47, image name: openproject-09022017V2
+Image id: ami-00003c41, image name: ng-docker-ubuntu
+Image id: ami-00003c3e, image name: QCIF Bio-linux 8 (Ubuntu 14.04 Trusty)
+Image id: ami-00003c3b, image name: CJS_UB14.04_BioLinux_Dammit_Installed
+Image id: ami-00003c38, image name: NVIDIA DIGITS
+Image id: ami-5d8b2e13, image name: cgenome_old
+Image id: ami-00003b82, image name: NeCTAR R-Studio (Ubuntu 16.04 LTS Xenial)
+Image id: ami-00003b7c, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-installed murano-agent)
+Image id: ami-00003b2e, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-00003b79, image name: GamesGroupSnapshot
+Image id: ami-27804fff, image name: taxacloud_frontend_base8
+Image id: ami-00003b76, image name: AAA Snapshot
+Image id: ami-00003b73, image name: KoBo Toolbox Demo for ResPitch
+Image id: ami-00003b70, image name: Project06
+Image id: ami-00003b64, image name: Deep Learning Demo for ResPitch
+Image id: ami-00003b28, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-00003b61, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64 (pre-installed murano-agent)
+Image id: ami-00003b1f, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-00003b31, image name: Community Test Image Ubuntu Xenial 16.04
+Image id: ami-00003b5e, image name: NeCTAR Scientific Linux 6 x86_64
+Image id: ami-00003b58, image name: NeCTAR Fedora 24 x86_64
+Image id: ami-33682125, image name: taxacloud_base18
+Image id: ami-00003b55, image name: NeCTAR Scientific Linux 6 x86_64
+Image id: ami-00003b52, image name: Community Test Image CentOS 7.2
+Image id: ami-00003b4f, image name: cqu-dm-dev
+Image id: ami-00003b4c, image name: teleheath-Nov21
+Image id: ami-00003b49, image name: ILERouting v1
+Image id: ami-00003b46, image name: trove-webserver-nov16
+Image id: ami-00003b43, image name: trove-4store-nov16
+Image id: ami-00003b1d, image name: ILEPostgres v2
+Image id: ami-00003b1a, image name: ILEUIServer
+Image id: ami-00003b17, image name: ltern-2_DATA-LTERN2
+Image id: ami-00003b14, image name: ltern-2_ROOT-3871
+Image id: ami-00003b11, image name: devtest2-2_ROOT-963
+Image id: ami-19167011, image name: gs-dev-snapshot-091116
+Image id: ami-00003b0e, image name: ILEComputeNode v3
+Image id: ami-00003b0b, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-00003b40, image name: n7673124_Project
+Image id: ami-00003b08, image name: BioinformaticsWorkshop16_v0.2
+Image id: ami-00003b05, image name: stdp-874
+Image id: ami-00003aff, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64 (pre-installed murano-agent)
+Image id: ami-00003afc, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-00003af9, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-installed murano-agent)
+Image id: ami-00003af6, image name: NeCTAR Ubuntu 15.10 (Wily) amd64
+Image id: ami-00003af3, image name: NeCTAR openSUSE Leap 42.1 x86_64
+Image id: ami-00003af0, image name: NeCTAR openSUSE 13.2 x86_64
+Image id: ami-00003aed, image name: NeCTAR CentOS 7 x86_64 (pre-installed murano-agent)
+Image id: ami-00003aea, image name: NeCTAR Scientific Linux 6 x86_64
+Image id: ami-00003ae7, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-00003ae4, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-00003ae1, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-00003ade, image name: BioWorkshop16_v1.2
+Image id: ami-00003adb, image name: NeCTAR CentOS 5 x86_64
+Image id: ami-00003ad8, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-00003ad5, image name: Pulsar_psrchive_installed2
+Image id: ami-00003acf, image name: shihabhasan
+Image id: ami-00003b3d, image name: jupyter demo for ResPitch
+Image id: ami-00003b3a, image name: earth.nullschool.net
+Image id: ami-00003aba, image name: ILENaked
+Image id: ami-00003aa5, image name: CoreOS Stable 1122.2.0 (20160929)
+Image id: ami-00003a97, image name: Rachel_GVL_DADA2
+Image id: ami-00003a91, image name: LAMMPS_NEW
+Image id: ami-00003a8e, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-00003a8b, image name: NeCTAR CentOS 7 x86_64 (pre-installed murano-agent)
+Image id: ami-00003a88, image name: NeCTAR Fedora 24 x86_64
+Image id: ami-00003a85, image name: bharat2-Spet14-2016
+Image id: ami-00003a9f, image name: CoreOS-1122.2.0
+Image id: ami-00003a7c, image name: x2g snapshot
+Image id: ami-00003a6d, image name: moodle snapshot intersect with fix
+Image id: ami-00003a6a, image name: 20160829 Learn Moodle
+Image id: ami-00003a67, image name: TorRelayTemplate-2016-08-25
+Image id: ami-00003a64, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-installed murano-agent)
+Image id: ami-00003a61, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-00003a52, image name: NeCTAR Fedora 24 x86_64
+Image id: ami-00003a46, image name: rtg-core-generic-template-snapshot
+Image id: ami-00003a3d, image name: GVL 4.1.0
+Image id: ami-00003a3a, image name: cath_qiime_dada2
+Image id: ami-00003a22, image name: BCCVL WP Blog
+Image id: ami-00003a0d, image name: 100y
+Image id: ami-00003a07, image name: iucn_100y
+Image id: ami-00003a01, image name: CompChemCurtin_26Jul2016
+Image id: ami-000039e6, image name: prism-pack-centos7
+Image id: ami-000039e0, image name: RancherOS v0.5.0
+Image id: ami-000039da, image name: BTP-20160708
+Image id: ami-000039d7, image name: int_mood_test_20160707
+Image id: ami-000039d4, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-000039d1, image name: NeuroDebian 8.0.0
+Image id: ami-000039c5, image name: node_connect_tomcat
+Image id: ami-000039e9, image name: RStudio_Server_eRSA_28Jun2016
+Image id: ami-000039ba, image name: BTP-20160624
+Image id: ami-000039b4, image name: anotherJune
+Image id: ami-000039ae, image name: tuyen_snapshot
+Image id: ami-000039ab, image name: virginie -ersaSnapshot
+Image id: ami-000039a8, image name: Snapshot-Drought
+Image id: ami-000039a2, image name: AlexFraser_LIMPS_WorkerTemplate_2016-06-18
+Image id: ami-00003986, image name: biohack1_docker_virtuosso_play_apache
+Image id: ami-00003983, image name: NeCTAR CentOS 5 x86_64
+Image id: ami-00003980, image name: BTP-20160612
+Image id: ami-0000396b, image name: GVL 4.1.0 Micro Alpha
+Image id: ami-00003971, image name: TESTING TPAC core.005_matlabR2016a
+Image id: ami-00003950, image name: xenial-server-cloudimg-amd64
+Image id: ami-0000394a, image name: NeCTAR CentOS 5 x86_64
+Image id: ami-0000392c, image name: debian_rspatial_2016-06-01
+Image id: ami-00003929, image name: debian_rspatial0.99.902
+Image id: ami-00003923, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-00003917, image name: diabetes_qiime_20_5_16
+Image id: ami-00003947, image name: NeCTAR Fedora 22 x86_64
+Image id: ami-00003c35, image name: CondaFerret-install-13May2016
+Image id: ami-000038a6, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-000038a3, image name: nectar_training_snapshot_13.06.16
+Image id: ami-000038a0, image name: parity-2-snap-1
+Image id: ami-00003882, image name: res_os_drupal7
+Image id: ami-00003d6a, image name: Domjudge
+Image id: ami-0000386d, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-0000386a, image name: twitter_image_1234
+Image id: ami-0000385e, image name: CvlBuildSystemBackup-20April2016
+Image id: ami-0000385b, image name: NeCTAR Fedora 23 x86_64
+Image id: ami-00003855, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-00003852, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-0000384f, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-0000384c, image name: NeCTAR Scientific Linux 6 x86_64
+Image id: ami-00003849, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-00003846, image name: NeCTAR Fedora 22 x86_64
+Image id: ami-00003843, image name: NeCTAR Ubuntu 15.10 (Wily) amd64
+Image id: ami-00003840, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-0000383d, image name: NeCTAR openSUSE Leap 42.1 x86_64
+Image id: ami-0000383a, image name: NeCTAR openSUSE 13.2 x86_64
+Image id: ami-00003837, image name: NeCTAR Ubuntu 16.04 LTS (Xenial) amd64
+Image id: ami-00003828, image name: FreeNAS-9.10-STABLE-201603252134
+Image id: ami-00003b37, image name: HadoopSlave
+Image id: ami-00003b34, image name: HadoopMaster
+Image id: ami-00003816, image name: cirros image
+Image id: aki-00003810, image name: Server 3.1
+Image id: aki-0000380d, image name: Server3
+Image id: ami-00003813, image name: EMUstack_14_04
+Image id: ami-0000380a, image name: storm1603
+Image id: ami-00003807, image name: zookeeper1603
+Image id: ami-00003801, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-000037f5, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-000037f8, image name: EMU-worker-node-15Mar2016-2
+Image id: ami-000037f2, image name: protcat_03.16
+Image id: ami-000038c9, image name: seqliner-reference
+Image id: ami-16048741, image name: 2016.03.01 - Wordpress_v1
+Image id: ami-000037e9, image name: SHPC4001 Base
+Image id: ami-000037e0, image name: Srv@CentOS7
+Image id: ami-000037dd, image name: CirrOS 0.3.4 x86_64
+Image id: ami-000037ef, image name: bioinfo
+Image id: ami-000037da, image name: snap_base_20160208_V2
+Image id: ami-000037d7, image name: centos-seven-space-template-snapshot-public
+Image id: ami-000037c8, image name: micro CernVM 1.16.2
+Image id: ami-000037c2, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-000037bf, image name: NeCTAR Scientific Linux 6 x86_64
+Image id: ami-000037bc, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-000037b9, image name: NeCTAR Ubuntu 15.10 (Wily) amd64
+Image id: ami-000038bb, image name: BTP-2016-01-25
+Image id: ami-000037b3, image name: NeCTAR Fedora 22 x86_64
+Image id: ami-000037b0, image name: NeCTAR Fedora 23 x86_64
+Image id: ami-000037ad, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-000037aa, image name: NeCTAR openSUSE 13.2 x86_64
+Image id: ami-000037a7, image name: NeCTAR openSUSE Leap 42.1 x86_64
+Image id: ami-000037a4, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-000037a1, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-0000372f, image name: NeCTAR openSUSE Leap 42.1 x86_64
+Image id: ami-0000372c, image name: NeCTAR Fedora 22 x86_64
+Image id: ami-00003729, image name: NeCTAR Fedora 23 x86_64
+Image id: ami-00003726, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-00003723, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-00003720, image name: NeCTAR Ubuntu 15.10 (Wily) amd64
+Image id: ami-0000371d, image name: NeCTAR openSUSE 13.2 x86_64
+Image id: ami-0000371a, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-00003717, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-00003714, image name: NeCTAR Scientific Linux 6 x86_64
+Image id: ami-00003711, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-0000370b, image name: snap_base_20151215
+Image id: ami-00003708, image name: ersa-ubuntu-1510-20160106
+Image id: ami-00003705, image name: ubuntu-15.10-20160106
+Image id: ami-000036f0, image name: qiime_1.9.1_ubuntu12_monashbioplatform2
+Image id: ami-000036e7, image name: ersa-ubuntu-1510-20151203
+Image id: ami-000036e4, image name: ubuntu-15.10-20151203
+Image id: ami-000036d8, image name: GamesGroup
+Image id: ami-000036d2, image name: ersa-cvmfs-prod-25Nov2015
+Image id: ami-000036cc, image name: ubuntu-15.10-20151116.1
+Image id: ami-000036ba, image name: JustinCirrosNov2015
+Image id: ami-000036b4, image name: Intersect_Ubuntu14_template v1.2
+Image id: ami-000036f3, image name: Intersect_Centos6_template v1.7
+Image id: ami-000036ae, image name: biowebapp_frontend_base1
+Image id: ami-000036ab, image name: Intersect_Ubuntu14_template v1.1
+Image id: ami-000036a8, image name: space-ubuntu-base-image-small-disk_v1
+Image id: ami-000036a2, image name: intersect-ubuntu-base_v1
+Image id: ami-0000369f, image name: Intersect_Centos6_template v1.6
+Image id: ami-0000369c, image name: Intersect_Centos6_template v1.4
+Image id: ami-00003690, image name: EMU worker node 5Nov2015
+Image id: ami-0000367f, image name: Alveo-Galaxy-CloudMan-1446608945
+Image id: ami-0000368d, image name: BigData-Workshop
+Image id: ami-0000368a, image name: ubuntu-15.04-zfs
+Image id: ami-00003687, image name: ubuntu-15.04-server-cloudimg-amd64
+Image id: ami-00003684, image name: ubuntu-15.10-server-cloudimg-amd64
+Image id: ami-00003673, image name: Intersect_Centos6_template v1.2
+Image id: ami-00003670, image name: prada_snapshot0
+Image id: ami-0000366a, image name: Intersect_Centos6_template v1.1
+Image id: ami-00003667, image name: Intersect_Centos6_template v1
+Image id: ami-00003655, image name: straylight-snap
+Image id: ami-00003652, image name: snap_base_20151013
+Image id: ami-000035f5, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-000035ef, image name: GVL 4.0.0
+Image id: ami-000035ce, image name: Heat-Load-Balancer
+Image id: ami-000035cb, image name: slurmcluster-nci-20150923
+Image id: ami-000035c8, image name: virtio-win-0.1.109boot.iso
+Image id: ami-000035c2, image name: Vicki_ABC
+Image id: ami-000035b6, image name: NeCTAR Ubuntu 15.04 (Vivid) amd64
+Image id: ami-00003681, image name: qiime_1.9.1
+Image id: ami-00003541, image name: Jas_compute
+Image id: ami-0000353e, image name: Jas_main
+Image id: ami-00003580, image name: slurmcluster-nci-20150906
+Image id: ami-0000351a, image name: whiteflyDB_migrate
+Image id: ami-00003514, image name: Ubuntu Server 15.04 (Vivid Vervet) x86_64
+Image id: ami-0000350b, image name: gci-vm-0.5
+Image id: ami-00003508, image name: gci-vm-0.3
+Image id: ami-00003505, image name: gci-vm-0.2
+Image id: ami-000034db, image name: Local all working
+Image id: ami-000034d8, image name: MPPACGL_image_3
+Image id: ami-000034b1, image name: Biolinux
+Image id: ami-000034a8, image name: LSurvey-Aug10-15
+Image id: ami-00003490, image name: chem3006_2015
+Image id: ami-00003484, image name: GVL-3.04.1
+Image id: ami-00003481, image name: CVL Neuro Imaging VM (July 2015)
+Image id: ami-0000347e, image name: nectar-ubuntu-14.04.18
+Image id: ami-0000346f, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-0000347b, image name:
+Image id: ami-0000346c, image name: CentOS-Genomes-Nimrod
+Image id: ami-00003469, image name: Fedora-Cloud-Base-20141203-21.x86_64
+Image id: ami-0000345c, image name: Ubuntu-14.04.2 - i386
+Image id: ami-00003475, image name: rsnap
+Image id: ami-0000341c, image name: CoreOS-723.1.0
+Image id: ami-0000342c, image name: ArefResearch-5th-July
+Image id: ami-00003429, image name: ArefSnapshot-Initial-Snapshot
+Image id: ami-000033bf, image name: CentOS 6.6 x86_64 generic official QCOW2
+Image id: ami-000033bc, image name: ANU_Quokka2.2.4
+Image id: ami-000033b9, image name: RDR_2.3
+Image id: ami-000033aa, image name: Boot-Windows-On-Vdb
+Image id: ami-000033a7, image name: CentOS6-CDH5BaseNode(JDK1.8+MySQL5.1)
+Image id: ami-0000339b, image name: spark-batch
+Image id: ami-00003398, image name: CentOS-Dev
+Image id: ami-00003395, image name: ass3Worker
+Image id: ami-000033a4, image name: jlh_snapshot_20150527
+Image id: ami-00003389, image name: Galaxy-CloudMan-1432608772
+Image id: ami-00003374, image name: workerfour
+Image id: ami-00003371, image name: workernode
+Image id: ami-00003368, image name: workertwo
+Image id: ami-0000335c, image name: CSU Regional Archives Omeka V2.0 Snapshot 2
+Image id: ami-00003341, image name: 4thLance
+Image id: ami-0000334d, image name: Thylacine_biolinux
+Image id: ami-000033d7, image name: 15-05-15 MRSA surgical instance snapshot
+Image id: ami-00003356, image name: Omeka V2.0 CSU Regional Archives Snapshot
+Image id: ami-00003320, image name: GVL-4.00-PeterMac
+Image id: ami-0000332f, image name: COMP90015.685003.java
+Image id: ami-0000331a, image name: CouchDB_Backup_May8_1146AM
+Image id: ami-00003392, image name: NeCTAR Debian 8 (Jessie) amd64
+Image id: ami-00003311, image name: WirelessServer
+Image id: ami-000032ed, image name: CentOS-QBI-Nimrod-final
+Image id: ami-000032ea, image name: QBI-Nimrod-CentOS-7
+Image id: ami-0000338f, image name: NeCTAR Scientific Linux 6 x86_64
+Image id: ami-0000338c, image name: NeCTAR Fedora 21 x86_64
+Image id: ami-00003317, image name: NeCTAR CentOS 6 x86_64
+Image id: ami-00003472, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-000032d2, image name: HIE-Tutorial
+Image id: ami-000032b4, image name: CoreOS 647.0.0
+Image id: ami-000032ab, image name: CoreOS 633.1.0
+Image id: ami-0000329f, image name: izwan-ogts-new
+Image id: ami-0000329c, image name: CoreOS 633.1.0
+Image id: ami-00003293, image name: ubuntu-12-with-couchdb
+Image id: ami-00003290, image name: tweetharv5t
+Image id: ami-00003266, image name: DB+Juju
+Image id: ami-0000326c, image name: biodalliance-snap
+Image id: ami-00003263, image name: BTP-21042015
+Image id: ami-0000325a, image name: First_Wroking_Ubuntu_Message_Distribution_Service_SnapShot
+Image id: ami-00003242, image name: izwan-rtk-ogts-image
+Image id: ami-0000323c, image name: Launchpod Matlab
+Image id: ami-00003239, image name: Worker1
+Image id: ami-0000325d, image name: twitterstream_hdfs
+Image id: ami-00003287, image name: QIIME_backup_15_04_13
+Image id: ami-00003236, image name: cm-miim
+Image id: ami-00003419, image name: reporting-20150410-164947
+Image id: ami-0000322d, image name: cm-miim-latest
+Image id: ami-00003221, image name: RTDriver
+Image id: ami-0000332c, image name: newmaster
+Image id: ami-0000320c, image name: aodaac-dev20150331
+Image id: ami-00003257, image name: dfbf798e1c65e74bbbabdbf57209553e
+Image id: ami-00003206, image name: Ubuntu 14.04.2
+Image id: ami-000031fd, image name: Galaxy/GVL-ALD Cloudman
+Image id: ami-000031f7, image name: KNP_20150324
+Image id: ami-000031f1, image name: Worker
+Image id: ami-000031ee, image name: twtcrunch-full-stack1
+Image id: ami-0000321b, image name: ianm-trusty-base
+Image id: ami-000031d6, image name: twwwwt
+Image id: ami-000033b6, image name: CentOS 6.6 x86_64 Generic Official QCOW2
+Image id: ami-000032c0, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-000032bd, image name: NeCTAR Ubuntu 14.10 (Utopic) amd64
+Image id: ami-00003553, image name: SP_NGS_Final
+Image id: ami-000032ba, image name: NeCTAR OpenSuSE 13.2 x86_64
+Image id: ami-000032b7, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-000031a6, image name: ace_ecostats_2015-02-26
+Image id: ami-00003191, image name: coesra_admin_24022014
+Image id: ami-00003215, image name: mpimaster
+Image id: ami-00003167, image name: binh
+Image id: ami-00003161, image name: cm-docker
+Image id: ami-00003517, image name: Ready for upload
+Image id: ami-00003155, image name: PopGen_Workshop1_2015
+Image id: ami-00003188, image name: coesra_vm_pre_module_download_v3
+Image id: ami-00003143, image name: GPlatesSever20150205
+Image id: ami-00003152, image name: MelbAnimationGroup_testsnapshot
+Image id: ami-00003122, image name: Canute300115_snap
+Image id: ami-00003119, image name: FreeBSD 10.0
+Image id: ami-00003113, image name: C-Pipe
+Image id: ami-00003116, image name: jcub_cue
+Image id: ami-000030ec, image name: CentOS_Snapshot_120115
+Image id: ami-000030ce, image name: galaxy-docker
+Image id: ami-000030c8, image name: ubuntu-utopic-zfs-20150107-121003
+Image id: ami-00003233, image name: ogts-server
+Image id: ami-000030b9, image name: Centos 7 Cloud
+Image id: ami-000030b6, image name: GVL-cpipe
+Image id: ami-00003098, image name: backup - login confirmation emails not working
+Image id: ami-0000308c, image name: snapworker1beforeaskingforallocation
+Image id: ami-00003087, image name: Snappy Ubuntu Core
+Image id: ami-00003089, image name: drupal_snapshot
+Image id: ami-00003078, image name: ANDS-MetadataRegistry-v14-Test-RC1
+Image id: ami-00003063, image name: ubuntu-14.10-server-cloudimg-amd64
+Image id: ami-00003057, image name: MatlabUEImage
+Image id: ami-0000304e, image name: LBM 0.7
+Image id: ami-0000303f, image name: Eman2-Ubuntu
+Image id: ami-00002ffa, image name: GVL-3.04
+Image id: ami-00002fc7, image name: devstack-cleanstate-justin
+Image id: ami-00002fd3, image name: rtgrnaiviz
+Image id: ami-00002fb5, image name: Bio-Linux8
+Image id: ami-00002fa3, image name: CentOS 6.5 tigerVNC and desktop
+Image id: ami-00002f88, image name: workways0.17
+Image id: ami-00002f64, image name: snap_base_10102014
+Image id: ami-00002f55, image name: ANDS-MetadataRegistry-v13.3-Test-RC1
+Image id: ami-00002f4c, image name: GVL-3.03.3
+Image id: ami-00002f46, image name: CoreOS
+Image id: ami-0000300c, image name: owncloudinabox
+Image id: ami-00002f25, image name: NeCTAR Fedora 19 x86_64
+Image id: ami-00002f1f, image name: NeCTAR CentOS 5.11 x86_64
+Image id: ami-000022d4, image name: NeCTAR CentOS 6.5 x86_64
+Image id: ami-000022d1, image name: NeCTAR Scientific Linux 6.5 x86_64
+Image id: ami-000022ce, image name: NeCTAR Fedora 20 x86_64
+Image id: ami-000022cb, image name: NeCTAR openSUSE 13.1 x86_64
+Image id: ami-000022c8, image name: NeCTAR Debian 7 (Wheezy) amd64
+Image id: ami-000022c5, image name: NeCTAR Ubuntu 12.04 (Precise) amd64
+Image id: ami-000022b3, image name: NeCTAR Ubuntu 14.04 (Trusty) amd64
+Image id: ami-000022b0, image name: NeCTAR CentOS 7 x86_64
+Image id: ami-000022ad, image name: NimrodGenomicsVM
+Image id: ami-000022a7, image name: NeCTAR Ubuntu 12.04 (Precise) amd64 (Old)
+Image id: ami-000022a4, image name: NeCTAR Debian 7 (Wheezy) amd64 (Old)
+Image id: ami-00002297, image name: CentOS 7 OS qcow
+Image id: ami-00002d33, image name: CI_Server_Base
+Image id: ami-00002270, image name: GVL-3.03.1
+Image id: ami-00002237, image name: F20-x86_64-cfntools
+Image id: ami-000021ac, image name: mediaconv-backup_2014-08-11
+Image id: ami-000021a9, image name: Ubuntu 12.04.4 (Precise) amd64
+Image id: ami-0000217c, image name: scm-portal
+Image id: ami-00002173, image name: nimrod-qbi4
+Image id: ami-00002170, image name: GVL-3.00
+Image id: ami-0000216a, image name: NGSTrainingV1.4
+Image id: ami-00002134, image name: NeCTAR Debian 7 (Wheezy) (Old)amd64
+Image id: ami-0000212e, image name: NeCTAR Ubuntu 14.04 (Trusty) (Old) amd64
+Image id: ami-000020ef, image name: NeCTAR CentOS 6.5 x86_64 (Old)
+Image id: ami-000020f8, image name: NeCTAR Fedora 20 x86_64 (Old)
+Image id: ami-000020d1, image name: Workways_nodejs_server
+Image id: ami-000020cb, image name: pylab
+Image id: ami-000020c2, image name: scb-swin-aar-260614
+Image id: ami-000020a4, image name: VHIRL-ANUGA-20140620-1
+Image id: ami-00002086, image name: ubuntu-14.04-server-cloudimg-amd64+zfs-gist.github.com/craigpatten/9948182/c44e99dd00d864057d02e1e6b9fa3a39c8733c1e
+Image id: ami-00002047, image name: NeCTAR Ubuntu 12.04.4 (Precise) amd64 (Old)
+Image id: ami-00002056, image name: Kiegeland NOL Snapshot
+Image id: ami-00001f84, image name: MIRA-CABOG
+Image id: ami-00001f66, image name: GVL-2.19
+Image id: ami-000025d4, image name: Qiime_cath_7_5_14
+Image id: ami-00001f57, image name: RSHINY_RCPP_FULL
+Image id: ami-00001f54, image name: CAVE GPU VirtualGL Xfce
+Image id: ami-00001f48, image name: workways0.12
+Image id: ami-00001f24, image name: ubuntu-14.04-server-cloudimg-amd64
+Image id: ami-00001fc9, image name: workways_portal_0.2
+Image id: ami-00001ef1, image name: ubiMat
+Image id: ami-00001edc, image name: Ubuntu 14.04 Cloud Image
+Image id: ami-00001eb2, image name: nimrod-qbi
+Image id: ami-00001eaf, image name: NeCTAR CentOS 5.10 x86_64 (Old)
+Image id: ami-00001eac, image name: NeCTAR Fedora 19 x86_64 (Old)
+Image id: ami-00001e8e, image name: connect_matlab2
+Image id: ami-00001e88, image name: connect_matlab
+Image id: ami-00001e7f, image name: snap_base
+Image id: ami-00001e85, image name: nimrod-TERN
+Image id: ami-00001e79, image name: GVL-2.15
+Image id: ami-00001e55, image name: ubuntu-13.10-cfntools
+Image id: ami-00001e4f, image name: ubuntu-12.10-cfntools
+Image id: ami-00001e46, image name: ubuntu-12.04-cfntools
+Image id: ami-00001de6, image name: cvl_compute
+Image id: ami-000023c4, image name: seaports-pacific-sql-20140313
+Image id: ami-00001dc2, image name: VGL-AEM-20140221-1
+Image id: ami-00001c51, image name: RStudio+Shiny Server
+Image id: ami-00001c24, image name: RServer3.02
+Image id: ami-00001c1b, image name: NeCTAR CentOS 6.5 x86_64 - with rsync
+Image id: ami-00001c21, image name: ozflux_server_initial
+Image id: ami-00001bc4, image name: griffith.demo1
+Image id: ami-00001a77, image name: nimrod-root
+Image id: ami-00001a62, image name: NeCTAR Debian 6 x86_64 (Squeeze)
+Image id: ami-00001a59, image name: snap_base_old
+Image id: ami-00001876, image name: CVL Neuro Imaging VM
+Image id: ami-00001870, image name: nimrod-david
+Image id: ami-0000182e, image name: openSUSE 13.1
+Image id: ami-0000181c, image name: BIS-2013
+Image id: ami-0000133f, image name: NXServer
+Image id: ami-0000133c, image name: ANDS-MetadataRegistry-v11
+Image id: ami-00001321, image name: NexentaStor3.1.5
+Image id: ami-0000130c, image name: NimrodBarrinesSSSD_1
+Image id: ami-00001303, image name: GVL-2.09
+Image id: ami-00001300, image name: TileMill
+Image id: ami-000012e2, image name: ersa_public_cvmfs_hpchome_Nov13
+Image id: ami-000012b8, image name: bccvl_clean
+Image id: ami-00001654, image name: 12.04LTS_FreeNX
+Image id: ami-00001615, image name: kr_nmrprac1
+Image id: ami-00001258, image name: head fresh on 24-10-2013
+Image id: ami-00001255, image name: node fresh 24-10-2013
+Image id: ami-00001561, image name: Ubuntu Instance
+Image id: ami-00001063, image name: R@CMon Ubuntu 12.04.3 (Precise) amd64 UEC
+Image id: ami-0000103f, image name: AS-1 23/09/2013
+Image id: ami-000010c6, image name: instance-snapshot
+Image id: ami-00000fe4, image name: GVL-2.05
+Image id: ami-000013d8, image name: IMOS-SOS ServerSeptember2013ProductionV4
+Image id: ami-00000822, image name: Easy_GUI_Project_UniofBallart
+Image id: ami-00000804, image name: ckan20-for-auscope
+Image id: ami-000007a7, image name: tunnelator-xfer
+Image id: ami-00000798, image name: CoEPP dynamic Torque SL6
+Image id: ami-000007aa, image name: Adelta-islandora
+Image id: ami-00000675, image name: labtrove1
+Image id: ami-00000616, image name: SecureRStudioV3
+Image id: ami-0000068a, image name: Nimrod_Webservice_LocalResources
+Image id: ami-00000565, image name: AODNRStudio
+Image id: ami-00000541, image name: CoEPP Scientific Linux 6x
+Image id: ami-00000516, image name: Debian 7.0 Wheezy netinstall
+Image id: ami-000004d3, image name: CAELinux 2011-2
+Image id: ami-000004b3, image name: NeCTAR Ubuntu 12.10 (Quantal) amd64 UEC (Old)
+Image id: ami-0000040b, image name: 2013_snap_bevan
+Image id: ami-000003b6, image name: CAELinux 2011
+Image id: ami-000003a9, image name: Secure-Rstudio
+Image id: ami-00000229, image name: MyTardis 3.0 nadojo
+Image id: ami-00000218, image name: ReDBox Cloud 1.5.2.2
+Image id: ami-000001ea, image name: Ubuntu Lucid i386
+Image id: ami-00000245, image name: DjangoServ2012-11-12
+Image id: ami-000001c4, image name: NXServer_old
+Image id: ami-0000018b, image name: NeCTAR Fedora 17 x86_64 (Old)
+Image id: ami-0000012e, image name: Ubuntu 12.04 LTS Gnome FreeNX
+Image id: ami-0000010f, image name: Fedora 16 - Updated
+Image id: ami-0000010c, image name: Fedora 16 (Verne) x86_64
+Image id: ami-00000107, image name: RedboxMint Ubuntu12
+Image id: ami-000000ec, image name: HadoopSingle_Ub12_ws
+Image id: ami-000000ea, image name: HadoopSingle_Ubunt12
+Image id: ami-00000066, image name: ubuntu12.04 disktest
+Image id: ami-00000062, image name: ricedb_mig
+Image id: ami-0000003b, image name: NeCTAR-MyTardis 3.0 nadojo
+Image id: ami-00000035, image name: Ubuntu 12.04 ReDBox 1.5
+Image id: aki-00000036, image name: rbucket/vmlinuz-3.2.0-24-generic.manifest.xml
+Image id: ami-00000032, image name: CloudMan & CBL 12.04
+Image id: ami-00000369, image name: Plone-4.2-SpacesDemo
+
+Process finished with exit code 0
