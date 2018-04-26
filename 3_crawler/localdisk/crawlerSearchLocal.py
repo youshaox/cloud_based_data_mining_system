@@ -89,10 +89,9 @@ class TwitterSearcher():
                     # store any tweets.
                     jtweet['_id'] = str(jtweet['id'])
                     jtweet_chunk += str(jtweet) + "\n"
-                print('运行了一次!')
+                logging.info('运行了一次!')
                 with open(self.filename, 'a') as tf:
                     tf.write(str(jtweet_chunk))
-                return True
 
                 # Output current number of tweets.
                 tweet_count += len(new_tweets)
