@@ -78,20 +78,21 @@ class TwitterSearcher():
                     logging.info("No more tweets to read.")
                     break
 
-                jtweet_chunk = ""
+                jtweet_list = []
                 # Process received tweets.
                 for tweet in new_tweets:
                     jtweet = tweet._json
                     if tweet.coordinates or tweet.place:
                         # store tweets with geo code.
                         jtweet['_id'] = str(jtweet['id'])
-                        jtweet_chunk += str(jtweet) + "\n"
+                        jtweet_list.append(jtweet)
                         tweet_tagged_count += 1
 
                 logging.info('Downloade {0} tweets with location'.format(tweet_tagged_count))
 
                 with open(self.filename, 'a') as tf:
-                    tf.write(str(jtweet_chunk))
+                    for jtweet in jtweet_list:
+                        print(json.dumps(jtweet), file=tf)
 
                 # Output current number of tweets.
                 tweet_count += len(new_tweets)

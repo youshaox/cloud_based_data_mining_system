@@ -78,7 +78,7 @@ class TwitterSearcher():
                     logging.info("No more tweets to read.")
                     break
 
-                jtweet_chunk = ""
+                jtweet_list = []
                 # Process received tweets.
                 for tweet in new_tweets:
 
@@ -88,10 +88,12 @@ class TwitterSearcher():
 
                     # store any tweets.
                     jtweet['_id'] = str(jtweet['id'])
-                    jtweet_chunk += str(jtweet) + "\n"
+                    jtweet_list.append(jtweet)
+
                 logging.info('运行了一次!')
                 with open(self.filename, 'a') as tf:
-                    tf.write(str(jtweet_chunk))
+                    for jtweet in jtweet_list:
+                        print(json.dumps(jtweet), file=tf)
 
                 # Output current number of tweets.
                 tweet_count += len(new_tweets)
