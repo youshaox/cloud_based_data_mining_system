@@ -16,7 +16,7 @@ class TwitterStreamListener(StreamListener):
         jtweet = json.loads(data)
         jtweet['_id'] = str(jtweet['id'])
         with open(self.filename, 'a') as tf:
-            json.dump(jtweet,tf)
+            print(json.dumps(jtweet), file=tf)
         return True
 
     def on_error(self, status_code):

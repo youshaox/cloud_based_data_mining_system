@@ -21,7 +21,6 @@ if __name__ == '__main__':
     with open(outfile, 'a') as tf:
         for jtweet in jtweet_list:
             print(json.dumps(jtweet), file=tf)
-            # json.dump(jtweet, tf, indent=2)
 
     with open(outfile, 'r') as df:
         lines = df.readlines()
