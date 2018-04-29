@@ -1,16 +1,18 @@
 """
 Main script for controller.
 Usage: python3 <controller.py> <action> <value_type> <value> <target>
-Where: <action>         -- create / terminate / delete / attach / unattach
+Where: <action>         -- create / terminate / delete / attach / recover
         <value_type>      -- instance / volume / snapshot
-        <target>    -- default / streamer-1 (instance-name)
+        <value>           -- streamer (depends on value_type and action)
+        <target>    -- default / streamer (instance-name)
         e.g:
-        create instance streamer-1 default
-        terminate instance streamer-1 default
-        attach volume 40 streamer-1
-        delete volume vol-f5a3a3f2
-        create snapshot vol-f5a3a3f2
-        delete snapshot vol-f5a3a3f2
+        create instance streamer default
+        terminate instance streamer default
+        attach volume 40 streamer
+        delete volume vol-f5a3a3f2 default
+        create snapshot vol-f5a3a3f2 default
+        delete snapshot snap-f5a3a3f2 default
+        recover snapshot snap-f5a3a3f2 streamer
 """
 
 import boto
@@ -170,8 +172,7 @@ def run(controller, action, value_type, value, target):
         sys.exit(ERROR)
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s-[line:%(lineno)d]-%(levelname)s: %(message)s')
+    logging.basicConfig(level=logging.INFO,format='%(asctime)s-[line:%(lineno)d]-%(levelname)s: %(message)s')
 
     action, value_type, value, target = check_arguments()
     logging.info('1. Check arguments success')

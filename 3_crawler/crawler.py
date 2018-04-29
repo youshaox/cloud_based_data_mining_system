@@ -105,7 +105,7 @@ def get_geocode(config):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s-[line:%(lineno)d]-%(levelname)s: %(message)s')
     if len(sys.argv) != NUM_ARGS:
         logging.error(
             'invalid number of arguments: <harvester.py> <config.json> <mode> '
