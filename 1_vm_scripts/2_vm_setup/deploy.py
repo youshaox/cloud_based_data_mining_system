@@ -1,12 +1,11 @@
 
 """
 Main script for dynamic deployment.
-Usage: python3 <deploy.py> <config> <sys_type> <number_of_instances>
+Usage: python3 <deploy.py> <configure> <sys_type> <number_of_instances>
 Where: <config>              -- configuration file
-       <sys_type>         -- streamer / searcher / tweetdb / webserver / default
+       <sys_type>         -- streamer / searcher / couchdb / webserver / default
        <number_of_instances> -- number of instances to create. This must be 4 for system type 'default'.
 """
-# TODO attach volume
 import re
 import sys
 import logging
@@ -23,6 +22,20 @@ PORT = 8773
 PATH = "/services/Cloud"
 INVENTORY_FILE_PATH = "inventory"
 SLEEP_TIME = 5
+
+
+def createVolume(ec2_conn, size):
+    logging.info('Create a volume with size(G): ' + str(size))
+    return ec2_conn.create_volume(size, "melbourne-qh2")
+
+def attachVolume(ec2_conn, volume_size, target_instance_id):
+    # todo 需要测试
+    volume = createVolume(ec2_conn, volume_size)
+    volume_id = volume.id
+    ec2_conn.attach_volume(volume_id, target_instance_id, "/dev/vdc")
+    logging.info("Attach " + str(volume_id) + " to " + str(target_instance_id))
+    return True
+
 
 def add_tag(instance, key, name):
     """
@@ -86,7 +99,7 @@ def check_arguments():
                 'invalid <sys_type>. Please choose one of the system types listed in config.json file.'
             )
             sys.exit(ERROR)
-        elif num_instances != 2:
+        elif num_instances != 1:
             logging.error(
                 'when <sys_type> is \'default\'. <number_of_instances> must be 2.'
             )
@@ -135,6 +148,11 @@ if __name__ == "__main__":
 
             while (instance.update() != "running"):
                 time.sleep(SLEEP_TIME)
+
+            # attach the volumes:
+            instance_id = instance.id
+            volume_size = jconfig['sys_types'][sys_type_list.index(type)]['volume_size']
+            attachVolume(ec2_conn, volume_size, instance_id)
             ip_list.append(instance.private_ip_address)
     else:
         reservation = ec2_conn.run_instances(max_count=num_instances,
@@ -147,7 +165,7 @@ if __name__ == "__main__":
                                                  'instance_type'],
                                              security_groups=jconfig['sys_types'][sys_type_list.index(sys_type)][
                                                  'security_groups'])
-
+        # todo 是否补充volume？
         ip_list = create_ip_list(reservation)
 
     logging.info('IP addresses of created instances: ' + ', '.join(ip_list))

@@ -4,6 +4,11 @@ Usage: python3 harvester.py <config> <mode> <auth_index>
 Where: <config>     -- A json file with configuration information.
        <mode>       -- Mode of usage (stream or search).
        <auth_index> -- Index for authentification information in config.
+        nohup python3 crawler.py configure.json stream 0 &
+        nohup python3 crawler.py configure.json stream 1 &
+        nohup python3 crawler.py configure.json stream 2 &
+        nohup python3 crawler.py configure.json stream 3 &
+        nohup python3 crawler.py configure.json search 4 &
 """
 
 import sys
