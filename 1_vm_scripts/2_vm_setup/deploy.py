@@ -95,7 +95,8 @@ def check_arguments():
     return jconfig, sys_type_list
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s-[line:%(lineno)d]-%(levelname)s: %(message)s')
 
     """1. 读取配置文件中所有的配置信息"""
     jconfig, sys_type_list = check_arguments()
