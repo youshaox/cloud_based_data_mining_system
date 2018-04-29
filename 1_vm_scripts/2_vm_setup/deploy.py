@@ -1,11 +1,12 @@
 
 """
 Main script for dynamic deployment.
-Usage: python3 <deploy.py> <config> <system_type> <number_of_instances>
+Usage: python3 <deploy.py> <config> <sys_type> <number_of_instances>
 Where: <config>              -- configuration file
-       <system_type>         -- streamer / searcher / tweetdb / webserver / site
-       <number_of_instances> -- number of instances to create. This must be 4 for system type 'site'.
+       <sys_type>         -- streamer / searcher / tweetdb / webserver / default
+       <number_of_instances> -- number of instances to create. This must be 4 for system type 'default'.
 """
+# TODO attach volume
 import re
 import sys
 import logging
@@ -21,6 +22,22 @@ ERROR = 2
 PORT = 8773
 PATH = "/services/Cloud"
 INVENTORY_FILE_PATH = "inventory"
+SLEEP_TIME = 5
+
+def add_tag(instance, key, name):
+    """
+    add tag for the instance
+    :param instance:
+    :param key:
+    :param name:
+    :return:
+    """
+    status = instance.update()
+    while status != 'running':
+        time.sleep(SLEEP_TIME)
+        status = instance.update()
+    instance.add_tag(key, name)
+
 
 def create_ip_list(reservation):
     """Create a list containing IP addresses of created instances.
@@ -32,12 +49,12 @@ def create_ip_list(reservation):
     ip_list = list()
     for instance in reservation.instances:
         while (instance.update() != "running"):
-            time.sleep(5)
+            time.sleep(SLEEP_TIME)
         ip_list.append(instance.private_ip_address)
     return ip_list
 
 
-def check_cli_argument():
+def check_arguments():
     """Check command line arguments and return configuration parameters in a json object and a list containing all system types.
         Args:
             reservation:
@@ -47,7 +64,7 @@ def check_cli_argument():
     """
     if len(sys.argv) != NUM_ARGS:
         logging.error(
-            'invalid number of arguments: <deploy.py> <config.json> <system_type> <number_of_instances>'
+            'invalid number of arguments: <deploy.py> <config.json> <sys_type> <number_of_instances>'
         )
         sys.exit(ERROR)
     config = sys.argv[1]
@@ -59,19 +76,19 @@ def check_cli_argument():
 
     sys_type_list = list()
 
-    # 只是把我们总共要的system列了出来
-    for jsys_type in jconfig['system_types']:
+    # instance name list
+    for jsys_type in jconfig['sys_types']:
         sys_type_list.append(jsys_type['name'])
 
     if sys_type not in sys_type_list:
-        if sys_type != "site":
+        if sys_type != "default":
             logging.error(
-                'invalid <system_type>. Please choose one of the system types listed in config.json file.'
+                'invalid <sys_type>. Please choose one of the system types listed in config.json file.'
             )
             sys.exit(ERROR)
-        elif num_instances != 4:
+        elif num_instances != 2:
             logging.error(
-                'when <system_type> is \'site\'. <number_of_instances> must be 4.'
+                'when <sys_type> is \'default\'. <number_of_instances> must be 2.'
             )
             sys.exit(ERROR)
 
@@ -81,56 +98,56 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
     """1. 读取配置文件中所有的配置信息"""
-    # jconfig: 配置信息
-    # sys_type_list: 所有的系统类型
-    jconfig, sys_type_list = check_cli_argument()
+    jconfig, sys_type_list = check_arguments()
+    # print(sys_type_list)
+    # ['streamer-1', 'couchdb-1']
     sys_type = sys.argv[2]
     num_instances = int(sys.argv[3])
 
     region = RegionInfo(name=jconfig['region']['name'], endpoint=jconfig['region']['endpoint'])
+    logging.info('1. Finish parsing the ' + sys.argv[1])
 
-    """2.1 connect to nectar"""
-    logging.info('Connecting to Nectar')
+    logging.info('2.1 Connecting to Nectar')
     ec2_conn = boto.connect_ec2(aws_access_key_id=jconfig['credentials']['access_key'],
                                 aws_secret_access_key=jconfig['credentials']['secret_key'],
                                 is_secure=True, region=region, port=PORT, path=PATH, validate_certs=False)
     ip_list = list()
 
-    """2.2 Create instance/s"""
-    logging.info("Creating instance")
-    # 固定的四个
-    if (sys_type == 'site'):
+    logging.info("2.2 Creating instances")
+
+    # by default, we creating the instances shown in the configure.json
+    if (sys_type == 'default'):
         for type in sys_type_list:
-            print(type)
             reservation = ec2_conn.run_instances(max_count=1,
-                                                 image_id=jconfig['system_types'][sys_type_list.index(type)][
+                                                 image_id=jconfig['sys_types'][sys_type_list.index(type)][
                                                      'image_id'],
-                                                 placement=jconfig['system_types'][sys_type_list.index(type)][
+                                                 placement=jconfig['sys_types'][sys_type_list.index(type)][
                                                      'placement'],
                                                  key_name=jconfig['key']['name'],
-                                                 instance_type=jconfig['system_types'][sys_type_list.index(type)][
+                                                 instance_type=jconfig['sys_types'][sys_type_list.index(type)][
                                                      'instance_type'],
-                                                 security_groups=jconfig['system_types'][sys_type_list.index(type)][
+                                                 security_groups=jconfig['sys_types'][sys_type_list.index(type)][
                                                      'security_groups'])
-            # 直到跑起来
-            while (reservation.instances[0].update() != "running"):
-                time.sleep(5)
-            ip_list.append(reservation.instances[0].private_ip_address)
-            break  # t/p
-        ip_list.extend(['0.0.0.0', '1.1.1.1', '2.2.2.2'])  # t/p
+            instance = reservation.instances[0]
+            add_tag(instance, 'Name', jconfig['sys_types'][sys_type_list.index(type)]['name'])
+            add_tag(instance, 'Type', jconfig['sys_types'][sys_type_list.index(type)]['type'])
+
+            while (instance.update() != "running"):
+                time.sleep(SLEEP_TIME)
+            ip_list.append(instance.private_ip_address)
     else:
-        logging.info('建立一个节点')
         reservation = ec2_conn.run_instances(max_count=num_instances,
-                                             image_id=jconfig['system_types'][sys_type_list.index(sys_type)][
+                                             image_id=jconfig['sys_types'][sys_type_list.index(sys_type)][
                                                  'image_id'],
-                                             placement=jconfig['system_types'][sys_type_list.index(sys_type)][
+                                             placement=jconfig['sys_types'][sys_type_list.index(sys_type)][
                                                  'placement'],
                                              key_name=jconfig['key']['name'],
-                                             instance_type=jconfig['system_types'][sys_type_list.index(sys_type)][
+                                             instance_type=jconfig['sys_types'][sys_type_list.index(sys_type)][
                                                  'instance_type'],
-                                             security_groups=jconfig['system_types'][sys_type_list.index(sys_type)][
+                                             security_groups=jconfig['sys_types'][sys_type_list.index(sys_type)][
                                                  'security_groups'])
-        """Get a list of running instances we've created"""
+
         ip_list = create_ip_list(reservation)
-        # ip_list = create_ip_list(reservation)
-    print('IP addresses of created instances: ' + ', '.join(ip_list))
+
+    logging.info('IP addresses of created instances: ' + ', '.join(ip_list))
+    logging.info('3. Finish instances setup')
