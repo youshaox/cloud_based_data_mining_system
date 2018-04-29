@@ -12,32 +12,10 @@ class TwitterStreamListener(StreamListener):
         """Store reference to couchdb."""
         self.db = db
 
-    # def clean_twitter(self, jtweet):
-    #     """
-    #     extract only part of the data
-    #     :param jtweet:
-    #     :return:
-    #     """
-    #     nid = str(jtweet["id"])
-    #     ntext = jtweet['text']
-    #     ncoordinates = jtweet['coordinates']
-    #     nuser = jtweet['user']
-    #     ntime = jtweet['created_at']
-    #     nplace = jtweet['place']
-    #     nentities = jtweet['entities']
-    #     nsource = jtweet['source']
-    #
-    #     jtweet = {'_id': nid, 'text': ntext, 'user': nuser,
-    #             'coordinates': ncoordinates, 'create_time': ntime,
-    #             'place': nplace, 'entities': nentities, 'source': nsource,
-    #             'addressed': False}
-    #     return jtweet
-
     def on_data(self, data):
         """Store tweet, if not already seen."""
         jtweet = json.loads(data)
         jtweet['_id'] = str(jtweet['id'])
-        # jtweet = self.clean_twitter(jtweet)
         try:
             self.db.save(jtweet)
         except couchdb.http.ResourceConflict:

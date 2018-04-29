@@ -81,17 +81,14 @@ class TwitterSearcher():
 
                 # Process received tweets.
                 for tweet in new_tweets:
-
                     jtweet = tweet._json
-
-                    # logging.info(jtweet)
-
-                    # store any tweets.
-                    jtweet['_id'] = str(jtweet['id'])
-                    try:
-                        self.db.save(jtweet)
-                    except couchdb.http.ResourceConflict:
-                        logging.info("Ignored duplicate tweet.")
+                    if tweet.coordinates or tweet.place:
+                        # store tweets with geo code.
+                        jtweet['_id'] = str(jtweet['id'])
+                        try:
+                            self.db.save(jtweet)
+                        except couchdb.http.ResourceConflict:
+                            logging.info("Ignored duplicate tweet.")
 
                 # Output current number of tweets.
                 tweet_count += len(new_tweets)
