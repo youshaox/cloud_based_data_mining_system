@@ -65,5 +65,5 @@
       "-12.46113"
    ],
    "Geocode": "-37.8142385,144.9622775,30km",
-   "DatabaseName":"tweets_source"
+   "DatabaseName":"raw_tweets"
 }
