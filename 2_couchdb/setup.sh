@@ -40,6 +40,9 @@ echo "[
     ]}
 ]." >> sys.config
 
+
+
+
 # todo 改couchdb1, ip
 # my ip: 115.146.85.248
 # remote ip: 115.146.85.226

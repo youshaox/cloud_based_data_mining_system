@@ -17,13 +17,13 @@
   ],
   "sys_types":[
     {
-      "name":"couchdb",
-      "type":"database",
+      "name":"webserver",
+      "type":"webserver",
       "instance_type":"m1.medium",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
-      "volume_size":"10",
-      "security_groups":["ssh","default"]
+      "volume_size":"20",
+      "security_groups":["ssh","default","http"]
     }
   ]
 }

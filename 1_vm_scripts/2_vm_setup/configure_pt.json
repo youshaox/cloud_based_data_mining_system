@@ -4,11 +4,11 @@
     "endpoint":"nova.rc.nectar.org.au"
   },
   "credentials":{
-    "access_key":"238656dab65d438390d91f689a08cb55",
-    "secret_key":"e5734f0116ab4104b1b24c3f8dd651b0"
+    "access_key":"b2dfda978f8f4fe7a52f5b489a59a06b",
+    "secret_key":"1dd070e9398f4d6b988a1b62d0237f24"
   },
   "key":{
-    "name":"group25"
+    "name":"group252"
   },
   "security_groups":[
     {"name":"ssh"},
