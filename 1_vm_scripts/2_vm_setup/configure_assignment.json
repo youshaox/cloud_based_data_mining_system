@@ -18,6 +18,7 @@
   "system_types":[
     {
       "name":"streamer",
+      "type":"crawler",
       "instance_type":"m1.medium",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
@@ -26,6 +27,7 @@
     },
     {
       "name":"searcher",
+      "type":"crawler",
       "instance_type":"m1.medium",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
@@ -34,6 +36,7 @@
     },
     {
       "name":"couchdb",
+      "type":"database",
       "instance_type":"m1.medium",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
