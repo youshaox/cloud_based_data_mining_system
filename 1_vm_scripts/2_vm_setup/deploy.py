@@ -149,6 +149,8 @@ if __name__ == "__main__":
             while (instance.update() != "running"):
                 time.sleep(SLEEP_TIME)
 
+            logging.info("Create the instance: " + str(jconfig['sys_types'][sys_type_list.index(type)]['name']) + " with instance id: "
+                         + str(instance.id))
             # attach the volumes:
             instance_id = instance.id
             volume_size = jconfig['sys_types'][sys_type_list.index(type)]['volume_size']
@@ -165,8 +167,9 @@ if __name__ == "__main__":
                                                  'instance_type'],
                                              security_groups=jconfig['sys_types'][sys_type_list.index(sys_type)][
                                                  'security_groups'])
-        # todo 是否补充volume？
+        instance = reservation.instances[0]
+        while (instance.update() != "running"):
+            time.sleep(SLEEP_TIME)
         ip_list = create_ip_list(reservation)
-
     logging.info('IP addresses of created instances: ' + ', '.join(ip_list))
     logging.info('3. Finish instances setup')
