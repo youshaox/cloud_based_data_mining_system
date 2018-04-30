@@ -168,6 +168,8 @@ if __name__ == "__main__":
                                              security_groups=jconfig['sys_types'][sys_type_list.index(sys_type)][
                                                  'security_groups'])
         instance = reservation.instances[0]
+        add_tag(instance, 'Name', jconfig['sys_types'][sys_type_list.index(sys_type)]['name'])
+        add_tag(instance, 'Type', jconfig['sys_types'][sys_type_list.index(sys_type)]['type'])
         while (instance.update() != "running"):
             time.sleep(SLEEP_TIME)
         ip_list = create_ip_list(reservation)

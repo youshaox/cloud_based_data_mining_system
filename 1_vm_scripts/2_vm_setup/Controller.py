@@ -30,7 +30,8 @@ ERROR = 2
 
 def check_arguments():
     if len(sys.argv) != NUM_ARGS:
-        logging.error('invalid number of arguments: <controller.py> <action> <value_type> <value> <target>')
+        logging.error('invalid number of arguments: <controller.py> <action> <value_type> <value> <target>' +
+                      "\nhelp: python controller.py help instance/volume/snapshot default default")
         sys.exit(ERROR)
     action = sys.argv[1]
     value_type = sys.argv[2]
@@ -73,30 +74,29 @@ class Controller():
             time.sleep(SLEEP_TIME)
         logging.info('Create an instance:' + instance_name)
 
-    def terminate_instance(self, instance_name):
-        id = self.jinstances_info[instance_name]['instance_id']
-        self.ec2_conn.terminate_instances(id)
-        logging.info('Terminate the instance ' + instance_name)
+    def terminate_instance(self, instance_id):
+        logging.info('Terminate the instance ' + instance_id)
+        return self.ec2_conn.terminate_instances(instance_id)
 
-    def get_instances_info(self):
-        reservations = self.ec2_conn.get_all_reservations()
-        for idx, res in enumerate(reservations):
+    def show_instances(self):
+        cur_reservations = self.ec2_conn.get_all_reservations()
+        for idx, res in enumerate(cur_reservations):
             instance = res.instances[0]
-
-            # 并不是所有的都有名字
-            try:
-                self.jinstances_info[instance.tags['Name']] = {"res_id": res.id, "instance_id":instance.id}
-            except KeyError:
-                continue
-        logging.info('3. Getting all info of the instances')
-        return self.jinstances_info
+            print({"instance_id": instance.id,
+                   "instance_state": instance.state,
+                   "instance_placement": instance.placement,
+                   "instance_tags": instance.tags
+                   })
 
     def show_volumes(self):
         curr_volumes = self.ec2_conn.get_all_volumes()
-        for v in curr_volumes:
-            print(v.id)
-            print(v.status)
-            print(v.zone)
+        for volume in curr_volumes:
+            print({"volume_id":volume.id,
+                   "volume_create_time":volume.create_time,
+                   "volume_size": volume.size,
+                   "volume_status":volume.status,
+                   "volume_zone":volume.zone})
+
 
     def createVolume(self, size):
         logging.info('Create a volume with size(G): ' + str(size))
@@ -107,7 +107,12 @@ class Controller():
 
     def deleteVolume(self, volume_id):
         volumes = self.ec2_conn.get_all_volumes()
-        if self.detachVolume(volume_id):
+
+        try:
+            detach = self.detachVolume(volume_id)
+        except boto.exception.EC2ResponseError:
+            detach = True
+        if detach:
             logging.info("Succussfully detach the volume" + volume_id)
             for volume in volumes:
                 if volume.id == volume_id:
@@ -129,11 +134,25 @@ class Controller():
     def createSnapshot(self, volume_id):
         suffix = datetime.datetime.now().strftime("%m%d%H%M")
         snapshot_name = volume_id + suffix
-        return self.ec2_conn.create_snapshot(volume_id, snapshot_name)
+        snapshot = self.ec2_conn.create_snapshot(volume_id, snapshot_name)
+        logging.info("Create the snapshot:" + str(snapshot.id) + " of the volume:" + str(volume_id))
+        return snapshot
 
     def deleteSnapshot(self, snapshot_id):
+        logging.info("Delete the snapshot:" + str(snapshot_id))
         return self.ec2_conn.delete_snapshot(snapshot_id)
 
+    def recoverSnapshot(self, snapshot_id, instance_id):
+        snapshot = self.ec2_conn.get_all_snapshots([snapshot_id])[0]
+        new_vol = snapshot.create_volume('melbourne-qh2')
+        while new_vol.status != "available":
+            time.sleep(SLEEP_TIME)
+            new_vol.update()
+
+        if self.attachVolume(new_vol.id, instance_id):
+            logging.info("Recover snapshot: " + str(snapshot_id) + " and attach the new volume " + str(new_vol.id) +" to instancde: " + str(instance_id))
+        else:
+            logging.error("Recover snapshot: fail in attach the new volume:" + str(new_vol.id))
 
 def run(controller, action, value_type, value, target):
     controller = controller
@@ -142,21 +161,33 @@ def run(controller, action, value_type, value, target):
             controller.create_instance(value)
         elif action == "terminate":
             controller.terminate_instance(value)
+        elif action == "get":
+            controller.show_instances()
         else:
-            logging.error("Unknown action: please select from \"create/terminate\"")
+            logging.error("\nUnknown action: please select from \"create/terminate/get\"\n" +
+                          "e.g:\n" +
+                          "python controller.py get instance info default\n"+
+                          "python controller.py create instance <nickname> default\n" +
+                          "python controller.py terminate instance <instance-id> default\n")
             sys.exit(ERROR)
     elif value_type == "volume":
-        if action == "attach":
+        if action == "create":
             volume = controller.createVolume(int(value))
             volume_id = volume.id
-            target_instance_id = controller.jinstances_info[target]['instance_id']
+            target_instance_id = target
             controller.attachVolume(volume_id, target_instance_id)
             logging.info("Attach " + str(volume_id) + " to " + str(target_instance_id))
         elif action == "delete":
             controller.deleteVolume(value)
             logging.info("Delete " + str(value))
+        elif action == "get":
+            controller.show_volumes()
         else:
-            logging.error("Unknown action: please select from \"attach/unattach/delete\"")
+            logging.error("\nUnknown action: please select from \"create/delete/get\"\n" +
+                          "e.g:\n" +
+                          "python controller.py get volume info default\n" +
+                          "python controller.py create volume <size> <instance-id>\n" +
+                          "python controller.py delete volume <vol-id> default\n")
             sys.exit(ERROR)
 
     elif value_type == "snapshot":
@@ -164,11 +195,18 @@ def run(controller, action, value_type, value, target):
             controller.createSnapshot(value)
         elif action == "delete":
             controller.deleteSnapshot(value)
+        elif action == "recover":
+            controller.recoverSnapshot(value, target)
         else:
             logging.error("Unknown action: please select from \"create/delete\"")
+            logging.error("\nUnknown action: please select from \"attach/delete/get\"\n" +
+                          "e.g:\n" +
+                          "python controller.py recover snapshot <snap-id> <instance-id>\n" +
+                          "python controller.py create snapshot <vol-id> default\n" +
+                          "python controller.py delete snapshot <snap-id> default\n")
             sys.exit(ERROR)
     else:
-        logging.error("Unknown value_type: please select \"instance/volume/snapshot\"")
+        logging.error("help:\npython controller.py help instance/volume/snapshot")
         sys.exit(ERROR)
 
 if __name__ == "__main__":
@@ -180,9 +218,7 @@ if __name__ == "__main__":
     # controller = Controller(aws_access_key_id='238656dab65d438390d91f689a08cb55',aws_secret_access_key='e5734f0116ab4104b1b24c3f8dd651b0')
     controller = Controller(aws_access_key_id='4fe68d160f60423bb0ff819f28f162f8',aws_secret_access_key='3e153f93268043b3b1717825921ff706')
     logging.info("2. Connection to Nectar sucess")
-    # 必须有
-    controller.get_instances_info()
 
-    logging.info("4. Take actions")
+    logging.info("3. Trigger the actions")
     run(controller, action, value_type, value, target)
     logging.info("Finish!")
