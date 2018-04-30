@@ -99,7 +99,7 @@ def check_arguments():
                 'invalid <sys_type>. Please choose one of the system types listed in config.json file.'
             )
             sys.exit(ERROR)
-        elif num_instances != 1:
+        elif num_instances != 2:
             logging.error(
                 'when <sys_type> is \'default\'. <number_of_instances> must be 2.'
             )
@@ -153,8 +153,11 @@ if __name__ == "__main__":
                          + str(instance.id))
             # attach the volumes:
             instance_id = instance.id
-            volume_size = jconfig['sys_types'][sys_type_list.index(type)]['volume_size']
-            attachVolume(ec2_conn, volume_size, instance_id)
+            try:
+                volume_size = jconfig['sys_types'][sys_type_list.index(type)]['volume_size']
+                attachVolume(ec2_conn, volume_size, instance_id)
+            except KeyError:
+                pass
             ip_list.append(instance.private_ip_address)
     else:
         reservation = ec2_conn.run_instances(max_count=num_instances,
