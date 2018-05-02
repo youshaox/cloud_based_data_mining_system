@@ -16,6 +16,8 @@ class TwitterStreamListener(StreamListener):
         """Store tweet, if not already seen."""
         jtweet = json.loads(data)
         jtweet['_id'] = str(jtweet['id'])
+        # 得使用id_str
+        # jtweet['_id'] = jtweet['id_str']
         try:
             self.db.save(jtweet)
         except couchdb.http.ResourceConflict:
