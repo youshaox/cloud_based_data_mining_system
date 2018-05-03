@@ -1,3 +1,4 @@
+# couchdb.yml
 ---
 - hosts: remote
   gather_facts: no
@@ -53,11 +54,11 @@
        mode: 0775
      with_items:
        - /data/workspace
-# git todo
-   - name: checkout from github
-     command: git clone https://youshaox:f7c1b12e440eefc32882bd423415c0b83a616d33@github.com/youshaox/cluster_and_cloud_2018.git
-     chdir: /data/workspace/
+## git todo
+#   - name: checkout from github
+#     command: git clone https://youshaox:f7c1b12e440eefc32882bd423415c0b83a616d33@github.com/youshaox/cluster_and_cloud_2018.git
+#     chdir: /data/workspace/
 # shell
    - name: install couchdb via shell
-     command:
-     chdir: /data/workspace
+     become: true
+     command: sh /data/workspace/cluster_and_cloud_2018/1_vm_scripts/4_ansible/test/couchdb-setup.sh
