@@ -17,15 +17,15 @@
   ],
   "sys_types":[
     {
-      "name":"couchdb-2",
-      "type":"crawler",
+      "name":"couchdb-1",
+      "type":"streamer",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
       "security_groups":["ssh","default"]
     },
     {
-      "name":"couchdb-1",
+      "name":"couchdb-2",
       "type":"database",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
