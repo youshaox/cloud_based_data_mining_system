@@ -1,0 +1,7 @@
+[remote]
+115.146.86.193
+115.146.85.13
+
+[all:vars]
+ansible_ssh_user=ubuntu
+ansible_ssh_private_key_file=./group25.pem

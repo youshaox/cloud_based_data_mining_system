@@ -1,0 +1,63 @@
+---
+- hosts: remote
+  gather_facts: no
+  remote_user: ubuntu
+  tasks:
+# 2 apt packages related
+# 2.0 update the apt-get
+   - name: apt-get update
+     become: true
+     apt:
+       update_cache: yes
+# 2.1 install the common packages
+   - name: install the packages using apt modules
+     become: true
+     apt: name={{item}} state=latest update_cache=yes
+     with_items:
+       - python3-pip
+       - git
+       - vim
+# 2.2 install the couchdb packages
+   - name: install the packages needed by couchdb
+     become: true
+     apt: name={{item}} state=latest update_cache=yes
+     with_items:
+       - build-essential
+       - pkg-config
+       - runit
+       - erlang
+       - libicu-dev
+       - libmozjs185-dev
+       - libcurl4-openssl-dev
+# 3 python packages related
+# 4 volume and directory related
+# 4.1 mkdir the volume directory we need
+   - name: setup the directory
+     become: true
+     file:
+       path: /data
+       state: directory
+       owner: ubuntu
+       group: ubuntu
+       mode: 0775
+# 4.2 mount the disk
+# todo 这样才能建立我们的/data
+# 4.3 mkdir the workspace
+   - name: mkdir the workspace
+     become: true
+     file:
+       path: "{{ item }}"
+       state: directory
+       owner: ubuntu
+       group: ubuntu
+       mode: 0775
+     with_items:
+       - /data/workspace
+# git todo
+   - name: checkout from github
+     command: git clone https://youshaox:f7c1b12e440eefc32882bd423415c0b83a616d33@github.com/youshaox/cluster_and_cloud_2018.git
+     chdir: /data/workspace/
+# shell
+   - name: install couchdb via shell
+     command:
+     chdir: /data/workspace
