@@ -44,7 +44,7 @@
      with_items:
       - /data/workspace
       - /data/log
-      - /data/log/couchdb
+      - /data/log/streamer
 ## 1.3 git
    - name: checkout from github
      command: git clone https://youshaox:f7c1b12e440eefc32882bd423415c0b83a616d33@github.com/youshaox/cluster_and_cloud_2018.git
@@ -61,34 +61,18 @@
        - Shapely
        - Point
        - pandas
-   - name: textblob.download_corpora
-     become: true
-     command: python3 -m textblob.download_corpora
+#   - name: textblob.download_corpora
+#     become: true
+#     command: python3 -m textblob.download_corpora
 
-# 2 specific: couchdb
-## 2.1 apt-get install couchdb related packages
-   - name: install the packages needed by couchdb
-     become: true
-     apt: name={{item}} state=latest update_cache=yes
+# 2 specific: crawler-streamer
+## 2.1 install the streamer related packages
+   - name: run the streamer
+     command: pip3 install {{item}}
      with_items:
-       - build-essential
-       - pkg-config
-       - runit
-       - erlang
-       - libicu-dev
-       - libmozjs185-dev
-       - libcurl4-openssl-dev
-## 2.2 run the shell script
-   - name: install couchdb via shell
-     become: true
-     command: sh /data/workspace/cluster_and_cloud_2018/1_vm_scripts/4_ansible/test/couchdb-setup.sh
-# 2.3 customised configure
-   - name: sed the vm.args
-     become: true
-     command: sed -i "s/-name couchdb@127.0.0.1/-name {{ couchdb1_name }}@{{ couchdb1_ip}}/g" /data/workspace/apache-couchdb-2.1.1/rel/couchdb/etc/vm.args
-
+       - tweepy
 # 3. run
-   - name: run the couchdb
-     command: nohup sh /data/workspace/apache-couchdb-2.1.1/rel/couchdb/bin/couchdb 2>&1 &
+   - name: run the streamer
+     shell: nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json stream 0 &
      args:
-       chdir: /data/log/couchdb
+       chdir: /data/log/streamer

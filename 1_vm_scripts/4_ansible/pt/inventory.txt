@@ -1,11 +1,11 @@
 [couchdb1]
-115.146.86.193 couchdb_name=couchdb1 couchdb_ip=115.146.86.193
+115.146.84.252 couchdb_name=couchdb1 couchdb_ip=115.146.86.193
 
 [couchdb2]
 115.146.85.13 couchdb_name=couchdb2 couchdb_ip=115.146.85.13
 
 [streamer]
-115.146.86.193
+115.146.84.252
 
 [searcher]
 115.146.85.13
@@ -13,3 +13,4 @@
 [all:vars]
 ansible_ssh_user=ubuntu
 ansible_ssh_private_key_file=./group25.pem
+ansible_ssh_extra_args='-o StrictHostKeyChecking=no'

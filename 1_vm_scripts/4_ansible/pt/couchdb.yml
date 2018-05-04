@@ -1,12 +1,12 @@
 # couchdb.yml
 # 需要替换couchdb1
 ---
-- hosts: couchdb1
+- hosts: couchdb2
   gather_facts: no
   remote_user: ubuntu
   vars:
-    couchdb_name: "{{ hostvars[groups['couchdb'][0]].couchdb_name }}"
-    couchdb_ip: "{{ hostvars[groups['couchdb'][0]].couchdb_ip }}"
+    couchdb_name: "{{ hostvars[groups['couchdb2'][0]].couchdb_name }}"
+    couchdb_ip: "{{ hostvars[groups['couchdb2'][0]].couchdb_ip }}"
   tasks:
 # 1. common
 # 1.1 apt packages related
@@ -64,9 +64,9 @@
        - Shapely
        - Point
        - pandas
-   - name: textblob.download_corpora
-     become: true
-     command: python3 -m textblob.download_corpora
+#   - name: textblob.download_corpora
+#     become: true
+#     command: python3 -m textblob.download_corpora
 
 # 2 specific: couchdb
 ## 2.1 apt-get install couchdb related packages
@@ -88,7 +88,7 @@
 # 2.3 customised configure
    - name: sed the vm.args
      become: true
-     command: sed -i "s/-name couchdb@127.0.0.1/-name {{ couchdb1_name }}@{{ couchdb1_ip}}/g" /data/workspace/apache-couchdb-2.1.1/rel/couchdb/etc/vm.args
+     command: sed -i "s/-name couchdb@127.0.0.1/-name {{ couchdb_name }}@{{ couchdb_ip}}/g" /data/workspace/apache-couchdb-2.1.1/rel/couchdb/etc/vm.args
 
 # 3. run
    - name: run the couchdb

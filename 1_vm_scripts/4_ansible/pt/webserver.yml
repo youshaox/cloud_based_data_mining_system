@@ -1,6 +1,8 @@
-# searcher.yml
+# todo finish the webserver
+# webserver.yml
+# 需要替换couchdb1
 ---
-- hosts: searcher
+- hosts: webserver
   gather_facts: no
   remote_user: ubuntu
   tasks:
@@ -30,12 +32,6 @@
        group: ubuntu
        mode: 0755
 # 1.2.2 mount the volume on the directory
-## todo 是否开机重启
-#   - name: mount the volume at /data
-#     become: true
-#     shell: |
-#       sudo mkfs.ext4 /dev/vdc
-#       mount /dev/vdc /data
 # 1.2.3 mkdir the workspace
    - name: mkdir the /data/workspace
      become: true
@@ -48,35 +44,37 @@
      with_items:
       - /data/workspace
       - /data/log
-      - /data/log/searcher
+      - /data/log/node
 ## 1.3 git
    - name: checkout from github
      command: git clone https://youshaox:f7c1b12e440eefc32882bd423415c0b83a616d33@github.com/youshaox/cluster_and_cloud_2018.git
      args:
        chdir: /data/workspace
        creates: /data/workspace/cluster_and_cloud_2018
-## 1.4 sentimental analysis
-   - name: sentimental anlysis related
-     command: pip3 install {{item}}
+# 2 specific: crawler-streamer
+## 2.1 install the node.js related packages
+## 2.2 install the node.js
+   - name: install the node.js related packasged
+     become: true
+     apt: name={{item}} state=latest update_cache=yes
      with_items:
-       - couchdb
-       - cloudant
-       - textblob
-       - Shapely
-       - Point
-       - pandas
-#   - name: textblob.download_corpora
-#     become: true
-#     command: python3 -m textblob.download_corpora
+       - npm
+   - name: install the pm2
+     become: true
+     command: npm install pm2 -g
 
-# 2 specific: crawler-searcher
-## 2.1 install the searcher related packages
-   - name: install the searcher-related packages
-     command: pip3 install {{item}}
-     with_items:
-       - tweepy
-# 3. run
-   - name: run the searcher
-     shell: nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json search 1 &
-     args:
-       chdir: /data/log/searcher
+   - name: install the node.js
+     ignore_errors: True
+     shell: |
+       cd /data/workspace
+       wget https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.xz
+       mkdir node
+       tar xvf node-v*.tar.?z --strip-components=1 -C ./node
+       cd /data/workspace
+       sudo rm -rf node-v*
+       mkdir node/etc
+       echo 'prefix=/usr/local' > /data/workspace/node/etc/npmrc
+       sudo  mv node /opt/
+       sudo chown -R root: /opt/node
+       sudo ln -s /opt/node/bin/node /usr/local/bin/node
+       sudo ln -s /opt/node/bin/npm /usr/local/bin/npm
