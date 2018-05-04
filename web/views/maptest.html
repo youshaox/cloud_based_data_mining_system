@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+<head>  
+</head>
+<body>
+<div id="googleMap" style="width:96%;height:600px;margin-left:20px;margin-right:50px"></div>
+
+<script>
+    var raw = <%- JSON.stringify(all_data) %>
+    var all_data = JSON.parse(raw);
+    function initMap() {
+    var mapProp= {
+              center: {lat: -37.8141, lng: 144.9633},
+              zoom: 11,
+              // mapTypeId: google.maps.MapTypeId.SATELLITE
+    };
+    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    map.data.addGeoJson(vicIncome);
+ map.data.setStyle(function(feature){
+    var income = feature.getProperty('income');
+    var color = income > 1600 ? '#800026' :
+                income > 1400 ? '#BD0026' :
+                income > 1200 ? '#E31A1C' :
+                income > 1000 ? '#FC4E2A' :
+                income > 800  ? '#FD8D3C' :
+                income > 600  ? '#FEB24C' :
+                                '#FFEDA0';
+    return {
+        fillColor:color,
+        strokeWeight:1
+    };
+ });
+    map.data.addListener('mouseover', function(event) {
+        map.data.revertStyle();
+        map.data.overrideStyle(event.feature, {strokeWeight: 4});
+    });
+    map.data.addListener('mouseout', function(event) {
+        map.data.revertStyle();
+    });
+    var infoWindow;
+    infoWindow = new google.maps.InfoWindow;
+    map.data.addListener('click', function (event) {
+        if(event.feature.getProperty('isColorful')) 
+        {
+            event.feature.setProperty('isColorful', false);
+        }
+        else
+        {
+            event.feature.setProperty('isColorful', true);  
+        }
+        var suburb = event.feature.getProperty('vic_lga__3');
+        var suburb_income;
+        var suburb_index;
+        var suburb_education;
+        var suburb_ios;
+        for (var ele in all_data) {
+           
+                if (all_data[ele]['name'].toUpperCase() == suburb.toUpperCase()) {
+                  
+                   suburb_income = all_data[ele]['income'];
+                   suburb_index = all_data[ele]['index'];
+                   suburb_education = all_data[ele]['education'];
+                   suburb_ios = all_data[ele]['IOS'];
+                }
+            }
+        var content = "<p class='map-popup-content' >" + suburb +
+                      "</br> Income: " + suburb_index +
+                      "</br> Twitter Index: " + suburb_index +
+                      "</br> Edu > 9yr: " + suburb_education +
+                      "</br> IOS percent: " + suburb_ios;
+        infoWindow.setContent(content+"</p>")
+        infoWindow.setPosition(event.latLng);
+        infoWindow.open(map);
+    });
+    }
+</script>
+
+
+
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4J8k1UAm7GRy3rAB-p9qrfOHlHK2hwno&callback=initMap">
+    </script>
+<script src="./testagain.js"></script>
+</body>
+</html>

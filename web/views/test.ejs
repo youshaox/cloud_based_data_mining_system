@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!-- <html> -->
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/cover.css">
+    <link rel="stylesheet" href="/stylesheets/sce.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+    <script src="/javascripts/canvasjs.min.js"></script>
+
+
+ <style>
+  /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+  .map-popup-content {
+    color: rgb(0,0,0);
+  }
+  /* Optional: Makes the sample page fill the window. */
+</style>
+
+  </head>
+
+
+  <nav>
+  <h3 class="masthead-brand">Australia City Analytics</h3>
+
+    <ul class="nav masthead-nav">
+      <li><a href="/Scenarios">Scenarios</a></li>
+      <li><a href="/MapDemo">Map</a></li>
+    </ul>
+  </nav>
+
+<div class="container-fluid">
+
+
+  <div class="row content">
+    
+    
+
+    <div class="col-sm-9">
+      <h2>Melbourn residents' Self-Assessed Health Condition Anaysis</h2>
+      <hr/>
+      <h3>Aurin Data</h3>
+
+      <div style="width:800px; height:450px;">
+      <canvas id="chart1"></canvas>
+        </div>
+      <hr/>
+      <h3> Tweets Data Analysis</h3>
+          <div id="chartContainer" style="width:800px; height:450px;">
+        
+        </div>
+        <div style="width:800px; height:450px;">
+        <canvas id="chart3"></canvas>
+        </div>
+
+     
+    </div>
+  </div>
+</div>
+<script>
+window.onload = function() {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+    theme: "light2", // "light1", "light2", "dark1", "dark2"
+    exportEnabled: true,
+    animationEnabled: true,
+    title: {
+        text: "Desktop Browser Market Share in 2016"
+    },
+    data: [{
+        type: "pie",
+        startAngle: 25,
+        toolTipContent: "<b>{label}</b>: {y}%",
+        showInLegend: "true",
+        legendText: "{label}",
+        indexLabelFontSize: 16,
+        indexLabel: "{label} - {y}%",
+        dataPoints: [
+            { y: <%=per1%>, label: "Chrome" },
+            { y: <%=per2%>, label: "Internet Explorer" },
+            { y: <%=per3%>, label: "Firefox" },
+            { y: <%=per4%>, label: "Microsoft Edge" },
+            { y: <%=per5%>, label: "Safari" },
+            { y: <%=per6%>, label: "Opera" },
+            { y: <%=per7%>, label: "Others" }
+        ]
+    }]
+});
+chart.render();
+
+}
+</script>
