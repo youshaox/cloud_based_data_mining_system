@@ -4,6 +4,8 @@
 - hosts: streamer
   gather_facts: no
   remote_user: ubuntu
+  vars:
+    streamer_auth: "{{ hostvars[groups['streamer'][0]].auth }}"
   tasks:
 # 1. common
 # 1.1 apt packages related
@@ -73,6 +75,6 @@
        - tweepy
 # 3. run
    - name: run the streamer
-     shell: nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json stream 0 &
+     shell: nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json stream {{ streamer_auth }} &
      args:
        chdir: /data/log/streamer

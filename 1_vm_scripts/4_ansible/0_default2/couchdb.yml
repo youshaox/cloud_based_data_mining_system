@@ -80,7 +80,6 @@
        - libcurl4-openssl-dev
 ## 2.2 run the shell script
    - name: install couchdb via shell
-     become: true
      shell: |
        cd /data/workspace
        wget http://apache.mirror.amaze.com.au/couchdb/source/2.1.1/apache-couchdb-2.1.1.tar.gz
@@ -92,13 +91,14 @@
        sed -i "s/;admin = mysecretpassword/admin = admin/g" local.ini
        sed -i 's/127.0.0.1/0.0.0.0/g' default.ini
        cd /data/workspace/apache-couchdb-2.1.1/rel/couchdb/releases/2.1.1;rm -rf sys.config
-       cp /data/workspace/cluster_and_cloud_2018/1_vm_scripts/4_ansible/0_default2/couchdb.yml ./
+       cp /data/workspace/cluster_and_cloud_2018/1_vm_scripts/4_ansible/0_default2/sys.config ./
+       chown ubuntu:ubuntu sys.config
 # 2.3 customised configure
    - name: sed the vm.args
      become: true
      command: sed -i "s/-name couchdb@127.0.0.1/-name {{ couchdb_name }}@{{ couchdb_ip}}/g" /data/workspace/apache-couchdb-2.1.1/rel/couchdb/etc/vm.args
 # 3. run
    - name: run the couchdb
-     command: nohup sh /data/workspace/apache-couchdb-2.1.1/rel/couchdb/bin/couchdb 2>&1 &
-     args:
-       chdir: /data/log/couchdb
+     shell: |
+       cd /data/log/couchdb
+       nohup sh /data/workspace/apache-couchdb-2.1.1/rel/couchdb/bin/couchdb 2>&1 &

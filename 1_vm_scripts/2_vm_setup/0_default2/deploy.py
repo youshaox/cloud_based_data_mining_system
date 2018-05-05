@@ -23,6 +23,8 @@ PATH = "/services/Cloud"
 INVENTORY_FILE_PATH = "inventory"
 SLEEP_TIME = 5
 
+def generate_inventory():
+    inventory_file = open(INVENTORY_FILE_PATH, 'w+')
 
 def createVolume(ec2_conn, size):
     logging.info('Create a volume with size(G): ' + str(size))
@@ -181,6 +183,12 @@ if __name__ == "__main__":
     logging.info('4. Generate inventory')
     generate_inventory()
 
+
+    # 115.146
+    # .86
+    # .204, 115.146
+    # .86
+    # .207
     # todo 1. create inventory
     # todo 2. orchestrate
     # 2018 - 05 - 05

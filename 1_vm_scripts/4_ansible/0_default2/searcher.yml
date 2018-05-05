@@ -1,8 +1,11 @@
 # searcher.yml
+# 定下授权序号
 ---
 - hosts: searcher
   gather_facts: no
   remote_user: ubuntu
+  vars:
+    searcher_auth: "{{ hostvars[groups['searcher'][0]].auth }}"
   tasks:
 # 1. common
 # 1.1 apt packages related
@@ -18,7 +21,6 @@
      with_items:
        - python3-pip
        - git
-       - vim
 # 1.2 directory related
 # 1.2.1 mkdir the directory
    - name: mkdir the mount point
@@ -78,6 +80,6 @@
        - tweepy
 # 3. run
    - name: run the searcher
-     shell: nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json search 1 &
+     shell: nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json search {{ searcher_auth }} &
      args:
        chdir: /data/log/searcher
