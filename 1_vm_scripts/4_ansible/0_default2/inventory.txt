@@ -8,7 +8,7 @@
 115.146.86.155 auth=1
 
 [webserver]
-115.146.86.192
+115.146.84.168
 
 [all:vars]
 ansible_ssh_user=ubuntu
