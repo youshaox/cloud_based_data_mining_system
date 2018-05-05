@@ -113,7 +113,7 @@ router.get('/', function(req, res, next) {
         			}
         		}
         	}
-        	res.render('home', {
+        	res.render('index', {
         		nsh:nsh,nsa:nsa,nsb:nsb,nsc:nsc,nss:nss,nsi:nsi,nsd:nsd,
         		quh:quh,qua:qua,qub:qub,quc:quc,qus:qus,qui:qui,qud:qud,
         		sah:sah,saa:saa,sab:sab,sac:sac,sas:sas,sai:sai,sad:sad,

@@ -590,13 +590,13 @@
     map.data.addGeoJson(vicIncome);
  map.data.setStyle(function(feature){
     var income = feature.getProperty('income');
-    var color = income > 1600 ? '#800026' :
-                income > 1400 ? '#BD0026' :
-                income > 1200 ? '#E31A1C' :
-                income > 1000 ? '#FC4E2A' :
-                income > 800  ? '#FD8D3C' :
-                income > 600  ? '#FEB24C' :
-                                '#FFEDA0';
+    var color = income > 1600 ? '#8B0000' :
+                income > 1400 ? '#FF0000' :
+                income > 1200 ? '#FF6347' :
+                income > 1000 ? '#CD5C5C' :
+                income > 800  ? '#BC8F8F' :
+                income > 600  ? '#F08080' :
+                                '#FFFAFA';
     return {
         fillColor:color,
         strokeWeight:1
