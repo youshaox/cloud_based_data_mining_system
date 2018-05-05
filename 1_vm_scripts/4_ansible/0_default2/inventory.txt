@@ -1,0 +1,16 @@
+[couchdb]
+115.146.86.135 couchdb_name=couchdb1 couchdb_ip=115.146.86.135
+
+[streamer]
+115.146.86.135
+
+[searcher]
+115.146.86.135
+
+[webserver]
+115.146.86.204
+
+[all:vars]
+ansible_ssh_user=ubuntu
+ansible_ssh_private_key_file=./group25.pem
+ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
