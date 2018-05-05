@@ -88,6 +88,18 @@ class Controller():
                    "instance_tags": instance.tags
                    })
 
+    def get_instances(self):
+        instance_list = list()
+        cur_reservations = self.ec2_conn.get_all_reservations()
+        for idx, res in enumerate(cur_reservations):
+            instance = res.instances[0]
+            instance_list.append({"instance_id": instance.id,
+                   "instance_state": instance.state,
+                   "instance_placement": instance.placement,
+                   "instance_tags": instance.tags
+                   })
+        return instance_list
+
     def show_volumes(self):
         curr_volumes = self.ec2_conn.get_all_volumes()
         for volume in curr_volumes:

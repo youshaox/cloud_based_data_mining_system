@@ -13,8 +13,9 @@ import json
 import boto
 import os
 import time
+import datetime
 from boto.ec2.regioninfo import RegionInfo
-
+import controller
 
 NUM_ARGS = 4
 ERROR = 2
@@ -23,8 +24,60 @@ PATH = "/services/Cloud"
 INVENTORY_FILE_PATH = "inventory"
 SLEEP_TIME = 5
 
-def generate_inventory():
-    inventory_file = open(INVENTORY_FILE_PATH, 'w+')
+def count_couchdb(controller):
+    """
+    return the number of couchdb in the reservations
+    :param controller:
+    :return:
+    """
+    count = 0
+    instance_list = controller.get_instances()
+    for jinstance in instance_list:
+        if jinstance['instance_tags']['Type'] == 'couchdb':
+            count += 1
+    return count
+
+def get_crendential():
+    return """\n[all:vars]\n
+    ansible_ssh_user = ubuntu\n
+    ansible_ssh_private_key_file =./ group25.pem\n
+    ansible_ssh_extra_args = '-o StrictHostKeyChecking=no'"""
+
+def generate_inventory(controller, sys_type, num_instances, instance_list):
+    # reuse
+    suffix = datetime.datetime.now().strftime("%m%d%H%M")
+    inventory_filename = INVENTORY_FILE_PATH+suffix
+    inventory_file = open(inventory_filename, 'w+')
+    if sys_type == "default":
+        pass
+    else:
+        if sys_type == "webserver":
+            inventory_file.write('[webserver]\n')
+            for indx in range(len(instance_list)):
+                inventory_file.write(instance_list[indx][indx]['ip'] +'\n')
+                inventory_file.write(get_crendential())
+        elif sys_type == "searcher":
+            inventory_file.write('[searcher]\n')
+            for indx in range(len(instance_list)):
+                inventory_file.write(instance_list[indx][indx]['ip'] +'\n')
+                inventory_file.write(get_crendential())
+        elif sys_type == "streamer":
+            inventory_file.write('[streamer]\n')
+            for indx in range(len(instance_list)):
+                inventory_file.write(instance_list[indx][indx]['ip'] +'\n')
+                inventory_file.write(get_crendential())
+        elif sys_type == "couchdb":
+            inventory_file.write('[couchdb]\n')
+            couchdb_suffix = count_couchdb(controller) + 1
+            for indx in range(len(instance_list)):
+                inventory_file.write(instance_list[indx][indx]['ip'] +
+                                     " " +
+                                     "couchdb_name=couchdb" + str(couchdb_suffix) +
+                                     " " +
+                                     "couchdb_ip=" + instance_list[indx][indx]['ip'] +
+                                     '\n')
+                inventory_file.write(get_crendential())
+    return inventory_filename
 
 def createVolume(ec2_conn, size):
     logging.info('Create a volume with size(G): ' + str(size))
@@ -92,7 +145,7 @@ def check_arguments():
 
     # instance name list
     for jsys_type in jconfig['sys_types']:
-        sys_type_list.append(jsys_type['name'])
+        sys_type_list.append(jsys_type['type'])
 
     if sys_type not in sys_type_list:
         if sys_type != "default":
@@ -111,17 +164,15 @@ def check_arguments():
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s-[line:%(lineno)d]-%(levelname)s: %(message)s')
-
-    """1. 读取配置文件中所有的配置信息"""
+    #
+    # """1. 读取配置文件中所有的配置信息"""
     jconfig, sys_type_list = check_arguments()
-    # print(sys_type_list)
-    # ['streamer-1', 'couchdb-1']
     sys_type = sys.argv[2]
     num_instances = int(sys.argv[3])
-
+    #
     region = RegionInfo(name=jconfig['region']['name'], endpoint=jconfig['region']['endpoint'])
     logging.info('1. Finish parsing the ' + sys.argv[1])
-
+    #
     logging.info('2.1 Connecting to Nectar')
     ec2_conn = boto.connect_ec2(aws_access_key_id=jconfig['credentials']['access_key'],
                                 aws_secret_access_key=jconfig['credentials']['secret_key'],
@@ -130,9 +181,14 @@ if __name__ == "__main__":
 
     logging.info("2.2 Creating instances")
 
+    num = 1
+    instance_list = list()
+
     # by default, we creating the instances shown in the configure.json
     if (sys_type == 'default'):
+
         for type in sys_type_list:
+            jinfo = {}
             reservation = ec2_conn.run_instances(max_count=1,
                                                  image_id=jconfig['sys_types'][sys_type_list.index(type)][
                                                      'image_id'],
@@ -160,6 +216,14 @@ if __name__ == "__main__":
             except KeyError:
                 pass
             ip_list.append(instance.private_ip_address)
+
+            ec2_conn.get_all_instances()
+
+            # jinfo = {num:{'name':jconfig['sys_types'][sys_type_list.index(type)]['name'],
+            #          'sys_type':jconfig['sys_types'][sys_type_list.index(type)]['type'],
+            #               'ip':}}
+            # instance_list.append(jinfo)
+
     else:
         reservation = ec2_conn.run_instances(max_count=num_instances,
                                              image_id=jconfig['sys_types'][sys_type_list.index(sys_type)][
@@ -171,34 +235,45 @@ if __name__ == "__main__":
                                                  'instance_type'],
                                              security_groups=jconfig['sys_types'][sys_type_list.index(sys_type)][
                                                  'security_groups'])
-        instance = reservation.instances[0]
-        add_tag(instance, 'Name', jconfig['sys_types'][sys_type_list.index(sys_type)]['name'])
-        add_tag(instance, 'Type', jconfig['sys_types'][sys_type_list.index(sys_type)]['type'])
-        while (instance.update() != "running"):
-            time.sleep(SLEEP_TIME)
-        ip_list = create_ip_list(reservation)
+
+        for instance in reservation.instances:
+            while (instance.update() != "running"):
+                time.sleep(SLEEP_TIME)
+        for num in range(num_instances):
+            jinfo = {}
+            instance = reservation.instances[num]
+            add_tag(instance, 'Name', jconfig['sys_types'][sys_type_list.index(sys_type)]['name'])
+            add_tag(instance, 'Type', jconfig['sys_types'][sys_type_list.index(sys_type)]['type'])
+            jinfo[num] = {"instance-id": instance.id,
+                                "name": jconfig['sys_types'][sys_type_list.index(sys_type)]['name'],
+                                'type': jconfig['sys_types'][sys_type_list.index(sys_type)]['type'],
+                                'ip': instance.private_ip_address}
+            instance_list.append(jinfo)
+
     logging.info('IP addresses of created instances: ' + ', '.join(ip_list))
     logging.info('3. Finish instances setup')
+
+    logging.info("The info of the instances created:")
+    for instance in instance_list:
+        logging.info(instance)
+
+    controller = controller.Controller(aws_access_key_id=jconfig['credentials']['access_key'], aws_secret_access_key=jconfig['credentials']['secret_key'])
     # todo 新的
     logging.info('4. Generate inventory')
-    # generate_inventory()
-    # 115.146
-    # .86
-    # .204, 115.146
-    # .86
-    # .207
-    # todo 1. create inventory
-    # todo 2. orchestrate
-    # 2018 - 05 - 05
-    # 0
-    # 9:41:17, 932 - [line:152]-INFO: Create
-    # the
-    # instance: couchdb - 1
-    # with instance id: i - 9
-    # d61a6b6
-    # 2018 - 05 - 05
-    # 0
-    # 9:41:47, 846 - [line:152]-INFO: Create
-    # the
-    # instance: webserver - 1
-    # with instance id: i - c2a7a997
+    # instance_list_fake =[{0: {'instance-id': 'i-bf902ce6', 'name': 'webserver', 'type': 'couchdb', 'ip': '115.146.85.207'}},
+    #                 {1: {'instance-id': 'i-c9dbb437', 'name': 'webserver', 'type': 'couchdb', 'ip': '115.146.85.13'}}]
+    generate_inventory(controller, sys_type, num_instances, instance_list)
+
+    count_couchdb(controller)
+
+# Shawn
+# "access_key":"238656dab65d438390d91f689a08cb55",
+# "secret_key":"e5734f0116ab4104b1b24c3f8dd651b0"
+
+# miaomiao
+# d39e2b6c96124c3cbd44749c7aa730b5
+# 512ad49874cf4d8eba84ec7c526cb3a5
+
+# mia
+# 04908217f41748f28077b2c0f6bffa32
+# 4c29e65c91fe4f7c8323e554df848eef

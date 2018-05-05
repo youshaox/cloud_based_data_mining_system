@@ -13,11 +13,11 @@
   "security_groups":[
     {"name":"ssh"},
     {"name":"default"},
-    {"name":"http"}
+    {"name":"node"}
   ],
   "sys_types":[
     {
-      "name":"couchdb-1",
+      "name":"webserver-1",
       "type":"couchdb",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
@@ -25,8 +25,8 @@
       "security_groups":["ssh","default"]
     },
     {
-      "name":"webserver-1",
-      "type":"webserver",
+      "name":"webserver",
+      "type":"couchdb",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",

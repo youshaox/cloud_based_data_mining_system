@@ -13,8 +13,8 @@ import couchdb
 import logging
 import sys
 
-PROCESSED_DB_NAME = "processed_data_emoji"
-RESULT_DB_NAME = "result_data_emoji"
+PROCESSED_DB_NAME = "processed_data2"
+RESULT_DB_NAME = "result_data_emoji2"
 
 
 def get_result(area_result):
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     vic_result = dict.fromkeys(ndata.VIC_DISTRICT_NAME)
     mel_result = dict.fromkeys(ndata.MEL_DISTRICT_NAME)
 
-    couch = couchdb.Server('http://admin:adminhttp://115.146.86.21:5984/')
+    couch = couchdb.Server('http://admin:admin@115.146.86.21:5984/')
     try:
         db_pro = couch[PROCESSED_DB_NAME]
     except Exception:

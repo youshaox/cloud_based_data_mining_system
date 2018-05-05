@@ -25,10 +25,9 @@ import logging
 
 start = time.clock()
 
-PROCESSED_DB_NAME = "processed_data"
+PROCESSED_DB_NAME = "processed_data2"
 DB_RAW_ADDRESS = 'http://admin:admin@115.146.86.21:5984/'
 DB_RAW_NAME = 'raw_tweets'
-NEW_TWITTER_FILE_NAME = "processed_twitter_data.json"
 
 STATE_GEO_FILE_NAME = "geojson/australia_state.geojson"
 MEL_DIST_GEO_FILE_NAME = "geojson/melbourne_geo.json"

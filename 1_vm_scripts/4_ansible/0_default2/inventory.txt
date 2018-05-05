@@ -1,8 +1,10 @@
 [couchdb]
 115.146.86.155 couchdb_name=couchdb1 couchdb_ip=115.146.86.155
+115.146.86.155 couchdb_name=couchdb2 couchdb_ip=115.146.86.155
+115.146.86.155 couchdb_name=couchdb3 couchdb_ip=115.146.86.155
 
 [streamer]
-115.146.86.155
+115.146.86.155 auth=0
 
 [searcher]
 115.146.86.155 auth=1

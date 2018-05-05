@@ -4,8 +4,8 @@
   gather_facts: no
   remote_user: ubuntu
   vars:
-    couchdb_name: "{{ hostvars[groups['couchdb'][0]].couchdb_name }}"
-    couchdb_ip: "{{ hostvars[groups['couchdb'][0]].couchdb_ip }}"
+    couchdb_name: "{{ hostvars[groups['couchdb1'][0]].couchdb_name }}"
+    couchdb_ip: "{{ hostvars[groups['couchdb1'][0]].couchdb_ip }}"
   tasks:
 # 1. common
 # 1.1 apt packages related
