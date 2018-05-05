@@ -181,9 +181,7 @@ if __name__ == "__main__":
     logging.info('3. Finish instances setup')
     # todo 新的
     logging.info('4. Generate inventory')
-    generate_inventory()
-
-
+    # generate_inventory()
     # 115.146
     # .86
     # .204, 115.146
