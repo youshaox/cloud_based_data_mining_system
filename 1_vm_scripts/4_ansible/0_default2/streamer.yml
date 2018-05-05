@@ -75,6 +75,8 @@
        - tweepy
 # 3. run
    - name: run the streamer
-     shell: nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json stream {{ streamer_auth }} &
+     ignore_errors: True
+     shell: |
+       nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json stream {{ streamer_auth }} &
      args:
        chdir: /data/log/streamer

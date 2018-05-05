@@ -99,6 +99,7 @@
      command: sed -i "s/-name couchdb@127.0.0.1/-name {{ couchdb_name }}@{{ couchdb_ip}}/g" /data/workspace/apache-couchdb-2.1.1/rel/couchdb/etc/vm.args
 # 3. run
    - name: run the couchdb
+     ignore_errors: True
      shell: |
        cd /data/log/couchdb
        nohup sh /data/workspace/apache-couchdb-2.1.1/rel/couchdb/bin/couchdb 2>&1 &

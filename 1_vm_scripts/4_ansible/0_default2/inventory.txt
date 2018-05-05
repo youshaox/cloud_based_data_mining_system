@@ -1,11 +1,11 @@
 [couchdb]
-115.146.86.204 couchdb_name=couchdb1 couchdb_ip=115.146.86.204
+115.146.86.207 couchdb_name=couchdb1 couchdb_ip=115.146.86.207
 
 [streamer]
-115.146.86.204 auth=0
+115.146.86.207 auth=0
 
 [searcher]
-115.146.86.204 auth=1
+115.146.86.207 auth=1
 
 [webserver]
 115.146.86.207
