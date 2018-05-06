@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var rp = require('request-promise');
+var eu = require('emoji-unicode');
 
 /* GET home page. */
 
@@ -13,11 +14,13 @@ router.get('/', function(req, res, next) {
 	var nsc, quc, sac, vic, wac, tac, ntc, ctc; // edu >12
 	var nsi, qui, sai, vii, wai, tai, nti, cti; // ios system
 	var nsd, qud, sad, vid, wad, tad, ntd, ctd; // android system
+	var nsn, qun, san, vin, wan, tan, ntn, ctn; // twitter amounts
+	var nse, que, sae, vie, wae, tae, nte, cte; // emoji
 
 	var all_data = [];
 
 	var aurin_url = 'http://115.146.86.138:5984/aurin/_design/au/_view/view';
-	var twitter_url = 'http://115.146.86.138:5984/processed_data/_design/pro/_view/view';
+	var twitter_url = 'http://115.146.86.21:5984/result_data_emoji2/_design/try/_view/view';
 
 	rp(aurin_url)
 	    .then(function(response) {
@@ -77,51 +80,74 @@ router.get('/', function(req, res, next) {
         .then(function(response) {
         	var obj = JSON.parse(response);
         	var listObj = obj['rows'];
-        	var contentObj = listObj[2]['value']['state'];
+        	var contentObj = listObj[0]['value'];
         	nsh = (contentObj['NEW SOUTH WALES'][0]).toFixed(3);
-        	nsi = (contentObj['NEW SOUTH WALES'][1]).toFixed(3);
-        	nsd = (contentObj['NEW SOUTH WALES'][2]).toFixed(3);
+        	nsi = (contentObj['NEW SOUTH WALES'][1]*100).toFixed(2);
+        	nsd = (contentObj['NEW SOUTH WALES'][2]*100).toFixed(2);
         	quh = (contentObj['QUEENSLAND'][0]).toFixed(3);
-        	qui = (contentObj['QUEENSLAND'][1]).toFixed(3);
-        	qud = (contentObj['QUEENSLAND'][2]).toFixed(3);
+        	qui = (contentObj['QUEENSLAND'][1]*100).toFixed(2);
+        	qud = (contentObj['QUEENSLAND'][2]*100).toFixed(2);
         	sah = (contentObj['SOUTH AUSTRALIA'][0]).toFixed(3);
-        	sai = (contentObj['SOUTH AUSTRALIA'][1]).toFixed(3);
-        	sad = (contentObj['SOUTH AUSTRALIA'][2]).toFixed(3);
+        	sai = (contentObj['SOUTH AUSTRALIA'][1]*100).toFixed(2);
+        	sad = (contentObj['SOUTH AUSTRALIA'][2]*100).toFixed(2);
         	vih = (contentObj['VICTORIA'][0]).toFixed(3);
-        	vii = (contentObj['VICTORIA'][1]).toFixed(3);
-        	vid = (contentObj['VICTORIA'][2]).toFixed(3);
+        	vii = (contentObj['VICTORIA'][1]*100).toFixed(2);
+        	vid = (contentObj['VICTORIA'][2]*100).toFixed(2);
         	wah = (contentObj['WESTERN AUSTRALIA'][0]).toFixed(3);
-        	wai = (contentObj['WESTERN AUSTRALIA'][1]).toFixed(3);
-        	wad = (contentObj['WESTERN AUSTRALIA'][2]).toFixed(3);
+        	wai = (contentObj['WESTERN AUSTRALIA'][1]*100).toFixed(2);
+        	wad = (contentObj['WESTERN AUSTRALIA'][2]*100).toFixed(2);
         	tah = (contentObj['TASMANIA'][0]).toFixed(3);
-        	tai = (contentObj['TASMANIA'][1]).toFixed(3);
-        	tad = (contentObj['TASMANIA'][2]).toFixed(3);
+        	tai = (contentObj['TASMANIA'][1]*100).toFixed(2);
+        	tad = (contentObj['TASMANIA'][2]*100).toFixed(2);
         	nth = (contentObj['NORTHERN TERRITORY'][0]).toFixed(3);
-        	nti = (contentObj['NORTHERN TERRITORY'][1]).toFixed(3);
-        	ntd = (contentObj['NORTHERN TERRITORY'][2]).toFixed(3);
-        	cth = (contentObj['AUSTRALIA CAPITAL TERRITORY'][0]).toFixed(3);
-        	cti = (contentObj['AUSTRALIA CAPITAL TERRITORY'][1]).toFixed(3);
-        	ctd = (contentObj['AUSTRALIA CAPITAL TERRITORY'][2]).toFixed(3);
+        	nti = (contentObj['NORTHERN TERRITORY'][1]*100).toFixed(2);
+        	ntd = (contentObj['NORTHERN TERRITORY'][2]*100).toFixed(2);
+        	cth = (contentObj['AUSTRALIAN CAPITAL TERRITORY'][0]).toFixed(3);
+        	cti = (contentObj['AUSTRALIAN CAPITAL TERRITORY'][1]*100).toFixed(2);
+        	ctd = (contentObj['AUSTRALIAN CAPITAL TERRITORY'][2]*100).toFixed(2);
+        	nsn = contentObj['NEW SOUTH WALES'][3];
+        	nse = "#x"+eu(contentObj['NEW SOUTH WALES'][4]);
+        	qun = contentObj['QUEENSLAND'][3];
+        	que = "#x"+eu(contentObj['QUEENSLAND'][4]);
+        	san = contentObj['SOUTH AUSTRALIA'][3];
+        	sae = "#x"+eu(contentObj['SOUTH AUSTRALIA'][4]);
+        	vin = contentObj['VICTORIA'][3];
+        	vie = "#x"+eu(contentObj['VICTORIA'][4]);
+        	wan = contentObj['WESTERN AUSTRALIA'][3];
+        	wae = "#x"+eu(contentObj['WESTERN AUSTRALIA'][4]);
+        	tan = contentObj['TASMANIA'][3];
+        	tae = "#x"+eu(contentObj['TASMANIA'][4]);
+        	ntn = contentObj['NORTHERN TERRITORY'][3];
+        	nte = "#x"+eu(contentObj['NORTHERN TERRITORY'][4]);
+        	ctn = contentObj['AUSTRALIAN CAPITAL TERRITORY'][3];
+        	cte = "#x"+eu(contentObj['AUSTRALIAN CAPITAL TERRITORY'][4]);
 
-        	var contentObj2 = listObj[1]['value']['victoria'];
+
+        	var contentObj2 = listObj[1]['value'];
         	for(var ele in contentObj2){
-        		for(var element in all_data){
-        			if(all_data[element]['name'].toUpperCase()==ele){
-        				all_data[element]['index'] = (contentObj2[ele][0]).toFixed(3);
-        				all_data[element]['IOS'] = contentObj2[ele][1];
-        				break;
-        			}
-        		}
-        	}
+	    		if(ele != '_id' && ele != '_rev')
+	    		{
+	    			for(var element in all_data) {
+	    				if(all_data[element]['name'].toUpperCase() == ele.toUpperCase()){
+	    					all_data[element]['emoji'] = contentObj2[ele][4];
+	    					all_data[element]['index'] = (contentObj2[ele][0]).toFixed(3);
+	    					all_data[element]['ios'] = (contentObj2[ele][1]*100).toFixed(2);
+	    					all_data[element]['amount'] = contentObj2[ele][3];
+	    					break;
+	    				}
+	    			}
+	    		}
+	    	}
+
         	res.render('index', {
-        		nsh:nsh,nsa:nsa,nsb:nsb,nsc:nsc,nss:nss,nsi:nsi,nsd:nsd,
-        		quh:quh,qua:qua,qub:qub,quc:quc,qus:qus,qui:qui,qud:qud,
-        		sah:sah,saa:saa,sab:sab,sac:sac,sas:sas,sai:sai,sad:sad,
-        		vih:vih,via:via,vib:vib,vic:vic,vis:vis,vii:vii,vid:vid,
-        		wah:wah,waa:waa,wab:wab,wac:wac,was:was,wai:wai,wad:wad,
-        		tah:tah,taa:taa,tab:tab,tac:tac,tas:tas,tai:tai,tad:tad,
-        		nth:nth,nta:nta,ntb:ntb,ntc:ntc,nts:nts,nti:nti,ntd:ntd,
-        		cth:cth,cta:cta,ctb:ctb,ctc:ctc,cts:cts,cti:cti,ctd:ctd,
+        		nsh:nsh,nsa:nsa,nsb:nsb,nsc:nsc,nss:nss,nsi:nsi,nsd:nsd,nsn:nsn,nse:nse,
+        		quh:quh,qua:qua,qub:qub,quc:quc,qus:qus,qui:qui,qud:qud,qun:qun,que:que,
+        		sah:sah,saa:saa,sab:sab,sac:sac,sas:sas,sai:sai,sad:sad,san:san,sae:sae,
+        		vih:vih,via:via,vib:vib,vic:vic,vis:vis,vii:vii,vid:vid,vin:vin,vie:vie,
+        		wah:wah,waa:waa,wab:wab,wac:wac,was:was,wai:wai,wad:wad,wan:wan,wae:wae,
+        		tah:tah,taa:taa,tab:tab,tac:tac,tas:tas,tai:tai,tad:tad,tan:tan,tae:tae,
+        		nth:nth,nta:nta,ntb:ntb,ntc:ntc,nts:nts,nti:nti,ntd:ntd,ntn:ntn,nte:nte,
+        		cth:cth,cta:cta,ctb:ctb,ctc:ctc,cts:cts,cti:cti,ctd:ctd,ctn:ctn,cte:cte,
         		all_data:JSON.stringify(all_data)
         	});
         	return Promise.resolve();

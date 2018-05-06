@@ -10,7 +10,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <!--[if lt IE 9]--><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><!--[endif]-->
-  <title>未改web for assignment2 - group 25</title>
+  <title>web for assignment2 - group 25</title>
   <meta name="description" content="This is the web for assignment2 of cluster and cloud computing">
   <!--[if lt IE 9]--><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><!--[endif]-->
   <!--[if lte IE 8]--><script type="text/javascript" src="http://explorercanvas.googlecode.com/svn/trunk/excanvas.js"></script><!--[endif]-->
@@ -37,7 +37,8 @@
   <!--<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
   <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
   <script src="/js/vicgeo.js"></script>
-
+  <script src="/js/emojiindex.js"></script>
+  
 
   <style type="text/css">
     .img-border { border: 3px solid rgb(4,128,58); }
@@ -80,11 +81,11 @@
           <!--/.navbar-header-->
           <div id="main-nav" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="mainNav">
-              <li class="active" id="firstLink"><a href="#home" class="scroll-link">Home主页</a></li>
-              <li><a href="#Q1" class="scroll-link">情景1</a></li>
-              <li><a href="#Q2" class="scroll-link">情景2</a></li>
-              <li><a href="#Q3" class="scroll-link">情景3</a></li>
-              <li><a href="#Q4" class="scroll-link">情景4</a></li>
+              <li class="active" id="firstLink"><a href="#home" class="scroll-link">Home</a></li>
+              <li><a href="#Q1" class="scroll-link">Happiness VS Income</a></li>
+              <li><a href="#Q2" class="scroll-link">Happiness VS Education</a></li>
+              <li><a href="#Q3" class="scroll-link">Favourite System VS Income</a></li>
+              <li><a href="#Q4" class="scroll-link">Favourite Emoji VS Happiness</a></li>
               <li><a href="#Group" class="scroll-link">Group</a></li>
             </ul>
           </div>
@@ -115,7 +116,7 @@
         <h3>This is the web application showing our result of assignment2.</h3>
               </div>
     </section>
-  <script>
+  <script type="text/javascript">
 
  window.onload = function barChart() {
         var chart = new CanvasJS.Chart("barChartContainer",
@@ -129,7 +130,7 @@
               animationEnabled: true,
               toolTip:{
                 shared: true,
-                content: "Happiness:{y} - Weekly Income:{a}"
+                content: "Happiness:{y}(From{b}Twitters) - Weekly Income:${a}"
               },
               data:[
                 {
@@ -137,21 +138,21 @@
                   showInLegend: true,
                   name: "Index",
                   dataPoints: [
-                    {y: <%=nsh%>, label: "New South Wales",a:<%=nss%>},
-                    {y: <%=quh%>, label: "Queensland" ,a:<%=qus%>},
-                    {y: <%=sah%>, label: "South Australia" ,a:<%=sas%>},
-                    {y: <%=tah%>, label: "Tasmania" ,a:<%=tas%>},
-                    {y: <%=vih%>, label: "Victoria" ,a:<%=vis%>},
-                    {y: <%=cth%>, label: "Australian Capital Territory" ,a:<%=cts%>},
-                    {y: <%=nth%>, label: "Northern Territory" ,a:<%=nts%>},
-                    {y: <%=wah%>, label: "Western Australia" ,a:<%=was%>}
+                    {y: <%=nsh%>, label: "New South Wales",a:<%=nss%>,b:<%=nsn%>},
+                    {y: <%=quh%>, label: "Queensland" ,a:<%=qus%>,b:<%=qun%>},
+                    {y: <%=sah%>, label: "South Australia" ,a:<%=sas%>,b:<%=san%>},
+                    {y: <%=tah%>, label: "Tasmania" ,a:<%=tas%>,b:<%=tan%>},
+                    {y: <%=vih%>, label: "Victoria" ,a:<%=vis%>,b:<%=vin%>},
+                    {y: <%=cth%>, label: "Australian Capital Territory" ,a:<%=cts%>,b:<%=ctn%>},
+                    {y: <%=nth%>, label: "Northern Territory" ,a:<%=nts%>,b:<%=ntn%>},
+                    {y: <%=wah%>, label: "Western Australia" ,a:<%=was%>,b:<%=wan%>}
                   ]
                 },
                               ]
             });
         chart.render();
 
-    var chart2 = new CanvasJS.Chart("barChartContainer2",
+   var chart2 = new CanvasJS.Chart("barChartContainer2",
             {
               title:{
                 text: "Happiness Index in States"
@@ -162,7 +163,7 @@
               animationEnabled: true,
               toolTip:{
                 shared: true,
-                content: "Happiness:{y} - 9 years or longer education:{a}"
+                content: "Happiness:{y}(From{b}Twitters) - 9 years or longer education:{a}%"
               },
               data:[
                 {
@@ -170,14 +171,14 @@
                   showInLegend: true,
                   name: "Index",
                   dataPoints: [
-                    {y: <%=nsh%>, label: "New South Wales",a:<%=nsb%>+<%=nsc%>},
-                    {y: <%=quh%>, label: "Queensland" ,a:<%=qub%>+<%=quc%>},
-                    {y: <%=sah%>, label: "South Australia" ,a:<%=sab%>+<%=sac%>},
-                    {y: <%=tah%>, label: "Tasmania" ,a:<%=tab%>+<%=tac%>},
-                    {y: <%=vih%>, label: "Victoria" ,a:<%=vib%>+<%=vic%>},
-                    {y: <%=cth%>, label: "Australian Capital Territory" ,a:<%=ctb%>+<%=ctc%>},
-                    {y: <%=nth%>, label: "Northern Territory" ,a:<%=ntb%>+<%=ntc%>},
-                    {y: <%=wah%>, label: "Western Australia" ,a:<%=wab%>+<%=wac%>}
+                    {y: <%=nsh%>, label: "New South Wales",a:<%=nsb%>+<%=nsc%>,b:<%=nsn%>},
+                    {y: <%=quh%>, label: "Queensland" ,a:<%=qub%>+<%=quc%>,b:<%=qun%>},
+                    {y: <%=sah%>, label: "South Australia" ,a:<%=sab%>+<%=sac%>,b:<%=san%>},
+                    {y: <%=tah%>, label: "Tasmania" ,a:<%=tab%>+<%=tac%>,b:<%=tan%>},
+                    {y: <%=vih%>, label: "Victoria" ,a:<%=vib%>+<%=vic%>,b:<%=vin%>},
+                    {y: <%=cth%>, label: "Australian Capital Territory" ,a:<%=ctb%>+<%=ctc%>,b:<%=ctn%>},
+                    {y: <%=nth%>, label: "Northern Territory" ,a:<%=ntb%>+<%=ntc%>,b:<%=ntn%>},
+                    {y: <%=wah%>, label: "Western Australia" ,a:<%=wab%>+<%=wac%>,b:<%=wan%>}
                   ]
                 },
                               ]
@@ -201,7 +202,7 @@
                 {
                   type: "stackedBar100",
                   showInLegend: true,
-                  name: "ISO",
+                  name: "IOS",
                   dataPoints: [
                     {y: <%=nsi%>, label: "New South Wales",a:<%=nss%>},
                     {y: <%=qui%>, label: "Queensland" ,a:<%=qus%>},
@@ -213,7 +214,7 @@
                     {y: <%=cti%>, label: "Australian Capital Territory" ,a:<%=cts%>}
                   ]
                 },
-  {
+                {
                   type: "stackedBar100",
                   showInLegend: true,
                   name: "Android",
@@ -232,7 +233,39 @@
                               ]
             });
         chart3.render();
-
+        
+        var chart4 = new CanvasJS.Chart("barChartContainer4",
+            {
+              title:{
+                text: "Favourite Emoji in States"
+              },
+              axisY:{
+                title: "Happiness Index"
+              },
+              animationEnabled: true,
+              toolTip:{
+                shared: true,
+                content: "Happiness:{y}(From{b}Twitters) - favourite emoji:{a}"
+              },
+              data:[
+                {
+                  type: "stackedBar",
+                  showInLegend: true,
+                  name: "Index",
+                  dataPoints: [
+                    {y: <%=nsh%>, label: "New South Wales",a:"&<%=nse%>",b:<%=nsn%>},
+                    {y: <%=quh%>, label: "Queensland" ,a:"&<%=que%>",b:<%=qun%>},
+                    {y: <%=sah%>, label: "South Australia" ,a:"&<%=sae%>",b:<%=san%>},
+                    {y: <%=tah%>, label: "Tasmania" ,a:"&<%=tae%>",b:<%=tan%>},
+                    {y: <%=vih%>, label: "Victoria" ,a:"&<%=vie%>",b:<%=vin%>},
+                    {y: <%=cth%>, label: "Australian Capital Territory" ,a:"&<%=cte%>",b:<%=ctn%>},
+                    {y: <%=nth%>, label: "Northern Territory" ,a:"&<%=nte%>",b:<%=ntn%>},
+                    {y: <%=wah%>, label: "Western Australia" ,a:"&<%=wae%>",b:<%=wan%>}
+                  ]
+                }
+                              ]
+            });
+        chart4.render();
 
 
 
@@ -262,7 +295,7 @@
                   indexLabelPlacement: "outside",
                   type: "pie",
                   showInLegend: true,
-                  toolTipContent: "{y} - {legendText}",
+                  toolTipContent: "{y}% - {legendText}",
                   dataPoints: [
                     {  y: <%=nsc%>, legendText:">12years", exploded: true },
                     {  y: <%=nsb%>, legendText:"9-12years", exploded: true },
@@ -294,7 +327,7 @@
                   indexLabelPlacement: "outside",
                   type: "pie",
                   showInLegend: true,
-                  toolTipContent: "{y} - {legendText}",
+                  toolTipContent: "{y}% - {legendText}",
                   dataPoints: [
                     {  y: <%=quc%>, legendText:">12years", exploded: true },
                     {  y: <%=qub%>, legendText:"9-12years", exploded: true },
@@ -327,7 +360,7 @@
                   indexLabelPlacement: "outside",
                   type: "pie",
                   showInLegend: true,
-                  toolTipContent: "{y} - {legendText}",
+                  toolTipContent: "{y}% - {legendText}",
                   dataPoints: [
                     {  y: <%=sac%>, legendText:">12years", exploded: true },
                     {  y: <%=sab%>, legendText:"9-12years", exploded: true },
@@ -360,7 +393,7 @@
                   indexLabelPlacement: "outside",
                   type: "pie",
                   showInLegend: true,
-                  toolTipContent: "{y} - {legendText}",
+                  toolTipContent: "{y}% - {legendText}",
                   dataPoints: [
                     {  y: <%=vic%>, legendText:">12years", exploded: true },
                     {  y: <%=vib%>, legendText:"9-12years", exploded: true },
@@ -399,7 +432,7 @@
                   indexLabelPlacement: "outside",
                   type: "pie",
                   showInLegend: true,
-                  toolTipContent: "{y} - {legendText}",
+                  toolTipContent: "{y}% - {legendText}",
                   dataPoints: [
                     {  y: <%=wac%>, legendText:">12years", exploded: true },
                     {  y: <%=wab%>, legendText:"9-12years", exploded: true },
@@ -432,7 +465,7 @@
                   indexLabelPlacement: "outside",
                   type: "pie",
                   showInLegend: true,
-                  toolTipContent: "{y} - {legendText}",
+                  toolTipContent: "{y}% - {legendText}",
                   dataPoints: [
                     {  y: <%=tac%>, legendText:">12years", exploded: true },
                     {  y: <%=tab%>, legendText:"9-12years", exploded: true },
@@ -466,7 +499,7 @@
                   indexLabelPlacement: "outside",
                   type: "pie",
                   showInLegend: true,
-                  toolTipContent: "{y} - {legendText}",
+                  toolTipContent: "{y}% - {legendText}",
                   dataPoints: [
                     {  y: <%=ntc%>, legendText:">12years", exploded: true },
                     {  y: <%=ntb%>, legendText:"9-12years", exploded: true },
@@ -500,7 +533,7 @@
                   indexLabelPlacement: "outside",
                   type: "pie",
                   showInLegend: true,
-                  toolTipContent: "{y} - {legendText}",
+                  toolTipContent: "{y}% - {legendText}",
                   dataPoints: [
                     {  y: <%=ctc%>, legendText:">12years", exploded: true },
                     {  y: <%=ctb%>, legendText:"9-12years", exploded: true },
@@ -525,6 +558,26 @@
 
 
 
+    <div class=" text-center">
+      <!-- Heading -->
+      <h2>Income Heat Map in Victoria</h2>
+      <p>This heat map is based on the average income level per family in Victoria. From this map we can explore average income, happiness index, percentage of having 9 years or more education, the percentage of twitter send by IOS system and the favourite emoji in every district.</p>
+    </div>
+<div id="googleMap" style="width:96%;height:600px;margin-left:20px;margin-right:50px"></div>
+
+     <div id="Q5">
+        <p>The income data and the percentage of having nine years or more education is from <a href="http://portal.aurin.org.au">AURIN</a>, which is the acronym of "Australian Urban Research Infrastructure Network".The other data including happiness index and favourite emoji is from Twitter.</p>
+      </div>              
+
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+<br/><br/>
 
 
   <section id="Q1">
@@ -542,106 +595,28 @@
     <div class=" text-center">
       <!-- Heading -->
       <hr/>
-      <h2>场景1</h2>
-      <p>第一部分介绍</p>
+      <h2>Happiness VS Income</h2>
+      <p>This part present the relationship between the happiness index and average income in eight states in Australia.</p>
     </div>
 
 
     <div id="Q1" style="background: none repeat scroll 0% 0% rgb(255, 255, 255);">
-      <ul style="background: lightgrey;">
-        <li><a href="#Q1.1">情景1.1条形</a></li>
-        <li><a href="#Q1.2" >情景1.2地图 到区</a></li>
-
-      </ul>
+      
 
       <div id="Q1.1">
         <p></p>
-        <p>小简介1.1</p>
+        <p> The Happiness index in each state is the average number of all Twitters' happiness index sent from this state.</p>
         <div id="barChartContainer" style="height: 450px; width: 80%; margin: auto"></div>
-        <p>场景1.1总结</p>
-      </div>        
+        <p>From this bar chart, Northern Territory is the state having the highest happiness index, where the average income is the highest as well. On the other hand, Twitters from Victoria shows the lowest happiness index among the eight states. The average income in this state is the the second lowest. The state with lowest income is Western Australia, where the happiness index is the second lowest.</p>
+<p>So it is true that to some extent, the people having higher income feel happier. </p>
+      </div>         
 
           </div>
-        </div>
+        
 
-      </div>
 
-      </div>
 
-     <div id="googleMap" style="width:96%;height:600px;margin-left:20px;margin-right:50px"></div>
 
-<script>
-    var raw = <%- JSON.stringify(all_data) %>
-    var all_data = JSON.parse(raw);
-    function initMap() {
-    var mapProp= {
-              center: {lat: -37.8141, lng: 144.9633},
-              zoom: 11,
-              // mapTypeId: google.maps.MapTypeId.SATELLITE
-    };
-    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-    map.data.addGeoJson(vicIncome);
- map.data.setStyle(function(feature){
-    var income = feature.getProperty('income');
-    var color = income > 1600 ? '#8B0000' :
-                income > 1400 ? '#FF0000' :
-                income > 1200 ? '#FF6347' :
-                income > 1000 ? '#CD5C5C' :
-                income > 800  ? '#BC8F8F' :
-                income > 600  ? '#F08080' :
-                                '#FFFAFA';
-    return {
-        fillColor:color,
-        strokeWeight:1
-    };
- });
-    map.data.addListener('mouseover', function(event) {
-        map.data.revertStyle();
-        map.data.overrideStyle(event.feature, {strokeWeight: 4});
-    });
-    map.data.addListener('mouseout', function(event) {
-        map.data.revertStyle();
-    });
-    var infoWindow;
-    infoWindow = new google.maps.InfoWindow;
-    map.data.addListener('click', function (event) {
-        if(event.feature.getProperty('isColorful')) 
-        {
-            event.feature.setProperty('isColorful', false);
-        }
-        else
-        {
-            event.feature.setProperty('isColorful', true);  
-        }
-        var suburb = event.feature.getProperty('vic_lga__3');
-        var suburb_income;
-        var suburb_index;
-        var suburb_education;
-        var suburb_ios;
-        for (var ele in all_data) {
-           
-                if (all_data[ele]['name'].toUpperCase() == suburb.toUpperCase()) {
-                  
-                   suburb_income = all_data[ele]['income'];
-                   suburb_index = all_data[ele]['index'];
-                   suburb_education = all_data[ele]['education'];
-                   suburb_ios = all_data[ele]['IOS'];
-                }
-            }
-        var content = "<p class='map-popup-content' >" + suburb +
-                      "</br> Income: " + suburb_income +
-                      "</br> Twitter Index: " + suburb_index +
-                      "</br> Edu > 9yr: " + suburb_education +
-                      "</br> IOS percent: " + suburb_ios;
-        infoWindow.setContent(content+"</p>")
-        infoWindow.setPosition(event.latLng);
-        infoWindow.open(map);
-    });
-    }
-</script>
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4J8k1UAm7GRy3rAB-p9qrfOHlHK2hwno&callback=initMap">
-    </script>
 
   </section>
 
@@ -666,20 +641,20 @@
     <div class=" text-center">
       <!-- Heading -->
       <hr/>
-      <h2>场景2</h2>
-      <p>第2部分介绍</p>
+      <h2>Happiness VS Education</h2>
+      <p>This part present the relationship between the happiness index and average education level in eight states in Australia.</p>
     </div>
 
 
     <div id="Q2" style="background: none repeat scroll 0% 0% rgb(255, 255, 255);">
       <ul style="background: lightgrey;">
-        <li onclick="pieChart1();pieChart2();pieChart3();pieChart4();pieChart5();pieChart6();pieChart7();pieChart8()"><a href="#Q2.1">情景2aurin数据(饼图)</a></li>
-        <li><a href="#Q2.2" >情景2twitter数据(条形)</a></li>
+        <li onclick="pieChart1();pieChart2();pieChart3();pieChart4();pieChart5();pieChart6();pieChart7();pieChart8()"><a href="#Q2.1">Education Situation in States</a></li>
+        <li><a href="#Q2.2" >Happiness Index in States</a></li>
 
       </ul>
 
       <div id="Q2.1">
-        <p>2.1简介</p>
+        <p>These pie charts show the percentage of people who receive education under nine years, nine to twelve years and over twelve years. The data is from AURIN.</p>
 
         <div class="container-fluid">
           <div class="row">
@@ -727,13 +702,14 @@
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
           </div> 
       
-     <p>2.1总结</p>
+     <p>According to the pie chart, most people receive education for nine to twelve years in every states. But Australian Capital Territory have the largest percentage(93.8%) of people who are educated longer than nine years while less than eighty percent of Northern Territory citizens receive education for more than nine years.</p>
      </div> 
 </div>
      <div id="Q2.2">
-<p>场景2.2简介</p>
+<p>The happiness index is calculated from Twitter data to explore the relationship between happiness and education level.</p>
         <div id="barChartContainer2" style="height: 450px; width: 80%; margin: auto"></div> 
-       <p>场景2总结</p>
+       <p>From this bar chart, the state having the largest happiness index is Northern Territory, where the education level is the lowest according to the statistic of percentage of people having shorter than nine years education. However, the second largest happiness index is in Tasmania, where the education level is the third highest according to the same criteria.</p>
+       <p>Therefore, there is no direct relation between happiness and education.</p>
       </div>        
 
           </div>
@@ -765,13 +741,13 @@
 
     <div class=" text-center">
       <!-- Heading -->
-      <h2>情景3</h2>
-      <p>情景3简介</p>
+      <h2>Favourite System VS Income</h2>
+      <p>Different system of mobile give different user experience. This part is to explore if the income level could influence the choice of system.</p>
     </div>
 
      <div id="Q3.2">
         <div id="barChartContainer3" style="height: 450px; width: 80%; margin: auto"></div>
-        <p>场景3总结</p>
+<p>We can see that in all states, ISO is more popular than Android. Northern Territory have the largest percentage of Twitters from IOS system and the highest average income. On the contrast, Western Australia have the largest percentage of Twitters from Android system and the lowest average income.</p>
       </div>              
 
 
@@ -797,12 +773,11 @@
 
     <div class=" text-center">
       <!-- Heading -->
-      <h2>情景4</h2>
-      <p>情景4简介</p>
+      <h2>Favourite Emoji VS Happiness</h2>
+      <p>In this part, the emoji which is used most often in Twitters in each states are recorded to find if happiness index could influence this.</p>
     </div>
-<p>待插入地图～～～～～</p>
-     <div id="Q4.1">
-        <p>场景4总结</p>
+        <div id="barChartContainer4" style="height: 450px; width: 80%; margin: auto"></div>
+        <p>It can be seen that the cool Face is used most often in Northern Territory where the happiness index is the highest. However, a trying face is the favourite emoji in Tasmania, where the happiness index is the second highest. So, there is no direct relationship between happiness and emoji on the average understanding of the meaning of emoji.</p>
       </div>              
 
 
@@ -817,16 +792,28 @@
 
 
 
-  <section id="Group" class="page-section colord">
-    <div class="container">
-      <div class="heading text-center">
-           <div class="container-fluid">
+
+     
+
+
+    
+
+  </section>
+
+<br/><br/>
+
+
+
+  <section id="Group">
+      <div class="container-fluid">
 
       <div class="heading text-center">
+   <div class="page-section colord">
+
         <!-- Heading -->
+
         <h2>Group Members</h2>
-      
-      </div>
+      </div></div>
 
       <div class="row-fluid">
         <div class="col-md-1"></div>
@@ -836,9 +823,9 @@
             <!-- Member Details -->
             <h4>Youshao Xiao</h4>
             <!-- Designation -->
-            <span class="pos">学号</span>
+            <span class="pos">876548</span>
             <div class="team-socials">            </div>
-            <span class="pos duty">个人分工任务</span>
+            <span class="pos duty">project management & dynamic deployment & crawler</span>
           </div>
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6">
@@ -847,10 +834,10 @@
             <!-- Member Details -->
             <h4>Jiaheng Zhu</h4>
             <!-- Designation -->
-            <span class="pos">学号</span>
+            <span class="pos">1211955</span>
             <div class="team-socials">
             </div>
-            <span class="pos duty">个人分工任务</span>
+            <span class="pos duty">web service design</span>
           </div>
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6">
@@ -859,10 +846,10 @@
             <!-- Member Details -->
             <h4>Lina Zhou</h4>
             <!-- Designation -->
-            <span class="pos">学号</span>
+            <span class="pos">941539</span>
             <div class="team-socials">
             </div>
-            <span class="pos duty">个人分工任务</span>
+            <span class="pos duty">couchdb setup + mapreduce view</span>
           </div>
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6">
@@ -871,10 +858,10 @@
             <!-- Member Details -->
             <h4>Haimei Liu</h4>
             <!-- Designation -->
-            <span class="pos">学号</span>
+            <span class="pos">895804</span>
             <div class="team-socials">
             </div>
-            <span class="pos duty">个人分工任务</span>
+            <span class="pos duty">data analyst & scenario design</span>
           </div>
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6">
@@ -886,7 +873,7 @@
             <span class="pos">895216</span>
             <div class="team-socials">
             </div>
-            <span class="pos duty">个人分工任务</span>
+            <span class="pos duty">front website & scenario design</span>
           </div>
         </div>
         <div class="col-md-1"></div>
@@ -941,7 +928,87 @@
 
   <script type="text/javascript" src="/canvasjs.min.js"></script></head>
 
+<script>
+    var raw = <%- JSON.stringify(all_data) %>
+    var all_data = JSON.parse(raw);
+    function initMap() {
+    var mapProp= {
+              center: {lat: -37.8141, lng: 144.9633},
+              zoom: 11,
+              // mapTypeId: google.maps.MapTypeId.SATELLITE
+    };
+    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    map.data.addGeoJson(vicIncome);
+ map.data.setStyle(function(feature){
+    var income = feature.getProperty('income');
+    var color = income > 1600 ? '#8B0000' :
+                income > 1400 ? '#FF0000' :
+                income > 1200 ? '#FF6347' :
+                income > 1000 ? '#CD5C5C' :
+                income > 800  ? '#BC8F8F' :
+                income > 600  ? '#F08080' :
+                                '#FFFAFA';
+    return {
+        fillColor:color,
+        strokeWeight:1
+    };
+ });
+    map.data.addListener('mouseover', function(event) {
+        map.data.revertStyle();
+        map.data.overrideStyle(event.feature, {strokeWeight: 4});
+    });
+    map.data.addListener('mouseout', function(event) {
+        map.data.revertStyle();
+    });
+    var infoWindow;
+    infoWindow = new google.maps.InfoWindow;
+    map.data.addListener('click', function (event) {
+        if(event.feature.getProperty('isColorful')) 
+        {
+            event.feature.setProperty('isColorful', false);
+        }
+        else
+        {
+            event.feature.setProperty('isColorful', true);  
+        }
+        var suburb = event.feature.getProperty('vic_lga__3');
+        var suburb_income;
+        var suburb_index;
+        var suburb_education;
+        var suburb_ios;
+        var suburb_emoji;
+        var suburb_amount;
+        for (var ele in all_data) {
+           
+                if (all_data[ele]['name'].toUpperCase() == suburb.toUpperCase()) {
+                  
+                   suburb_amount = all_data[ele]['amount'];
+                   suburb_income = all_data[ele]['income'];
+                   suburb_index = all_data[ele]['index'];
+                   suburb_education = all_data[ele]['education'];
+                   suburb_ios = all_data[ele]['ios'];
+                   suburb_emoji = all_data[ele]['emoji'];
+                }
+            }
+        var content = "<p class='map-popup-content' > <strong>" + suburb + "</strong>" +
+                      "</br> <strong>Twitter amount: </strong>" + suburb_amount +
+                      "</br> <strong>Income: </strong>" + suburb_income +
+                      "</br> <strong>Happiness Index: </strong>" + suburb_index +
+                      "</br> <strong>Edu > 9yr: </strong>" + suburb_education + "%" +
+                      "</br> <strong>IOS percent: </strong>" + suburb_ios + "%" +
+                      "</br>" + suburb_emoji;
+        infoWindow.setContent(content+"</p>")
+        infoWindow.setPosition(event.latLng);
+        infoWindow.open(map);
+    });
+    }
+   
+   
 
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4J8k1UAm7GRy3rAB-p9qrfOHlHK2hwno&callback=initMap">
+    </script>
 
     </body>
 
