@@ -113,11 +113,43 @@
      become: true
      shell: |
        sed -i "s/-name couchdb@127.0.0.1/-name couchdb@$(ip route get 8.8.8.8 | awk '{print $NF; exit}')/g" /data/workspace/apache-couchdb-2.1.1/rel/couchdb/etc/vm.args
-# 3. run
-   - name: run the couchdb, streamer, seacher
+# 3. run the couchdb
+   - name: run the couchdb (part1)
+     become: true
+     shell: |
+       adduser --system --no-create-home --shell /bin/bash --group --gecos "CouchDB Administrator" couchdb
+       cp -R /data/workspace/apache-couchdb-2.1.1/rel/couchdb /home/couchdb
+       chown -R couchdb:couchdb /home/couchdb
+       find /home/couchdb -type d -exec chmod 0770 {} \;
+       sh -c 'chmod 0644 /home/couchdb/etc/*'
+       mkdir /var/log/couchdb
+       chown couchdb:couchdb /var/log/couchdb
+       mkdir /etc/sv/couchdb
+       mkdir /etc/sv/couchdb/log
+   - name: run the couchdb (part2)
+     shell: |
+       echo "#!/bin/sh" >> /data/workspace/apache-couchdb-2.1.1/run
+       echo "export HOME=/home/couchdb" >> /data/workspace/apache-couchdb-2.1.1/run
+       echo "exec 2>&1" >> /data/workspace/apache-couchdb-2.1.1/run
+       echo "exec chpst -u couchdb /home/couchdb/bin/couchdb" >> /data/workspace/apache-couchdb-2.1.1/run
+   - name: run the couchdb (part3)
+     shell: |
+       echo "#!/bin/sh" >> /data/workspace/apache-couchdb-2.1.1/log_run
+       echo "exec svlogd -tt /var/log/couchdb" >> /data/workspace/apache-couchdb-2.1.1/log_run
+   - name: run the couchdb (part4)
+     become: true
+     shell: |
+       cd /data/workspace
+       mv apache-couchdb-2.1.1/run /etc/sv/couchdb/run
+       mv apache-couchdb-2.1.1/log_run /etc/sv/couchdb/log/run
+       chmod u+x /etc/sv/couchdb/run
+       chmod u+x /etc/sv/couchdb/log/run
+       ln -s /etc/sv/couchdb/ /etc/service/couchdb
+       sleep 5
+       sv status couchdb
+# 4. run the crawler
+   - name: run the craweler: streamer, seacher
      ignore_errors: True
      shell: |
-       cd /data/log/couchdb;nohup sh /data/workspace/apache-couchdb-2.1.1/rel/couchdb/bin/couchdb 2>&1 &
-       sleep 3s
        cd /data/log/stream;nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json stream 0 &
        cd /data/log/searcher;nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json search 1 &

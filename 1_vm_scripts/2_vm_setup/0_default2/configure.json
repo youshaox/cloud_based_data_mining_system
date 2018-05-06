@@ -18,7 +18,7 @@
   "sys_types":[
     {
       "name":"couchdb-slave",
-      "type":"combo",
+      "type":"couchdb",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
@@ -26,7 +26,7 @@
     },
     {
       "name":"couchdb-master",
-      "type":"combo",
+      "type":"couchdb",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",

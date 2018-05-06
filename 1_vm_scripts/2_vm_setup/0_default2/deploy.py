@@ -36,7 +36,7 @@ def run(inventory_name, s_type):
         playbook_name = "webserver.yml"
     elif s_type == "combo":
         playbook_name = "combo.yml"
-    command = "ansible-playbook -i " + inventory_name + " template/" + playbook_name
+    command = "ansible-playbook -vvv -i " + inventory_name + " template/" + playbook_name
     logging.info(command)
     os.system(command)
 
@@ -316,7 +316,7 @@ if __name__ == "__main__":
     # [{'s_type': 'combo', 's_num': 3, 'ip_list': ['115.146.86.214', '115.146.86.207', '115.146.86.208']}, {'s_type': 'webserver', 's_num': 1, 'ip_list': ['115.146.86.209']}]
     logging.info("waiting for a while for the open of the port 22")
 
-    time.sleep(SLEEP_TIME*10)
+    time.sleep(SLEEP_TIME*12)
     logging.info("orchestrate the servers")
     orchestrate(inventory_filename, sys_type, inventory_list)
     # # todo form the cluster
