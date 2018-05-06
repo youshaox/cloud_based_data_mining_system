@@ -16,6 +16,8 @@ import sys
 # json = [{"1":{"name":"couchdb"}}, {"2":{"name":"couchdb2"}}]
 # for js in json:
 #     print(js['couchdb'])
+inventory_list = [{"s_type":"combo", "s_num":2, "ip_list":['115.146.86.214']}]
 
-for num in range(2):
-    print(num)
+print(inventory_list[0]["ip_list"])
+# for json in jsons:
+#     print(json)

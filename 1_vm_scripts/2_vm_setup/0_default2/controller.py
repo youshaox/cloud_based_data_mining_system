@@ -7,8 +7,8 @@ Where: <action>         -- create / terminate / delete / attach / recover
         <target>    -- default / streamer (instance-name)
         e.g:
         create instance streamer default
-        terminate instance streamer default
-        attach volume 40 streamer
+        terminate instance i-d7da2302 default
+        attach volume 40 i-d7da2302
         delete volume vol-f5a3a3f2 default
         create snapshot vol-f5a3a3f2 default
         delete snapshot snap-f5a3a3f2 default
@@ -109,6 +109,15 @@ class Controller():
                    "volume_status":volume.status,
                    "volume_zone":volume.zone})
 
+    def show_snapshots(self):
+        curr_snapshots= self.ec2_conn.get_all_snapshots()
+        for snapshot in curr_snapshots:
+            print({"snapshot_id":snapshot.id,
+                   "volume_id":snapshot.volume_id,
+                   "snapshot_size": snapshot.volume_size,
+                   "start_time": snapshot.start_time,
+                   "snapshot_status":snapshot.status
+                   })
 
     def createVolume(self, size):
         logging.info('Create a volume with size(G): ' + str(size))
@@ -209,6 +218,8 @@ def run(controller, action, value_type, value, target):
             controller.deleteSnapshot(value)
         elif action == "recover":
             controller.recoverSnapshot(value, target)
+        elif action == "get":
+            controller.show_snapshots()
         else:
             logging.error("Unknown action: please select from \"create/delete\"")
             logging.error("\nUnknown action: please select from \"attach/delete/get\"\n" +

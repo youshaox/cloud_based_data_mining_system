@@ -17,20 +17,20 @@
   ],
   "sys_types":[
     {
-      "name":"webserver-1",
-      "type":"webserver",
+      "name":"couchdb-master",
+      "type":"combo",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
       "security_groups":["ssh","default"]
     },
     {
-      "name":"webserver",
-      "type":"streamer",
+      "name":"test",
+      "type":"combo",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
-      "security_groups":["ssh","default"]
+      "security_groups":["ssh","default","node"]
     }
   ]
 }
