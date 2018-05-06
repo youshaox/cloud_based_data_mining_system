@@ -1,23 +1,22 @@
-# #####################################################
-# process raw tweets and store in new storage:
-# tweets structure:
-# Sentiment:(float)
-# system:(string)android/iOS
-# state: (string)'NEW SOUTH WALES', 'VICTORIA', 'QUEENSLAND', 'SOUTH AUSTRALIA',
-#          'TASMANIA', 'WESTERN AUSTRALIA', 'AUSTRALIA CAPITAL TERRITORY', 'NORTHERN TERRITORY'
-# Melbourne:(Int) 1/0
-# Victoria: (Int) 1/0
-# DistrictInMel: district in melboune
-# DistrictInVic: district in victoria
-#
-#
-# #####################################################
+"""
+process raw tweets and store in new storage:
+processed tweets structure:
+Sentiment:(float)
+system:(string)android/iOS
+state: (string)'NEW SOUTH WALES', 'VICTORIA', 'QUEENSLAND', 'SOUTH AUSTRALIA',
+         'TASMANIA', 'WESTERN AUSTRALIA', 'AUSTRALIA CAPITAL TERRITORY', 'NORTHERN TERRITORY'
+DistrictInMel: district in Melboune
+DistrictInVic: district in victoria
+emoji_list: [] list of the emojis in the tweet
+
+"""
+
 from textblob import TextBlob
 import json
 from shapely.geometry import shape, Point
-import pandas as pd
 import time
-import mel_lga_name as ndata
+import lga_name as ndata
+import create_design as cdview
 import couchdb
 import sys
 import emoji
@@ -35,7 +34,9 @@ VIC_DIST_GEO_FILE_NAME = "geojson/vic_lga_gov.json"
 
 
 def extract_emojis(str):
-  return ''.join(c for c in str if c in emoji.UNICODE_EMOJI)
+    """extract the emojis used in tweet using python emoji package"""
+    return ''.join(c for c in str if c in emoji.UNICODE_EMOJI)
+
 
 def average_bounding_box(box):
     """Average list of 4 bounding box coordinates to a midpoint."""
@@ -50,18 +51,10 @@ def average_bounding_box(box):
     return float(lng), float(lat)
 
 
-# Check Geometry
-def isvalid(geom):
-    try:
-        shape(geom)
-        return 1
-    except:
-        return 0
 
-
-# split the location of user Melbourne, Victoria
-# return the state name
 def get_state_by_user_location(location_of_user):
+    """split the location of user Melbourne, Victoria , return the state name"""
+
     # if it is in other state
     for item1 in ndata.STATE_NAME:
         if item1 in location_of_user.upper():
@@ -89,9 +82,13 @@ def get_vic_dist(location_of_user):
     return None
 
 
-# find the name of district within victoria by coordinates
-def get_vic_dist_by_coordinate(vic_geo, point):
 
+def get_vic_dist_by_coordinate(vic_geo, point):
+    """
+    :param vic_geo: the geojson file of victoria
+    :param point: tweet's coordinate
+    :return: the district name in victoria
+    """
     name = None
     # district_vic: dict
     for vicdistrict in vic_geo:  # list
@@ -124,8 +121,12 @@ def get_mel_dist_by_coordinate(melb_geo, point):
         return name
 
 
-# iOS :1, Android -1, none: 0
+
 def get_system(source):
+    """
+    :param source: source of a tweet
+    :return: the system type of the user ,iOS :1, Android -1, none: 0
+    """
     t = ['iphone', 'iPhone', 'ipad', 'iPad,', 'iOS']
     t2 = ['android', 'Android']
     find = 0
@@ -149,12 +150,6 @@ def tag_tweets(db_raw, db_pro, mel_geo, vic_geo, state_geo):
 
         # initialization
         coordinate = None
-        score = 0
-        state_name = None
-        mel_district = None
-        vic_district = None
-        system = 0
-        emoji_list = None
 
         # use the coordinate of tweet to find the location name
         if line['coordinates2']:
@@ -229,20 +224,22 @@ if __name__ == "__main__":
     mel_geo = mel_geo0['features']
 
     # Get raw tweets db.
-    couch_raw = couchdb.Server(DB_RAW_ADDRESS)
+    couch = couchdb.Server(DB_RAW_ADDRESS)
     try:
-        db_raw = couch_raw[DB_RAW_NAME]
+        db_raw = couch[DB_RAW_NAME]
     except Exception:
         logging.error("Raw tweets DB does not exist.")
         sys.exit(2)
 
-    # Get processed tweets db.
-    couch_pro = couchdb.Server(DB_RAW_ADDRESS)
-    if PROCESSED_DB_NAME in couch_pro:
-        db_pro = couch_pro[PROCESSED_DB_NAME]
+    # create view to raw_tweets database
+    cdview.designdoc_raw(couch)
+
+    # create processed tweets db.
+    if PROCESSED_DB_NAME in couch:
+        db_pro = couch[PROCESSED_DB_NAME]
         print("already has the db")
     else:
-        db_pro = couch_pro.create(PROCESSED_DB_NAME)
+        db_pro = couch.create(PROCESSED_DB_NAME)
         print('here')
 
     tag_tweets(db_raw, db_pro, mel_geo, vic_geo, state_geo)

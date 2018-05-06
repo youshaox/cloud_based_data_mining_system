@@ -24,19 +24,30 @@ PATH = "/services/Cloud"
 INVENTORY_FILE_PATH = "inventory"
 SLEEP_TIME = 5
 
-
-def orchestrate(inventory_name, sys_type):
-    if sys_type == "couchdb":
+def run(inventory_name, s_type):
+    playbook_name=""
+    if s_type == "couchdb":
         playbook_name = "couchdb.yml"
-    elif sys_type == "streamer":
+    elif s_type == "streamer":
         playbook_name = "streamer.yml"
-    elif sys_type == "searcher":
+    elif s_type == "searcher":
         playbook_name = "searcher.yml"
-    elif sys_type == "webserver":
+    elif s_type == "webserver":
         playbook_name = "webserver.yml"
+    elif s_type == "combo":
+        playbook_name = "combo.yml"
     command = "ansible-playbook -i " + inventory_name + " template/" + playbook_name
     logging.info(command)
     os.system(command)
+
+def orchestrate(inventory_name, sys_type, inventory_list):
+    if sys_type == "default":
+        for jinventory in inventory_list:
+            s_type = jinventory['s_type']
+            run(inventory_name, s_type)
+    else:
+        s_type = sys_type
+        run(inventory_name, s_type)
 
 def get_crendential():
     return "\n[all:vars]\nansible_ssh_user=ubuntu\nansible_ssh_private_key_file=./group25.pem\nansible_ssh_extra_arg"\
@@ -113,7 +124,7 @@ def generate_inventory(instance_info_list):
     generate_actual_inventory(inventory_file, inventory_list)
     # write the crendential info
     inventory_file.write(get_crendential())
-    return inventory_file
+    return inventory_filename, inventory_list
 
 def createVolume(ec2_conn, size):
     logging.info('Create a volume with size(G): ' + str(size))
@@ -221,8 +232,7 @@ if __name__ == "__main__":
     # ------
     # by default, we creating the instances shown in the configure.json
     if (sys_type == 'default'):
-        # print(sys_type_list)
-        print(instance_name_list)
+
         num = 0
         for instance_name in instance_name_list:
             jinfo = {}
@@ -296,25 +306,24 @@ if __name__ == "__main__":
     for instance in instance_info_list:
         logging.info(instance)
 
-    controller = controller.Controller(aws_access_key_id=jconfig['credentials']['access_key'], aws_secret_access_key=jconfig['credentials']['secret_key'])
-    # # todo 新的
     logging.info('4. Generate inventory')
 
-    # # test
-    #
-    # instance_info_list_fake = [{0: {'instance-id': 'i-2d4e280a', 'name': 'couchdb-master', 'type': 'combo', 'ip': '115.146.86.214'}},
-    #                            {1: {'instance-id': 'i-c54a9664', 'name': 'test', 'type': 'streamer', 'ip': '115.146.86.207'}},
-    #                            {2: {'instance-id': 'i-c54a9664', 'name': 'test', 'type': 'searcher', 'ip': '115.146.86.208'}},
-    #                            {3: {'instance-id': 'i-c54a9664', 'name': 'test', 'type': 'webserver', 'ip': '115.146.86.209'}}]
-    # # test
     # # -----
-    inventory_name = generate_inventory(instance_info_list)
-    #
+    inventory_filename, inventory_list = generate_inventory(instance_info_list)
     # # wait for the SSH port open
-    # time.sleep(SLEEP_TIME*4)
-    # # orchestrate(inventory_name, sys_type)
+
+    # inventory_list:
+    # [{'s_type': 'combo', 's_num': 3, 'ip_list': ['115.146.86.214', '115.146.86.207', '115.146.86.208']}, {'s_type': 'webserver', 's_num': 1, 'ip_list': ['115.146.86.209']}]
+    logging.info("waiting for a while for the open of the port 22")
+
+    time.sleep(SLEEP_TIME*10)
+    logging.info("orchestrate the servers")
+    orchestrate(inventory_filename, sys_type, inventory_list)
     # # todo form the cluster
-    # logging.info("Finish")
+    logging.info("Finish")
+
+# todo 1. 解决couchdb 启动
+# todo 2. form the cluster
 
 # Shawn
 # "access_key":"238656dab65d438390d91f689a08cb55",

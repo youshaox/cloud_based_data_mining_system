@@ -17,7 +17,7 @@
   ],
   "sys_types":[
     {
-      "name":"couchdb-master",
+      "name":"couchdb-slave",
       "type":"combo",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
@@ -25,7 +25,7 @@
       "security_groups":["ssh","default"]
     },
     {
-      "name":"test",
+      "name":"couchdb-master",
       "type":"combo",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",

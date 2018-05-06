@@ -55,6 +55,14 @@ The dynamic deployment part consists of two parts. It realises the functions to 
 1. The creation of the instance depends on the configuration file: **configure.json **, which specifies the nectar credentials and the instances details. It requires the dependent security groups and key pair (group25.pem) is already setup.
 2. The scale up of the instances is suggested to use the command line argument in deploy.py
 
+
+
+We support five kinds of system:
+
+1. couchdb
+2. streamer
+3. ​
+
 ### 3.2 control the instance
 
 ### 1. GET action for instance and volume
@@ -86,4 +94,4 @@ python controller.py get volume info default
 ## 6. TODO list
 
 1. Rather than using configure file, i would prefer to use database to maintain the configuration details.
-2. ​
+2. securtiy: password for git clone and couchdb and nectar key pair and nectar access key

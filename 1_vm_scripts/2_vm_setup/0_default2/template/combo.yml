@@ -86,7 +86,6 @@
        ./configure && make release
        cd /data/workspace/apache-couchdb-2.1.1/rel/couchdb/etc
        sed -i "s/;admin = mysecretpassword/admin = cdurq48YWLWtZtd/g" local.ini
-#       sed -i "s/;admin = mysecretpassword/admin = admin/g" local.ini
        sed -i 's/127.0.0.1/0.0.0.0/g' default.ini
        cd /data/workspace/apache-couchdb-2.1.1/rel/couchdb/releases/2.1.1;rm -rf sys.config
        echo '[' >> sys.config
@@ -112,7 +111,6 @@
 # 2.3 customised configure
    - name: sed the vm.args
      become: true
-     warn: False
      shell: |
        sed -i "s/-name couchdb@127.0.0.1/-name couchdb@$(ip route get 8.8.8.8 | awk '{print $NF; exit}')/g" /data/workspace/apache-couchdb-2.1.1/rel/couchdb/etc/vm.args
 # 3. run

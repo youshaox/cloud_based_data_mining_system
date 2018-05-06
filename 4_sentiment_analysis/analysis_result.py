@@ -1,4 +1,4 @@
-# #####################################################
+"""
 # calculate the sentiment result and the mobile system result in states, victoria and melbourne
 # write result in json file
 # {"area name": [average sentiment score, iOS system percentage, android system percentage}
@@ -6,12 +6,13 @@
 # state_sentiment_iOS_android.json
 # victoria_sentiment_iOS_android.json
 # melbourne_sentiment_iOS_android.json
-# #####################################################
 
-import mel_lga_name as ndata
+"""
+import lga_name as ndata
 import couchdb
 import logging
 import sys
+import create_design as cdview
 
 PROCESSED_DB_NAME = "processed_data2"
 RESULT_DB_NAME = "result_data_emoji2"
@@ -110,6 +111,9 @@ if __name__ == "__main__":
     except Exception:
         logging.error("processed tweets DB does not exist.")
         sys.exit(2)
+
+    # create view to access processed data
+    cdview.designdoc_pro_data(couch)
 
     tmp = sum_up_tag_tweet(db_pro, mel_result, vic_result, state_result)
     # get average sentiment score and system usage proportion
