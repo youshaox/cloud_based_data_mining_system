@@ -95,3 +95,4 @@ python controller.py get volume info default
 
 1. Rather than using configure file, i would prefer to use database to maintain the configuration details.
 2. securtiy: password for git clone and couchdb and nectar key pair and nectar access key
+3. 负载均衡
