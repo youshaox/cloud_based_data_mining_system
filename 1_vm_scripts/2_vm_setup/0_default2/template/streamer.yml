@@ -1,8 +1,11 @@
-# couchdb.yml
+# streamer.yml
+# 需要替换couchdb1
 ---
-- hosts: couchdb
+- hosts: streamer
   gather_facts: no
   remote_user: ubuntu
+  vars:
+    streamer_auth: "{{ hostvars[groups['streamer'][0]].auth }}"
   tasks:
 # 1. common
 # 1.1 apt packages related
@@ -18,6 +21,7 @@
      with_items:
        - python3-pip
        - git
+       - vim
 # 1.2 directory related
 # 1.2.1 mkdir the directory
    - name: mkdir the mount point
@@ -29,6 +33,7 @@
        group: ubuntu
        mode: 0755
 # 1.2.2 mount the volume on the directory
+
 # 1.2.3 mkdir the workspace
    - name: mkdir the /data/workspace
      become: true
@@ -41,7 +46,7 @@
      with_items:
       - /data/workspace
       - /data/log
-      - /data/log/couchdb
+      - /data/log/streamer
 ## 1.3 git
    - name: checkout from github
      command: git clone https://youshaox:f7c1b12e440eefc32882bd423415c0b83a616d33@github.com/youshaox/cluster_and_cloud_2018.git
@@ -62,41 +67,14 @@
 #     become: true
 #     command: python3 -m textblob.download_corpora
 
-# 2 specific: couchdb
-## 2.1 apt-get install couchdb related packages
-   - name: install the packages needed by couchdb
-     become: true
-     apt: name={{item}} state=latest update_cache=yes
+# 2 specific: crawler-streamer
+## 2.1 install the streamer related packages
+   - name: run the streamer
+     command: pip3 install {{item}}
      with_items:
-       - build-essential
-       - pkg-config
-       - runit
-       - erlang
-       - libicu-dev
-       - libmozjs185-dev
-       - libcurl4-openssl-dev
-## 2.2 run the shell script
-   - name: install couchdb via shell
-     shell: |
-       cd /data/workspace
-       wget http://apache.mirror.amaze.com.au/couchdb/source/2.1.1/apache-couchdb-2.1.1.tar.gz
-       tar -zxvf apache-couchdb-2.1.1.tar.gz
-       cd apache-couchdb-2.1.1/
-       sudo rm -rf /usr/lib/erlang/man
-       ./configure && make release
-       cd /data/workspace/apache-couchdb-2.1.1/rel/couchdb/etc
-       sed -i "s/;admin = mysecretpassword/admin = admin/g" local.ini
-       sed -i 's/127.0.0.1/0.0.0.0/g' default.ini
-       cd /data/workspace/apache-couchdb-2.1.1/rel/couchdb/releases/2.1.1;rm -rf sys.config
-       cp /data/workspace/cluster_and_cloud_2018/1_vm_scripts/4_ansible/0_default2/sys.config ./
-       chown ubuntu:ubuntu sys.config
-# 2.3 customised configure
-   - name: sed the vm.args
-     become: true
-     command: echo s/-name couchdb@127.0.0.1/-name couchdb@$(ifconfig eth0 | sed -n '/inet addr/p' | awk -F'[: ]+' '{print $4}')/g
+       - tweepy
 # 3. run
-   - name: run the couchdb
+   - name: run the streamer
      ignore_errors: True
      shell: |
-       cd /data/log/couchdb
-       nohup sh /data/workspace/apache-couchdb-2.1.1/rel/couchdb/bin/couchdb 2>&1 &
+       cd /data/log/streamer;nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json stream {{ streamer_auth }} &

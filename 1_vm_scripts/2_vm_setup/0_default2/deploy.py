@@ -24,26 +24,25 @@ PATH = "/services/Cloud"
 INVENTORY_FILE_PATH = "inventory"
 SLEEP_TIME = 5
 
-def count_couchdb(controller):
-    """
-    return the number of couchdb in the reservations
-    :param controller:
-    :return:
-    """
-    count = 0
-    instance_list = controller.get_instances()
-    for jinstance in instance_list:
-        if jinstance['instance_tags']['Type'] == 'couchdb':
-            count += 1
-    return count
+
+def orchestrate(inventory_name, sys_type):
+    if sys_type == "couchdb":
+        playbook_name = "couchdb.yml"
+    elif sys_type == "streamer":
+        playbook_name = "streamer.yml"
+    elif sys_type == "searcher":
+        playbook_name = "searcher.yml"
+    elif sys_type == "webserver":
+        playbook_name = "webserver.yml"
+    command = "ansible-playbook -i " + inventory_name + " template/" + playbook_name
+    print(command)
+    os.system(command)
 
 def get_crendential():
-    return """\n[all:vars]\n
-    ansible_ssh_user = ubuntu\n
-    ansible_ssh_private_key_file =./ group25.pem\n
-    ansible_ssh_extra_args = '-o StrictHostKeyChecking=no'"""
+    return "\n[all:vars]\nansible_ssh_user=ubuntu\nansible_ssh_private_key_file=./group25.pem\nansible_ssh_extra_arg"\
+           +"s='-o StrictHostKeyChecking=no'"
 
-def generate_inventory(controller, sys_type, num_instances, instance_list):
+def generate_inventory(controller, sys_type, num_instances, instance_info_list):
     # reuse
     suffix = datetime.datetime.now().strftime("%m%d%H%M")
     inventory_filename = INVENTORY_FILE_PATH+suffix
@@ -53,30 +52,27 @@ def generate_inventory(controller, sys_type, num_instances, instance_list):
     else:
         if sys_type == "webserver":
             inventory_file.write('[webserver]\n')
-            for indx in range(len(instance_list)):
-                inventory_file.write(instance_list[indx][indx]['ip'] +'\n')
-                inventory_file.write(get_crendential())
+            for indx in range(len(instance_info_list)):
+                inventory_file.write(instance_info_list[indx][indx]['ip'] +'\n')
+            inventory_file.write(get_crendential())
         elif sys_type == "searcher":
             inventory_file.write('[searcher]\n')
-            for indx in range(len(instance_list)):
-                inventory_file.write(instance_list[indx][indx]['ip'] +'\n')
-                inventory_file.write(get_crendential())
+            for indx in range(len(instance_info_list)):
+                inventory_file.write(instance_info_list[indx][indx]['ip'] +" auth=1" +'\n')
+            inventory_file.write(get_crendential())
         elif sys_type == "streamer":
             inventory_file.write('[streamer]\n')
-            for indx in range(len(instance_list)):
-                inventory_file.write(instance_list[indx][indx]['ip'] +'\n')
-                inventory_file.write(get_crendential())
+            for indx in range(len(instance_info_list)):
+                # todo consider to use dynamic authoriation number
+                inventory_file.write(instance_info_list[indx][indx]['ip'] + " auth=0" + '\n')
+            inventory_file.write(get_crendential())
         elif sys_type == "couchdb":
             inventory_file.write('[couchdb]\n')
-            couchdb_suffix = count_couchdb(controller) + 1
-            for indx in range(len(instance_list)):
-                inventory_file.write(instance_list[indx][indx]['ip'] +
-                                     " " +
-                                     "couchdb_name=couchdb" + str(couchdb_suffix) +
-                                     " " +
-                                     "couchdb_ip=" + instance_list[indx][indx]['ip'] +
-                                     '\n')
-                inventory_file.write(get_crendential())
+            for indx in range(len(instance_info_list)):
+                inventory_file.write(instance_info_list[indx][indx]['ip'] + '\n')
+                # print(len(instance_info_list))
+                # print(instance_info_list[indx][indx]['ip'])
+            inventory_file.write(get_crendential())
     return inventory_filename
 
 def createVolume(ec2_conn, size):
@@ -182,89 +178,93 @@ if __name__ == "__main__":
     logging.info("2.2 Creating instances")
 
     num = 1
-    instance_list = list()
+    instance_info_list = list()
+    # ------
+    # ## by default, we creating the instances shown in the configure.json
+    # if (sys_type == 'default'):
+    #
+    #     for type in sys_type_list:
+    #         jinfo = {}
+    #         reservation = ec2_conn.run_instances(max_count=1,
+    #                                              image_id=jconfig['sys_types'][sys_type_list.index(type)][
+    #                                                  'image_id'],
+    #                                              placement=jconfig['sys_types'][sys_type_list.index(type)][
+    #                                                  'placement'],
+    #                                              key_name=jconfig['key']['name'],
+    #                                              instance_type=jconfig['sys_types'][sys_type_list.index(type)][
+    #                                                  'instance_type'],
+    #                                              security_groups=jconfig['sys_types'][sys_type_list.index(type)][
+    #                                                  'security_groups'])
+    #         instance = reservation.instances[0]
+    #         add_tag(instance, 'Name', jconfig['sys_types'][sys_type_list.index(type)]['name'])
+    #         add_tag(instance, 'Type', jconfig['sys_types'][sys_type_list.index(type)]['type'])
+    #
+    #         while (instance.update() != "running"):
+    #             time.sleep(SLEEP_TIME)
+    #
+    #         logging.info("Create the instance: " + str(jconfig['sys_types'][sys_type_list.index(type)]['name']) + " with instance id: "
+    #                      + str(instance.id))
+    #         # attach the volumes:
+    #         instance_id = instance.id
+    #         try:
+    #             volume_size = jconfig['sys_types'][sys_type_list.index(type)]['volume_size']
+    #             attachVolume(ec2_conn, volume_size, instance_id)
+    #         except KeyError:
+    #             pass
+    #         ip_list.append(instance.private_ip_address)
+    #
+    #         ec2_conn.get_all_instances()
+    #
+    #         # jinfo = {num:{'name':jconfig['sys_types'][sys_type_list.index(type)]['name'],
+    #         #          'sys_type':jconfig['sys_types'][sys_type_list.index(type)]['type'],
+    #         #               'ip':}}
+    #         # instance_info_list.append(jinfo)
+    #
+    # else:
+    #     reservation = ec2_conn.run_instances(max_count=num_instances,
+    #                                          image_id=jconfig['sys_types'][sys_type_list.index(sys_type)][
+    #                                              'image_id'],
+    #                                          placement=jconfig['sys_types'][sys_type_list.index(sys_type)][
+    #                                              'placement'],
+    #                                          key_name=jconfig['key']['name'],
+    #                                          instance_type=jconfig['sys_types'][sys_type_list.index(sys_type)][
+    #                                              'instance_type'],
+    #                                          security_groups=jconfig['sys_types'][sys_type_list.index(sys_type)][
+    #                                              'security_groups'])
+    #
+    #     for instance in reservation.instances:
+    #         while (instance.update() != "running"):
+    #             time.sleep(SLEEP_TIME)
+    #     for num in range(num_instances):
+    #         jinfo = {}
+    #         instance = reservation.instances[num]
+    #         add_tag(instance, 'Name', jconfig['sys_types'][sys_type_list.index(sys_type)]['name'])
+    #         add_tag(instance, 'Type', jconfig['sys_types'][sys_type_list.index(sys_type)]['type'])
+    #         jinfo[num] = {"instance-id": instance.id,
+    #                             "name": jconfig['sys_types'][sys_type_list.index(sys_type)]['name'],
+    #                             'type': jconfig['sys_types'][sys_type_list.index(sys_type)]['type'],
+    #                             'ip': instance.private_ip_address}
+    #         instance_info_list.append(jinfo)
+    #
+    # logging.info('IP addresses of created instances: ' + ', '.join(ip_list))
+    # logging.info('3. Finish instances setup')
+    #
+    # logging.info("The info of the instances created:")
+    # for instance in instance_info_list:
+    #     logging.info(instance)
+    #
+    # controller = controller.Controller(aws_access_key_id=jconfig['credentials']['access_key'], aws_secret_access_key=jconfig['credentials']['secret_key'])
+    # # todo 新的
+    # logging.info('4. Generate inventory')
+    instance_info_list_fake = [{0: {'instance-id': 'i-bf902ce6', 'name': 'webserver', 'type': 'streamer', 'ip': '115.146.84.167'}},
+                    {1: {'instance-id': 'i-c9dbb437', 'name': 'webserver', 'type': 'searcher', 'ip': '115.146.85.170'}}]
 
-    # by default, we creating the instances shown in the configure.json
-    if (sys_type == 'default'):
+    inventory_name = generate_inventory(controller, sys_type, num_instances, instance_info_list_fake)
 
-        for type in sys_type_list:
-            jinfo = {}
-            reservation = ec2_conn.run_instances(max_count=1,
-                                                 image_id=jconfig['sys_types'][sys_type_list.index(type)][
-                                                     'image_id'],
-                                                 placement=jconfig['sys_types'][sys_type_list.index(type)][
-                                                     'placement'],
-                                                 key_name=jconfig['key']['name'],
-                                                 instance_type=jconfig['sys_types'][sys_type_list.index(type)][
-                                                     'instance_type'],
-                                                 security_groups=jconfig['sys_types'][sys_type_list.index(type)][
-                                                     'security_groups'])
-            instance = reservation.instances[0]
-            add_tag(instance, 'Name', jconfig['sys_types'][sys_type_list.index(type)]['name'])
-            add_tag(instance, 'Type', jconfig['sys_types'][sys_type_list.index(type)]['type'])
-
-            while (instance.update() != "running"):
-                time.sleep(SLEEP_TIME)
-
-            logging.info("Create the instance: " + str(jconfig['sys_types'][sys_type_list.index(type)]['name']) + " with instance id: "
-                         + str(instance.id))
-            # attach the volumes:
-            instance_id = instance.id
-            try:
-                volume_size = jconfig['sys_types'][sys_type_list.index(type)]['volume_size']
-                attachVolume(ec2_conn, volume_size, instance_id)
-            except KeyError:
-                pass
-            ip_list.append(instance.private_ip_address)
-
-            ec2_conn.get_all_instances()
-
-            # jinfo = {num:{'name':jconfig['sys_types'][sys_type_list.index(type)]['name'],
-            #          'sys_type':jconfig['sys_types'][sys_type_list.index(type)]['type'],
-            #               'ip':}}
-            # instance_list.append(jinfo)
-
-    else:
-        reservation = ec2_conn.run_instances(max_count=num_instances,
-                                             image_id=jconfig['sys_types'][sys_type_list.index(sys_type)][
-                                                 'image_id'],
-                                             placement=jconfig['sys_types'][sys_type_list.index(sys_type)][
-                                                 'placement'],
-                                             key_name=jconfig['key']['name'],
-                                             instance_type=jconfig['sys_types'][sys_type_list.index(sys_type)][
-                                                 'instance_type'],
-                                             security_groups=jconfig['sys_types'][sys_type_list.index(sys_type)][
-                                                 'security_groups'])
-
-        for instance in reservation.instances:
-            while (instance.update() != "running"):
-                time.sleep(SLEEP_TIME)
-        for num in range(num_instances):
-            jinfo = {}
-            instance = reservation.instances[num]
-            add_tag(instance, 'Name', jconfig['sys_types'][sys_type_list.index(sys_type)]['name'])
-            add_tag(instance, 'Type', jconfig['sys_types'][sys_type_list.index(sys_type)]['type'])
-            jinfo[num] = {"instance-id": instance.id,
-                                "name": jconfig['sys_types'][sys_type_list.index(sys_type)]['name'],
-                                'type': jconfig['sys_types'][sys_type_list.index(sys_type)]['type'],
-                                'ip': instance.private_ip_address}
-            instance_list.append(jinfo)
-
-    logging.info('IP addresses of created instances: ' + ', '.join(ip_list))
-    logging.info('3. Finish instances setup')
-
-    logging.info("The info of the instances created:")
-    for instance in instance_list:
-        logging.info(instance)
-
-    controller = controller.Controller(aws_access_key_id=jconfig['credentials']['access_key'], aws_secret_access_key=jconfig['credentials']['secret_key'])
-    # todo 新的
-    logging.info('4. Generate inventory')
-    # instance_list_fake =[{0: {'instance-id': 'i-bf902ce6', 'name': 'webserver', 'type': 'couchdb', 'ip': '115.146.85.207'}},
-    #                 {1: {'instance-id': 'i-c9dbb437', 'name': 'webserver', 'type': 'couchdb', 'ip': '115.146.85.13'}}]
-    generate_inventory(controller, sys_type, num_instances, instance_list)
-
-    count_couchdb(controller)
+    # wait for the SSH port open
+    # time.sleep(SLEEP_TIME*4)
+    # inventory_name ='inventory05061156.txt'
+    orchestrate(inventory_name, sys_type)
 
 # Shawn
 # "access_key":"238656dab65d438390d91f689a08cb55",
