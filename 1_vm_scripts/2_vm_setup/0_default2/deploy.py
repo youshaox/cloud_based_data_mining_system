@@ -30,7 +30,7 @@ def prepend_the_master_ip(inventory_filename, master_ip):
         content = inventory_file.read()
         inventory_file.seek(0, 0)
         line = "[master]\n" + str(master_ip) + "\n"
-        inventory_file.write(line.rstrip('\r\n' + '\n' + content)
+        inventory_file.write(line.rstrip('\r\n' + '\n' + content))
 
 def get_curl_command(master_ip, slave_ip):
     command = "curl -X PUT \"http://admin:cdurq48YWLWtZtd@" + str(master_ip) + ":5986/_nodes/couchdb@" + str(slave_ip) + "\"" + " -d {}\n"
