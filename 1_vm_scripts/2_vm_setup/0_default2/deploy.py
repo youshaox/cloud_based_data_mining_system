@@ -1,6 +1,6 @@
 
 """
-Main script for dynamic deployment.
+Script for dynamic deployment.
 Usage: python3 <deploy.py> <configure> <sys_type> <number_of_instances>
 Where: <config>              -- configuration file
        <sys_type>         -- streamer / searcher / couchdb / webserver / combo / default

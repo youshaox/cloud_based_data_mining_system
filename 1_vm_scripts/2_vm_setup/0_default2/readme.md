@@ -1,8 +1,8 @@
 # Dynamic Deployment part
 
-The dynamic deployment part consists of two parts. It realises the functions to setup the instances and configure required softwares and scale up with one click.
+The dynamic deployment part consists of two parts. It realises the functions to setup the instances and configure required softwares and scale up **with one click**.
 
-1. The setup and control of the vm machines on Nectar via the boto library.
+1. The setup and control of the vm machines on Nectar is via the boto library.
    1. creating the instances via **configure.json** or **command line** argument is implenmented by the **deploy.py**
    2. the control of the instances via **command line argument** is implemented by the **controller.py**
 
@@ -50,22 +50,79 @@ The dynamic deployment part consists of two parts. It realises the functions to 
 
 ###3. boto part:
 
-### 3.1 create instance
+### 3.1 create instances
 
-1. The creation of the instance depends on the configuration file: **configure.json **, which specifies the nectar credentials and the instances details. It requires the dependent security groups and key pair (group25.pem) is already setup.
-2. The scale up of the instances is suggested to use the command line argument in deploy.py
+There are three ways to create instances: 1. deploy.py (via configure.json)  2. deploy.py (via command line argument)  3. controller.py
+
+1. The creation of the instance depends on the configuration file: **configure.json **, which specifies the nectar credentials and the instances details. It requires the dependent security groups and key pair (group25.pem) is already setup. (**deploy.py**)
+2. The scale up of the instances is suggested to use the command line argument in **deploy.py**. But it requires the configure.json specifies the correspoding server type.
+3. Also **controller.py** also could be used to setup the script (python3 controller.py create instance  \<instance-name\> default)
+
+
+#### 3.1.1 deploy.py
+
+We support six types of server:
+
+1. couchdb (The server with couchdb running)
+2. streamer (The server with streaming harvester running)
+3. searcher (The server with searching harvester running)
+4. **combo** (couchdb + streamer + searcher running)
+5. webserver (webserver running)
+6. default (which creates the instances as specified in the configure.json and with correspongding softwares running)
+
+**By the way, we provide the configure.json (two nodes) and configure_project.json (4 nodes) as examples.**
+
+If there are more than 2 combo/couchdb in the configure.json file and "default" mode is used. **It will automatically formalise the cluster as we shown in the <u>video</u>**.
+
+```shell
+# for example, 3 combo + 1 webserver
+python3 deploy.py default 4
+
+# create a couchdb same as the one specified in the configure.json
+python3 deploy.py couchdb 1
+```
+
+#### Automatically configure the required softwares
+
+1. After that it will automatically generate the inventory file for the ansible-playbooks.
+2. Then it will run the ansible-playbook by calling the predefined yaml file: (cluster.yml, combo.yml, couchdb.yml, searcher.yml, streamer.yml, webserver.yml)
+3. It will automatically formalise the couchdb cluster if running in the default mode with at least two couchdb instances
+
+#### Future
+
+TODO LIST:
+
+1. The auth_index for different crawlers should be dynamic. 
+
+   Solution: We could use the database like mysql to maintain the configuration tables.
+
+2. It is not safe to use github key directly.
+
+   Solution: We could use the database like mysql to maintain the configuration tables.
 
 
 
-We support five kinds of system:
+#### 3.1.2 controller.py
 
-1. couchdb
-2. streamer
-3. ​
+You could also create the instance from deploy.py.
 
-### 3.2 control the instance
+```
+python3 controller.py create instance <instance-name>
+```
 
-### 1. GET action for instance and volume
+### 3.2 control the instance (controller.py)
+
+```shell
+python3 controller.py <action> <value_type> <value> <target>
+# Where: <action>         -- create / terminate / delete / attach / recover
+#        <value_type>      -- instance / volume / snapshot
+#        <value>           -- streamer (depends on value_type and action)
+#        <target>    -- default / streamer (instance-name)
+```
+
+Here are some examples for using this script.
+
+#### 1. GET action for instance and volume
 
 ```shell
 # 1. get the instances info
@@ -83,7 +140,18 @@ python controller.py get volume info default
 
 
 
-## 
+#### 2. TERMINATE the instance
+
+```shell
+# 3. terminate the instance
+python controller.py terminate <instance-id> default
+```
+
+##![4_terminate_instance](/Users/youshaoxiao/PycharmProjects/cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/readme_images/4_terminate_instance.jpg) 
+
+### 3. 
+
+
 
 ## 4. ansible
 

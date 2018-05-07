@@ -17,12 +17,12 @@
   ],
   "sys_types":[
     {
-      "name":"couchdb-slave",
-      "type":"combo",
+      "name":"webserver1",
+      "type":"webserver",
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
-      "security_groups":["ssh","default"]
+      "security_groups":["ssh","default","node"]
     },
     {
       "name":"couchdb-master",
@@ -30,7 +30,7 @@
       "instance_type":"m2.small",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
-      "security_groups":["ssh","default","node"]
+      "security_groups":["ssh","default"]
     }
   ]
 }

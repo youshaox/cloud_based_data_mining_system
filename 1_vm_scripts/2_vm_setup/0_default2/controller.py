@@ -1,5 +1,5 @@
 """
-Main script for controller.
+Script for controller of the instances, volumes and snapshots.
 Usage: python3 <controller.py> <action> <value_type> <value> <target>
 Where: <action>         -- create / terminate / delete / attach / recover
         <value_type>      -- instance / volume / snapshot
@@ -238,8 +238,13 @@ if __name__ == "__main__":
     action, value_type, value, target = check_arguments()
     logging.info('1. Check arguments success')
 
+    # shawn personal
     # controller = Controller(aws_access_key_id='238656dab65d438390d91f689a08cb55',aws_secret_access_key='e5734f0116ab4104b1b24c3f8dd651b0')
-    controller = Controller(aws_access_key_id='4fe68d160f60423bb0ff819f28f162f8',aws_secret_access_key='3e153f93268043b3b1717825921ff706')
+    # miao miao
+    # controller = Controller(aws_access_key_id='d39e2b6c96124c3cbd44749c7aa730b5',aws_secret_access_key='512ad49874cf4d8eba84ec7c526cb3a5')
+    # mia
+    controller = Controller(aws_access_key_id='04908217f41748f28077b2c0f6bffa32',aws_secret_access_key='4c29e65c91fe4f7c8323e554df848eef')
+    # controller = Controller(aws_access_key_id='4fe68d160f60423bb0ff819f28f162f8',aws_secret_access_key='3e153f93268043b3b1717825921ff706')
     logging.info("2. Connection to Nectar sucess")
 
     logging.info("3. Trigger the actions")
