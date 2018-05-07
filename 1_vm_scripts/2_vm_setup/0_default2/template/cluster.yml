@@ -1,0 +1,7 @@
+# cluster.yml
+---
+- hosts: master
+  gather_facts: no
+  remote_user: ubuntu
+  tasks:
+   - script: ../cluster_setup.sh

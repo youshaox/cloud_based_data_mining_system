@@ -42,7 +42,6 @@
      with_items:
       - /data/workspace
       - /data/log
-      - /data/log/couchdb
       - /data/log/streamer
       - /data/log/searcher
 ## 1.3 git
@@ -148,7 +147,7 @@
        sleep 5
        sv status couchdb
 # 4. run the crawler
-   - name: run the craweler: streamer, seacher
+   - name: run the streamer, seacher
      ignore_errors: True
      shell: |
        cd /data/log/stream;nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json stream 0 &

@@ -22,7 +22,40 @@ ERROR = 2
 PORT = 8773
 PATH = "/services/Cloud"
 INVENTORY_FILE_PATH = "inventory"
+CLUSTER_FILE_PATH = "cluster_setup.sh"
 SLEEP_TIME = 5
+
+# cluster formation
+def wirte_the_master_ip(inventory_filename, master_ip):
+    with open(inventory_filename, 'a+') as inventory_file:
+        inventory_file.write("[master]\n")
+        inventory_file.write(str(master_ip) + "\n")
+
+def get_curl_command(master_ip, slave_ip):
+    command = "curl -X PUT \"http://admin:cdurq48YWLWtZtd@" + str(master_ip) + ":5986/_nodes/couchdb@" + str(slave_ip) + "\"" + " -d {}\n"
+    return command
+
+def genearate_cluster_setup_file(instance_info_list):
+    suffix = datetime.datetime.now().strftime("%m%d%H%M")
+    cluster_setup_filename = CLUSTER_FILE_PATH
+    # print(cluster_setup_filename)
+
+    with open(cluster_setup_filename, 'w+') as cluster_setup_file:
+        master_ip=""
+        slave_ip_list=list()
+        for indx in range(len(instance_info_list)):
+            if instance_info_list[indx][indx]['name'] == "couchdb-master":
+                master_ip = instance_info_list[indx][indx]['ip']
+            elif instance_info_list[indx][indx]['name'] == "couchdb-slave":
+                slave_ip_list.append(instance_info_list[indx][indx]['ip'])
+        if len(slave_ip_list) == 0:
+            logging.info("0 slave. No need for cluster setup")
+        else:
+            cluster_setup_file.write('#!/usr/bin/env bash\n')
+            for slave_ip in slave_ip_list:
+                line = get_curl_command(master_ip, slave_ip)
+                cluster_setup_file.write(line)
+    return cluster_setup_filename, len(slave_ip_list), master_ip
 
 def run(inventory_name, s_type):
     playbook_name=""
@@ -36,7 +69,7 @@ def run(inventory_name, s_type):
         playbook_name = "webserver.yml"
     elif s_type == "combo":
         playbook_name = "combo.yml"
-    command = "ansible-playbook -vvv -i " + inventory_name + " template/" + playbook_name
+    command = "ansible-playbook -i " + inventory_name + " template/" + playbook_name
     logging.info(command)
     os.system(command)
 
@@ -51,7 +84,7 @@ def orchestrate(inventory_name, sys_type, inventory_list):
 
 def get_crendential():
     return "\n[all:vars]\nansible_ssh_user=ubuntu\nansible_ssh_private_key_file=./group25.pem\nansible_ssh_extra_arg"\
-           +"s='-o StrictHostKeyChecking=no'"
+           +"s='-o StrictHostKeyChecking=no'\n"
 
 def generate_actual_inventory(inventory_file, sys_list):
     for jsys in sys_list:
@@ -319,12 +352,15 @@ if __name__ == "__main__":
     time.sleep(SLEEP_TIME*12)
     logging.info("orchestrate the servers")
     orchestrate(inventory_filename, sys_type, inventory_list)
-    # # todo form the cluster
+
+    if sys_type == 'default':
+        cluster_setup_shell_filename, slave_num, master_ip = genearate_cluster_setup_file(instance_info_list)
+        if slave_num != 0:
+            wirte_the_master_ip(inventory_filename, master_ip)
+            command = "ansible-playbook -v -i " + inventory_filename + " master template/cluster.yml"
+            os.system(command)
+            logging.info("Form the couchdb cluster with slave number:" + str(slave_num))
     logging.info("Finish")
-
-# todo 1. 解决couchdb 启动
-# todo 2. form the cluster
-
 # Shawn
 # "access_key":"238656dab65d438390d91f689a08cb55",
 # "secret_key":"e5734f0116ab4104b1b24c3f8dd651b0"
