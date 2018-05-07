@@ -15,7 +15,6 @@ import os
 import time
 import datetime
 from boto.ec2.regioninfo import RegionInfo
-import controller
 
 NUM_ARGS = 4
 ERROR = 2
@@ -26,8 +25,6 @@ CLUSTER_FILE_PATH = "cluster_setup.sh"
 SLEEP_TIME = 5
 
 # cluster formation
-
-
 def prepend_the_master_ip(inventory_filename, master_ip):
     with open(inventory_filename, 'r+') as inventory_file:
         content = inventory_file.read()
@@ -40,10 +37,7 @@ def get_curl_command(master_ip, slave_ip):
     return command
 
 def genearate_cluster_setup_file(instance_info_list):
-    suffix = datetime.datetime.now().strftime("%m%d%H%M")
     cluster_setup_filename = CLUSTER_FILE_PATH
-    # print(cluster_setup_filename)
-
     with open(cluster_setup_filename, 'w+') as cluster_setup_file:
         master_ip=""
         slave_ip_list=list()
@@ -335,22 +329,13 @@ if __name__ == "__main__":
                                 'ip': instance.private_ip_address}
             instance_info_list.append(jinfo)
 
-    # -----
-
     logging.info('3. Finish instances setup')
-
     logging.info("The info of the instances created:")
     for instance in instance_info_list:
         logging.info(instance)
 
     logging.info('4. Generate inventory')
-
-    # # -----
     inventory_filename, inventory_list = generate_inventory(instance_info_list)
-    # # wait for the SSH port open
-
-    # inventory_list:
-    # [{'s_type': 'combo', 's_num': 3, 'ip_list': ['115.146.86.214', '115.146.86.207', '115.146.86.208']}, {'s_type': 'webserver', 's_num': 1, 'ip_list': ['115.146.86.209']}]
     logging.info("waiting for a while for the open of the port 22")
 
     time.sleep(SLEEP_TIME*12)
@@ -363,7 +348,6 @@ if __name__ == "__main__":
         if slave_num != 0:
             prepend_the_master_ip(inventory_filename, master_ip)
             command = "ansible-playbook -v -i " + inventory_filename + " template/cluster.yml"
-            print(command)
             os.system(command)
             logging.info("Form the couchdb cluster with slave number:" + str(slave_num))
     logging.info("Finish")
