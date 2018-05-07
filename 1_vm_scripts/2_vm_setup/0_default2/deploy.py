@@ -26,10 +26,14 @@ CLUSTER_FILE_PATH = "cluster_setup.sh"
 SLEEP_TIME = 5
 
 # cluster formation
-def wirte_the_master_ip(inventory_filename, master_ip):
-    with open(inventory_filename, 'a+') as inventory_file:
-        inventory_file.write("[master]\n")
-        inventory_file.write(str(master_ip) + "\n")
+
+
+def prepend_the_master_ip(inventory_filename, master_ip):
+    with open(inventory_filename, 'r+') as inventory_file:
+        content = inventory_file.read()
+        inventory_file.seek(0, 0)
+        line = "[master]\n" + str(master_ip) + "\n"
+        inventory_file.write(line.rstrip('\r\n' + '\n' + content)
 
 def get_curl_command(master_ip, slave_ip):
     command = "curl -X PUT \"http://admin:cdurq48YWLWtZtd@" + str(master_ip) + ":5986/_nodes/couchdb@" + str(slave_ip) + "\"" + " -d {}\n"
@@ -357,19 +361,9 @@ if __name__ == "__main__":
     if sys_type == 'default':
         cluster_setup_shell_filename, slave_num, master_ip = genearate_cluster_setup_file(instance_info_list)
         if slave_num != 0:
-            wirte_the_master_ip(inventory_filename, master_ip)
-            command = "ansible-playbook -v -i " + inventory_filename + " master template/cluster.yml"
+            prepend_the_master_ip(inventory_filename, master_ip)
+            command = "ansible-playbook -v -i " + inventory_filename + " template/cluster.yml"
+            print(command)
             os.system(command)
             logging.info("Form the couchdb cluster with slave number:" + str(slave_num))
     logging.info("Finish")
-# Shawn
-# "access_key":"238656dab65d438390d91f689a08cb55",
-# "secret_key":"e5734f0116ab4104b1b24c3f8dd651b0"
-
-# miaomiao
-# d39e2b6c96124c3cbd44749c7aa730b5
-# 512ad49874cf4d8eba84ec7c526cb3a5
-
-# mia
-# 04908217f41748f28077b2c0f6bffa32
-# 4c29e65c91fe4f7c8323e554df848eef

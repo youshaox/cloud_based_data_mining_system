@@ -91,7 +91,15 @@ python controller.py get volume info default
 
 ## 5. Usage example
 
-## 6. TODO list
+
+
+## 6. TEST
+
+
+
+
+
+## 7. TODO list
 
 1. Rather than using configure file, i would prefer to use database to maintain the configuration details.
 2. securtiy: password for git clone and couchdb and nectar key pair and nectar access key
@@ -99,7 +107,7 @@ python controller.py get volume info default
 
 
 
-# 7. nectar
+# 8. nectar
 
 1. The termination of some instances have to wait for a long time.
 2. The termination of some volumes have to wait for a long time.

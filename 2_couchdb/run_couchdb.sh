@@ -33,3 +33,5 @@ sudo chmod u+x /etc/sv/couchdb/log/run
 sudo ln -s /etc/sv/couchdb/ /etc/service/couchdb
 sleep 5
 sudo sv status couchdb
+
+curl -X GET admin:cdurq48YWLWtZtd@localhost:5984/_membership
