@@ -1,12 +1,10 @@
-
 """
 Script for dynamic deployment.
 Usage: python3 <deploy.py> <configure> <sys_type> <number_of_instances>
 Where: <config>              -- configuration file
        <sys_type>         -- streamer / searcher / couchdb / webserver / combo / default
-       <number_of_instances> -- number of instances to create. This must be 4 for system type 'default' in the project and 2 for the system for demo.
+       <number_of_instances> -- number of instances to create. This must be the number of instances specified in the configure file.
 """
-import re
 import sys
 import logging
 import json
@@ -24,8 +22,14 @@ INVENTORY_FILE_PATH = "inventory"
 CLUSTER_FILE_PATH = "cluster_setup.sh"
 SLEEP_TIME = 5
 
-# cluster formation
+# couchdb cluster formation
 def prepend_the_master_ip(inventory_filename, master_ip):
+    """
+    prepend the master ip to the inventory for the couchdb cluster
+    :param inventory_filename:
+    :param master_ip:
+    :return:
+    """
     with open(inventory_filename, 'r+') as inventory_file:
         content = inventory_file.read()
         inventory_file.seek(0, 0)
@@ -56,6 +60,12 @@ def genearate_cluster_setup_file(instance_info_list):
     return cluster_setup_filename, len(slave_ip_list), master_ip
 
 def run(inventory_name, s_type):
+    """
+    run the corresponding yaml
+    :param inventory_name:
+    :param s_type:
+    :return:
+    """
     playbook_name=""
     if s_type == "couchdb":
         playbook_name = "couchdb.yml"
@@ -98,7 +108,6 @@ def generate_actual_inventory(inventory_file, sys_list):
                 inventory_file.write(ip + " auth=1" + "\n")
         elif s_type == "streamer":
             inventory_file.write('[streamer]\n')
-            # todo consider to use dynamic authoriation number
             for ip in jsys['ip_list']:
                 inventory_file.write(ip + " auth=0" + "\n")
         elif s_type == "couchdb":
@@ -114,6 +123,11 @@ def generate_actual_inventory(inventory_file, sys_list):
             sys.exit(ERROR)
 
 def generate_inventory(instance_info_list):
+    """
+    generate the inventory file for the usage in the ansibe-playbook
+    :param instance_info_list:
+    :return:
+    """
     inventory_list = list()
     combo_ip_list = list()
     couchdb_ip_list = list()
@@ -121,7 +135,6 @@ def generate_inventory(instance_info_list):
     searcher_ip_list = list()
     webserver_ip_list = list()
 
-    # name of the inventory
     suffix = datetime.datetime.now().strftime("%m%d%H%M")
     inventory_filename = INVENTORY_FILE_PATH+suffix
     inventory_file = open(inventory_filename, 'w+')
@@ -153,11 +166,17 @@ def generate_inventory(instance_info_list):
     if len(webserver_ip_list) != 0:
         inventory_list.append({"s_type": "webserver", "s_num": len(webserver_ip_list), "ip_list": webserver_ip_list})
     generate_actual_inventory(inventory_file, inventory_list)
-    # write the crendential info
+
     inventory_file.write(get_crendential())
     return inventory_filename, inventory_list
 
 def createVolume(ec2_conn, size):
+    """
+    create volume
+    :param ec2_conn:
+    :param size:
+    :return:
+    """
     logging.info('Create a volume with size(G): ' + str(size))
     return ec2_conn.create_volume(size, "melbourne-qh2")
 
@@ -182,29 +201,10 @@ def add_tag(instance, key, name):
         status = instance.update()
     instance.add_tag(key, name)
 
-
-def create_ip_list(reservation):
-    """Create a list containing IP addresses of created instances.
-
-        Args:
-            reservation:
-
-    """
-    ip_list = list()
-    for instance in reservation.instances:
-        while (instance.update() != "running"):
-            time.sleep(SLEEP_TIME)
-        ip_list.append(instance.private_ip_address)
-    return ip_list
-
-
 def check_arguments():
-    """Check command line arguments and return configuration parameters in a json object and a list containing all system types.
-        Args:
-            reservation:
-        Returns:
-            jconfig:
-            sys_type_list:
+    """
+    Check command line arguments and return configuration parameters in a json object and a list containing all system types.
+    :return:
     """
     if len(sys.argv) != NUM_ARGS:
         logging.error(
@@ -243,8 +243,7 @@ def check_arguments():
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s-[line:%(lineno)d]-%(levelname)s: %(message)s')
-    #
-    # """1. 读取配置文件中所有的配置信息"""
+    # 1. check the arguments
     jconfig, sys_type_list, instance_name_list = check_arguments()
     sys_type = sys.argv[2]
     num_instances = int(sys.argv[3])
@@ -258,10 +257,8 @@ if __name__ == "__main__":
                                 is_secure=True, region=region, port=PORT, path=PATH, validate_certs=False)
     logging.info("2.2 Creating instances")
 
-
     instance_info_list = list()
-    # ------
-    # by default, we creating the instances shown in the configure.json
+
     if (sys_type == 'default'):
 
         num = 0
@@ -286,15 +283,14 @@ if __name__ == "__main__":
 
             logging.info("Create the instance: " + str(jconfig['sys_types'][instance_name_list.index(instance_name)]['name']) + " with instance id: "
                          + str(instance.id))
-            # attach the volumes:
+            # attach the volumes if the volume is specified in the configure.json:
             instance_id = instance.id
             try:
-                # if there is no volume set, just leave it
+                # if there is no volume set, just leave it.
                 volume_size = jconfig['sys_types'][instance_name_list.index(instance_name)]['volume_size']
                 attachVolume(ec2_conn, volume_size, instance_id)
             except KeyError:
                 pass
-
             jinfo = {}
             jinfo[num] = {"instance-id": instance.id,
                       "name": jconfig['sys_types'][instance_name_list.index(instance_name)]['name'],
@@ -303,7 +299,6 @@ if __name__ == "__main__":
             instance_info_list.append(jinfo)
             num += 1
     else:
-        # 如果有多台相同的name_list
         reservation = ec2_conn.run_instances(max_count=num_instances,
                                              image_id=jconfig['sys_types'][sys_type_list.index(sys_type)][
                                                  'image_id'],
@@ -336,13 +331,13 @@ if __name__ == "__main__":
 
     logging.info('4. Generate inventory')
     inventory_filename, inventory_list = generate_inventory(instance_info_list)
-    logging.info("waiting for a while for the open of the port 22")
+    logging.info("Waiting for a while for the open of the port 22")
 
     time.sleep(SLEEP_TIME*12)
-    logging.info("orchestrate the servers")
+    logging.info("5. Orchestrate the servers")
     orchestrate(inventory_filename, sys_type, inventory_list)
 
-    # form cluster function only provided to the default mode
+    # form cluster function only provided to the default mode if the couchdb instances >= 2
     if sys_type == 'default':
         cluster_setup_shell_filename, slave_num, master_ip = genearate_cluster_setup_file(instance_info_list)
         if slave_num != 0:
@@ -350,4 +345,4 @@ if __name__ == "__main__":
             command = "ansible-playbook -v -i " + inventory_filename + " template/cluster.yml"
             os.system(command)
             logging.info("Form the couchdb cluster with slave number:" + str(slave_num))
-    logging.info("Finish")
+    logging.info("6. Finish")

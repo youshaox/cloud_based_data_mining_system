@@ -94,13 +94,11 @@ TODO LIST:
 
 1. The auth_index for different crawlers should be dynamic. 
 
-   Solution: We could use the database like mysql to maintain the configuration tables.
+   Solution: We could use the database like mysql to maintain the configuration tables for more flexiable deployment.
 
 2. It is not safe to use github key directly.
 
-   Solution: We could use the database like mysql to maintain the configuration tables.
-
-
+   Solution: We could use the database like mysql to maintain the configuration tables for the security reason.
 
 #### 3.1.2 controller.py
 
