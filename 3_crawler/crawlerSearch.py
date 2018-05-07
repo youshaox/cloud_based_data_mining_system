@@ -17,8 +17,6 @@ class TwitterSearcher():
         self.db = db
         self.geo = geo
         self.query = query
-
-        # API rate call limit.
         self.limit = 100
 
     def search(self):
@@ -84,7 +82,7 @@ class TwitterSearcher():
                     jtweet = tweet._json
                     if tweet.coordinates or tweet.place:
                         # store tweets with geo code.
-                        jtweet['_id'] = str(jtweet['id'])
+                        jtweet['_id'] = jtweet['id_str']
                         try:
                             self.db.save(jtweet)
                         except couchdb.http.ResourceConflict:

@@ -1,6 +1,1 @@
-1. 这块的功能 （基本功能 + 调用/使用方式）
-2. 这块的目录结构（只说用到的）
-3. 这块的依赖环境
-
-
-
+ dynamic deployment scripts are located in 2_vm_setup.
