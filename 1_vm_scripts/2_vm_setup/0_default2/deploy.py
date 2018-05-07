@@ -353,6 +353,7 @@ if __name__ == "__main__":
     logging.info("orchestrate the servers")
     orchestrate(inventory_filename, sys_type, inventory_list)
 
+    # form cluster function only provided to the default mode
     if sys_type == 'default':
         cluster_setup_shell_filename, slave_num, master_ip = genearate_cluster_setup_file(instance_info_list)
         if slave_num != 0:
