@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 	var all_data = [];
 
 	var aurin_url = 'http://115.146.86.138:5984/aurin/_design/au/_view/view';
-	var twitter_url = 'http://115.146.86.21:5984/result_data_emoji2/_design/try/_view/view';
+	var twitter_url = 'http://115.146.86.21:5984/result_data_emoji3/_design/try/_view/viewResult';
 
 	rp(aurin_url)
 	    .then(function(response) {
