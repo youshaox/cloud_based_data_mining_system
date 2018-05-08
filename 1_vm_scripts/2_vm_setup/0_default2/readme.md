@@ -63,7 +63,7 @@ BTW: In case of testing, there are also two video demos separately showing the s
  python3 controller.py attach volume 40 i-d7da2302
 ```
 
-###3. boto part:
+### 3. boto part:
 
 ### 3.1 create instances
 
@@ -208,22 +208,8 @@ The ansible part consists of the inventory and playbook.yaml which locates in cl
 5. webserver.yml: playbook to run the webserver
 6. cluster.yml: playbook to formalise the couchdb cluster in default mode.
 
-## 6. Test
+## 5. TODO list
 
-The dynamic deployment with one click 
-
-## 7. TODO list
-
-1. Rather than using configure file, i would prefer to use database to maintain the configuration details.
+1. Rather than using configure file, database is preferred to maintain the configuration details since databse tables are more easy to maintain and good structure and synchronisation feature.
 2. securtiy: password for git clone and couchdb and nectar key pair and nectar access key
-3. load balance: two niginx two node.js
-4. monitor system
-5. spark for analysis.
-
-
-
-# 8. nectar
-
-1. The termination of some instances have to wait for a long time.
-2. The termination of some volumes have to wait for a long time.
-3. The response of web page is very slow.
+3. monitor system should be implemented to monitor the status of service
