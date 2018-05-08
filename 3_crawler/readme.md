@@ -45,7 +45,7 @@ Harverst tweets from the streaming API and save the tweets in the couchdb.
 
 **Avoid the duplicate tweets**
 
-1. id/id_str is the unique id of each tweet. So id_str is used as the "\_id" in the couchdb where "_\_id" is also unqiue in the couchdb. So a duplicate tweet will cause resource conflicts when it is saved to the couchdb. We use this method to avoid the duplicate tweets in our project.
+1. id/id_str is the unique id of each tweet. So id_str is used as the "\_id" in the couchdb where "_id" is also unqiue in the couchdb. So a duplicate tweet will cause resource conflicts when it is saved to the couchdb. We use this method to avoid the duplicate tweets in our project.
 
 
 2. Also id_str(string) should be used rather than id (number) due to some programming languages may have difficulty/silent defects in interpreting it.
