@@ -75,3 +75,18 @@ https://www.karambelkar.info/2015/01/how-to-use-twitters-search-rest-api-most-ef
 2. proxy handler
 
    At first, proxy handler is thought to be used to handle with the anti-crawler techniques. That is to say crawlling the proxy websites and use available proxy IPs for our crawler. However the usage of the twitter API makes this process simple. Also the rate limit is imposed on each account.
+
+## TEST
+
+With the prerequisites installed and authoriation key provided in configure.json file and couchdb installed in the local system, our system could be tested using the following commands:
+
+```shell
+# use the streaming api with the authoriation key 0
+python3 crawler.py configure.json stream 0
+
+# use the search api with the authoriation key 1
+python3 crawler.py configure.json search 1
+```
+
+
+

@@ -170,6 +170,21 @@ def generate_inventory(instance_info_list):
     inventory_file.write(get_crendential())
     return inventory_filename, inventory_list
 
+def get_volume_size(jconfig):
+    """
+    return the volume size of the first combo or couchdb in the configure.json
+    :param jconfig:
+    :return:
+    """
+    jinstance_info_list = jconfig['sys_types']
+    for jinstance_info in jinstance_info_list:
+        print(jinstance_info)
+        if jinstance_info['type'] in 'couchdb' or jinstance_info['type'] in 'combo':
+            # print("+" + jinstance_info)
+            n_volume_size = jinstance_info['volume_size']
+            # print(n_volume_size)
+            return n_volume_size
+
 def createVolume(ec2_conn, size):
     """
     create volume
@@ -181,7 +196,7 @@ def createVolume(ec2_conn, size):
     return ec2_conn.create_volume(size, "melbourne-qh2")
 
 def attachVolume(ec2_conn, volume_size, target_instance_id):
-    volume = createVolume(ec2_conn, volume_size)
+    volume = createVolume(ec2_conn, int(volume_size))
     volume_id = volume.id
     ec2_conn.attach_volume(volume_id, target_instance_id, "/dev/vdc")
     logging.info("Attach " + str(volume_id) + " to " + str(target_instance_id))
@@ -323,6 +338,15 @@ if __name__ == "__main__":
                                 'type': jconfig['sys_types'][sys_type_list.index(sys_type)]['type'],
                                 'ip': instance.private_ip_address}
             instance_info_list.append(jinfo)
+            # attach the volume if there is volume settings
+            if sys_type in "couchdb" or sys_type in "combo":
+                try:
+                    # if there is no volume set, just leave it.
+                    instance_id = instance.id
+                    volume_size = get_volume_size(jconfig)
+                    attachVolume(ec2_conn, volume_size, instance_id)
+                except KeyError:
+                    pass
 
     logging.info('3. Finish instances setup')
     logging.info("The info of the instances created:")

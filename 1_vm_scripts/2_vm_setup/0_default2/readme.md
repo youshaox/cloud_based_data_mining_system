@@ -1,10 +1,10 @@
-# Dynamic Deployment part
+# Dynamic Deployment
 
 The dynamic deployment part consists of two parts. It realises the functions to setup the instances and configure required softwares and scale up **with one click**.
 
 1. The setup and control of the vm machines on Nectar is via the boto library.
    1. creating the instances via **configure.json** or **command line** argument is implenmented by the **deploy.py**
-   2. the control of the instances via **command line argument** is implemented by the **controller.py**
+   2. the control of the instances via **command line argument** isimplemented by the **controller.py**
 
 
 2. The automatic configuration of softwares using ansible library.
@@ -16,14 +16,23 @@ The dynamic deployment part consists of two parts. It realises the functions to 
 
    ```shell
    python3
-   ansible 2.5
    ```
 
 2. python packages:
 
    ```
    boto
+   ansible 2.5
    ```
+
+3. nectar
+
+   1. all server image is default to be "NeCTAR Ubuntu 16.04 LTS (Xenial) amd64".
+   2. Following security group needs to be pre-create: ssh, default, node(web:with TCP port 3000 open for all CIDR)
+   3. the key pair: group25.pem for nectar need to be set
+   4. the ec2 access ky and ec2 secret key need to be provided.
+
+   ​
 
 ## 2. Introduction
 
@@ -120,7 +129,9 @@ python3 controller.py <action> <value_type> <value> <target>
 
 Here are some examples for using this script.
 
-#### 1. GET action for instance and volume
+### 3.2.1 instance related operations
+
+#### 1. GET action
 
 ```shell
 # 1. get the instances info
@@ -129,41 +140,71 @@ python controller.py get instance info default
 
 ![3_instances_info](/Users/youshaoxiao/PycharmProjects/cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/readme_images/3_instances_info.jpg)
 
-```shell
-# 2. get the volumes info
-python controller.py get volume info default
-```
-
-![2_volume_info](/Users/youshaoxiao/PycharmProjects/cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/readme_images/2_volume_info.jpg)
-
-
-
-#### 2. TERMINATE the instance
+#### 2. terminate action
 
 ```shell
-# 3. terminate the instance
+# 2. terminate the instance
+# if the volume is attached to the instance, it will only detach the volume.
 python controller.py terminate <instance-id> default
 ```
 
 ##![4_terminate_instance](/Users/youshaoxiao/PycharmProjects/cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/readme_images/4_terminate_instance.jpg) 
 
-### 3. 
+#### 3. create action
+
+```shell
+# This creates a medium size instance with ubuntu 16.04
+# python controller.py create <instance-name> default
+python controller.py create couchdb-slave default
+```
+
+### 3.2.2 volume related operations 
+
+```shell
+# 1. get the volume info
+python controller.py get volume info default
+# 2. delete the volume: it will firstly detach the volume if it is attached.
+python controller.py delete volume vol-c7f34877 default
+# 3. create volume with the size to existing instance
+python controller.py create volume 40 i-d7da2302
+```
+
+![5_delete_volume](/Users/youshaoxiao/PycharmProjects/cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/readme_images/5_delete_volume.jpg)
+
+### 3.2.3 snapshot related operations
+
+```shell
+# 1. create the snapshot of the volume
+python controller.py create snapshot vol-f5a3a3f2 default
+# 2. delete the snapshot of the volume
+python controller.py delete snapshot snap-ebffc956 default
+# 3. recover the snapshot in a new volume and attach to the existing instance
+# python controller.py recover snapshot <snap-id> <instance-id>
+python controller.py recover snapshot snap-f5a3a3f2 i-d7da2302
+```
+
+![6_create_the_snapshot](/Users/youshaoxiao/PycharmProjects/cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/readme_images/6_create_the_snapshot.jpg)
 
 
 
 ## 4. ansible
 
+There deploy.py will automatically generate the inventory file and call the corresponding playbooks (yaml).
 
+The ansible part consists of the inventory and playbook.yaml which locates in cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/template:
 
-## 5. Usage example
+1. combo.yml: playbook to run the couchdb + streamer + searcher
+   * there are two versions: combo_with_volume and combo_without_volume (whether mount the volume on the directory). If you wanna to test either, just copy the required templates to cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/template.
+2. couchdb.yml: playbook to run the couchdb
+   * there are two versions: couchdb_with_volume and couchdb_without_volume (whether mount the volume on the directory). If you wanna to test either, just copy the required templates to cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/template.
+3. searcher.yml: playbook to run the searcher 
+4. streamer.yml: playbook to run the streamer
+5. webserver.yml: playbook to run the webserver
+6. cluster.yml: playbook to formalise the couchdb cluster in default mode.
 
+## 6. Test
 
-
-## 6. TEST
-
-
-
-
+The dynamic deployment with one click 
 
 ## 7. TODO list
 
@@ -180,4 +221,3 @@ python controller.py terminate <instance-id> default
 1. The termination of some instances have to wait for a long time.
 2. The termination of some volumes have to wait for a long time.
 3. The response of web page is very slow.
-4. ​

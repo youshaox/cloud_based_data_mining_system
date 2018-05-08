@@ -44,12 +44,17 @@
       "security_groups":["ssh","default"]
     },
     {
-      "name":"nodejs",
-      "type":"webserver",
-      "instance_type":"m1.medium",
-      "image_id":"ami-190a1773",
-      "placement":"melbourne-qh2",
-      "volume_size":"40",
-      "security_groups":["ssh","default","node"]
+      "name": "nodejs",
+      "type": "webserver",
+      "instance_type": "m1.medium",
+      "image_id": "ami-190a1773",
+      "placement": "melbourne-qh2",
+      "volume_size": "40",
+      "security_groups": [
+        "ssh",
+        "default",
+        "node"
+      ]
+    }
   ]
 }

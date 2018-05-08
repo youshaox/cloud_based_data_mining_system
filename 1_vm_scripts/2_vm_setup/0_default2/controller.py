@@ -6,9 +6,11 @@ Where: <action>         -- create / terminate / delete / attach / recover
         <value>           -- depends on value_type and action
         <target>    -- default / streamer (instance-name)
         e.g:
+        get instance info default
         create instance instance-name default
         terminate instance i-d7da2302 default
-        attach volume 40 i-d7da2302
+        get volume info default
+        create volume 40 i-d7da2302
         delete volume vol-f5a3a3f2 default
         create snapshot vol-f5a3a3f2 default
         delete snapshot snap-f5a3a3f2 default
@@ -127,7 +129,6 @@ class Controller():
 
     def deleteVolume(self, volume_id):
         volumes = self.ec2_conn.get_all_volumes()
-
         try:
             detach = self.detachVolume(volume_id)
         except boto.exception.EC2ResponseError:

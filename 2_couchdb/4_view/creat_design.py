@@ -58,22 +58,11 @@ def designdoc_aurin(couch):
     aurin_db.save(design_doc)
 
 
-def designdoc_geo(couch):
-    geo_db = couch['geo_data']
-    design_doc = {
-        '_id': '_design/try2',
-        'views': {
-            'view1': {
-                'map': 'function(doc){emit(doc.id,doc);}'
-            }
-        }
-    }
 
-    geo_db.save(design_doc)
 
 
 
 if __name__ == '__main__':
 
-    #designdoc_geo(sever_instance)
+
     designdoc_aurin(sever_instance)
