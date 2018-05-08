@@ -33,11 +33,11 @@
 
 # 5. Future
 
-#5. User guide for testing (dynamic deployment) Shawn
+# 6. User guide for testing (dynamic deployment) Shawn
 
-# 6. Nectar cloud - pros + cons (Shawn ...)
+# 7. Nectar cloud - pros + cons (Shawn ...)
 
-# 7. Scenairos analysis + story (miaomiao) 
+# 8. Scenairos analysis + story (miaomiao) 
 
 The scenarios supported and why, together with graphical results, e.g. pie-charts/graphs of Tweet analysis and snapshots of the webapps/maps displaying certain Tweet scenarios;
 
@@ -45,15 +45,15 @@ The scenarios supported and why, together with graphical results, e.g. pie-chart
 
 ## 
 
-## Conclusion
+## 9. Conclusion
 
-# 9. Video (shawn + miaomiao)
+# Video (shawn + miaomiao)
 
 1. dynamic deployment (2 min: 2 couchdb + scale)
 2. front end story
 3. github link
 
-### miao miao 最后把稿子格式统一下
+### 最后把稿子格式统一下
 
 
 
