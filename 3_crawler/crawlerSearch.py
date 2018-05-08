@@ -26,7 +26,7 @@ class TwitterSearcher():
         """
         # default no lower bound.
         lower_id = None
-        # default no upper bounc.
+        # default no upper bound.
         upper_id = -1
 
         # Track number of tweets returned in total.
