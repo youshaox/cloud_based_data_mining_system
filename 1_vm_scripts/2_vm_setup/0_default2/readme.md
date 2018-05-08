@@ -14,7 +14,7 @@ One is showing deploy two instances with one click — 1 with combo (couchDB + c
 
 Another is showing scaling a couchDB to an existing couchDB with a click. But the adding nodes have to be manually done. Also there is no volume attached to these instances due to the temporary instances are used for testing.
 
-There are also two video demos separately showing the successful dynamic deployment of dynamic deployment of the couchDB cluster in one click (link 2) and setup of a couchDB with volume (Link3).
+BTW: In case of testing, there are also two video demos separately showing the successful dynamic deployment of dynamic deployment of the couchDB cluster in one click (link 2) and setup of a couchDB with volume (Link3).
 
 ## 1. Prerequisites
 
