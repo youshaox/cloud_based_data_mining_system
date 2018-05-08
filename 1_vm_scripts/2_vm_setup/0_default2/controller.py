@@ -3,10 +3,10 @@ Script for controller of the instances, volumes and snapshots.
 Usage: python3 <controller.py> <action> <value_type> <value> <target>
 Where: <action>         -- create / terminate / delete / attach / recover
         <value_type>      -- instance / volume / snapshot
-        <value>           -- streamer (depends on value_type and action)
+        <value>           -- depends on value_type and action
         <target>    -- default / streamer (instance-name)
         e.g:
-        create instance streamer default
+        create instance instance-name default
         terminate instance i-d7da2302 default
         attach volume 40 i-d7da2302
         delete volume vol-f5a3a3f2 default
@@ -16,7 +16,6 @@ Where: <action>         -- create / terminate / delete / attach / recover
 """
 
 import boto
-import os
 import time
 import datetime
 import boto.exception
@@ -243,8 +242,9 @@ if __name__ == "__main__":
     # miao miao
     # controller = Controller(aws_access_key_id='d39e2b6c96124c3cbd44749c7aa730b5',aws_secret_access_key='512ad49874cf4d8eba84ec7c526cb3a5')
     # mia
-    controller = Controller(aws_access_key_id='04908217f41748f28077b2c0f6bffa32',aws_secret_access_key='4c29e65c91fe4f7c8323e554df848eef')
-    # controller = Controller(aws_access_key_id='4fe68d160f60423bb0ff819f28f162f8',aws_secret_access_key='3e153f93268043b3b1717825921ff706')
+    # controller = Controller(aws_access_key_id='04908217f41748f28077b2c0f6bffa32',aws_secret_access_key='4c29e65c91fe4f7c8323e554df848eef')
+    # project
+    controller = Controller(aws_access_key_id='4fe68d160f60423bb0ff819f28f162f8',aws_secret_access_key='3e153f93268043b3b1717825921ff706')
     logging.info("2. Connection to Nectar sucess")
 
     logging.info("3. Trigger the actions")

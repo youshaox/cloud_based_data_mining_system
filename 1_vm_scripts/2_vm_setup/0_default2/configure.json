@@ -4,8 +4,8 @@
     "endpoint":"nova.rc.nectar.org.au"
   },
   "credentials":{
-    "access_key":"238656dab65d438390d91f689a08cb55",
-    "secret_key":"e5734f0116ab4104b1b24c3f8dd651b0"
+    "access_key":"4fe68d160f60423bb0ff819f28f162f8",
+    "secret_key":"3e153f93268043b3b1717825921ff706"
   },
   "key":{
     "name":"group25"
@@ -17,20 +17,39 @@
   ],
   "sys_types":[
     {
-      "name":"webserver1",
-      "type":"webserver",
-      "instance_type":"m2.small",
+      "name":"couchdb-slave",
+      "type":"couchdb",
+      "instance_type":"m1.medium",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
-      "security_groups":["ssh","default","node"]
+      "volume_size":"70",
+      "security_groups":["ssh","default"]
     },
     {
-      "name":"couchdb-master",
+      "name":"combo-slave",
       "type":"combo",
-      "instance_type":"m2.small",
+      "instance_type":"m1.medium",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
+      "volume_size":"70",
       "security_groups":["ssh","default"]
-    }
+    },
+    {
+      "name":"combo-master",
+      "type":"combo",
+      "instance_type":"m1.medium",
+      "image_id":"ami-190a1773",
+      "placement":"melbourne-qh2",
+      "volume_size":"70",
+      "security_groups":["ssh","default"]
+    },
+    {
+      "name":"nodejs",
+      "type":"webserver",
+      "instance_type":"m1.medium",
+      "image_id":"ami-190a1773",
+      "placement":"melbourne-qh2",
+      "volume_size":"40",
+      "security_groups":["ssh","default","node"]
   ]
 }

@@ -7,11 +7,13 @@ Twitter Harvester consists of four files:
 3. crawlerSearch.py
 4. crawlerStream.py
 
-```
-python3
-```
+```shell
+# use the streaming api with the authoriation key 0
+python3 crawler.py configure.json stream 0
 
-
+# use the search api with the authoriation key 1
+python3 crawler.py configure.json search 1
+```
 
 ## 1. Prerequisites
 

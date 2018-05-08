@@ -16,7 +16,7 @@ The dynamic deployment part consists of two parts. It realises the functions to 
 
    ```shell
    python3
-   ansible 2.5.1
+   ansible 2.5
    ```
 
 2. python packages:
@@ -27,7 +27,7 @@ The dynamic deployment part consists of two parts. It realises the functions to 
 
 ## 2. Introduction
 
-<u>The deploy.py will **automatically setup or scale up all the instances **and **run the ansible-playbooks to configure the corresponding softwares**. But it is more clearer for us to divide them into two parts in this report.</u>
+<u>The deploy.py will **automatically setup or scale up the instances **and **run the ansible-playbooks to configure the corresponding softwares**. It is more clearer for us to divide them into two parts and have discussion in this report.</u>
 
 ```shell
  # 1. deploy.py
@@ -169,7 +169,9 @@ python controller.py terminate <instance-id> default
 
 1. Rather than using configure file, i would prefer to use database to maintain the configuration details.
 2. securtiy: password for git clone and couchdb and nectar key pair and nectar access key
-3. 负载均衡
+3. load balance: two niginx two node.js
+4. monitor system
+5. spark for analysis.
 
 
 

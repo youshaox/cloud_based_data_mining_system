@@ -30,12 +30,6 @@
        group: ubuntu
        mode: 0755
 # 1.2.2 mount the volume on the directory
-   - name: mkdir the mount point
-     become: true
-     shell: |
-       mkfs.ext4 /dev/vdc
-       mount /dev/vdc /data
-       sleep 3
 # 1.2.3 mkdir the workspace
    - name: mkdir the /data/workspace
      become: true
