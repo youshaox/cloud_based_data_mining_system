@@ -1,4 +1,11 @@
 """
+group 25
+* Youshao Xiao - 876548
+* Jiaheng Zhu - 848432
+* Lina Zhou - 941539
+* Haimei Liu - 895804
+* Miaomiao Zhang - 895216
+
 process raw tweets and store in new storage:
 processed tweets structure:
 Sentiment:(float)
@@ -10,23 +17,26 @@ DistrictInVic: district in victoria
 emoji_list: [] list of the emojis in the tweet
 
 """
-
+from collections import Counter
 from textblob import TextBlob
 import json
 from shapely.geometry import shape, Point
 import time
-import lga_name as ndata
+import mel_lga_name as ndata
 import create_design as cdview
 import couchdb
 import sys
 import emoji
 import logging
+#from TextParser import *
+import emoji_unicode_ranking as eur
+import create_View
 
 start = time.clock()
 
-PROCESSED_DB_NAME = "processed_data2"
-DB_RAW_ADDRESS = 'http://admin:admin@115.146.86.21:5984/'
+PROCESSED_DB_NAME = "processed_data_new_system"
 DB_RAW_NAME = 'raw_tweets'
+server_instance = couchdb.Server('http://admin:admin@115.146.86.138:5984/')
 
 STATE_GEO_FILE_NAME = "geojson/australia_state.geojson"
 MEL_DIST_GEO_FILE_NAME = "geojson/melbourne_geo.json"
@@ -37,6 +47,11 @@ def extract_emojis(str):
     """extract the emojis used in tweet using python emoji package"""
     return ''.join(c for c in str if c in emoji.UNICODE_EMOJI)
 
+def get_most_used_eomji(str):
+    if str:
+        return Counter(str).most_common()[0][0]
+    else:
+        return None
 
 def average_bounding_box(box):
     """Average list of 4 bounding box coordinates to a midpoint."""
@@ -49,8 +64,6 @@ def average_bounding_box(box):
     lng /= 4
 
     return float(lng), float(lat)
-
-
 
 def get_state_by_user_location(location_of_user):
     """split the location of user Melbourne, Victoria , return the state name"""
@@ -129,26 +142,35 @@ def get_system(source):
     """
     t = ['iphone', 'iPhone', 'ipad', 'iPad,', 'iOS']
     t2 = ['android', 'Android']
-    find = 0
+    find = None
     for iOS in t:
         if iOS in source:
-            find = 1
+            find = "IOS"
             break
     for android in t2:
         if android in source:
-            find = -1
+            find = "AND"
     return find
 
 
-def tag_tweets(db_raw, db_pro, mel_geo, vic_geo, state_geo):
+def tag_tweets(view, db_pro, mel_geo, vic_geo, state_geo):
     """tag raw tweets with suburb, city in Victoria, State, sentiment score and the kind of mobile
     and end system, store them in processed database"""
     count = 0
 
-    for line0 in db_raw.view('try/viewST'):
+    for line0 in view:
+        if count > 300:
+            break
         line = line0['value']
+        # check whether the tweet has been processed
+        if 'processed' in line0:
+            if line0['processed1']:
+                continue
 
-        # initialization
+        # get tweet id
+        id = line0['id']
+
+        # initialization of coordinate
         coordinate = None
 
         # use the coordinate of tweet to find the location name
@@ -186,24 +208,44 @@ def tag_tweets(db_raw, db_pro, mel_geo, vic_geo, state_geo):
         # tag and store if location exists
         if state_name or vic_district or mel_district:
 
+            # TextParser.getStopWords()
+            # textParser = TextParser()
+
             # get sentiment score
             blob = TextBlob(line['text'])
+            #blob = TextBlob(textParser.parsing(line['text']))
             score = blob.sentiment.polarity
 
             # get emoji list
             emoji_list = extract_emojis(line['text'])
 
+            if score == 0:
+                if len(emoji_list) > 0:
+                    rank = 0
+                    for e in emoji_list:
+                        # print(e)
+                        # print(eur.EMOJI_UNICODE_RANKING.keys())
+                        if e in eur.EMOJI_UNICODE_RANKING.keys():
+                            rank += eur.EMOJI_UNICODE_RANKING[e]
+
+                    score = rank / len(emoji_list)
+
             # get the name of mobile end system
             system = get_system(line['source'])
+            to_store_emoji = get_most_used_eomji(emoji_list)
 
-            # count = count + 1
             stored_tweet = {
                 'system': system, 'sentiment': score, 'state': state_name, 'districtInMel': mel_district,
-                'districtInVic': vic_district, 'emoji_list':emoji_list}
+                'districtInVic': vic_district, 'emoji_list':to_store_emoji}
+
             db_pro.save(stored_tweet)
+            count += 1
+            doc = db_raw.get(id)
+            doc['processed1'] = True
+            db_raw.save(doc)
 
         else:
-            logging.info("No location found.")
+            continue
 
     return None
 
@@ -224,25 +266,28 @@ if __name__ == "__main__":
     mel_geo = mel_geo0['features']
 
     # Get raw tweets db.
-    couch = couchdb.Server(DB_RAW_ADDRESS)
+    # couch = couchdb.Server(DB_RAW_ADDRESS)
     try:
-        db_raw = couch[DB_RAW_NAME]
+        db_raw = server_instance[DB_RAW_NAME]
     except Exception:
         logging.error("Raw tweets DB does not exist.")
         sys.exit(2)
 
     # create view to raw_tweets database
-    cdview.designdoc_raw(couch)
+    #cdview.designdoc_raw(couch)
+
+    create_View.create_view(server_instance, DB_RAW_NAME, "process_raw", None)
+    view = create_View.get_view(server_instance, DB_RAW_NAME, "process_raw/process_raw", None)
 
     # create processed tweets db.
-    if PROCESSED_DB_NAME in couch:
-        db_pro = couch[PROCESSED_DB_NAME]
+    if PROCESSED_DB_NAME in server_instance:
+        db_pro = server_instance[PROCESSED_DB_NAME]
         print("already has the db")
     else:
-        db_pro = couch.create(PROCESSED_DB_NAME)
-        print('here')
+        db_pro = server_instance.create(PROCESSED_DB_NAME)
+        print('create new processed database')
 
-    tag_tweets(db_raw, db_pro, mel_geo, vic_geo, state_geo)
+    tag_tweets(view, db_pro, mel_geo, vic_geo, state_geo)
 
     state_geo_info0.close()
     vic_geo_file.close()
@@ -250,3 +295,5 @@ if __name__ == "__main__":
 
     end = time.clock()
     print('Running time: %s Seconds' % (end - start))
+
+
