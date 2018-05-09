@@ -133,15 +133,18 @@ def save_result(result_db0, group_level, server):
 
 
 if __name__ == "__main__":
-    server_instance = couchdb.Server('http://admin:admin@改:5984/')
+    server_instance = couchdb.Server('http://admin:admin@115.146.86.21:5984/')
     if RESULT_DB_NAME in server_instance:
-        result_db = server_instance[RESULT_DB_NAME]
+        del server_instance[RESULT_DB_NAME]
+        result_db = server_instance.create(RESULT_DB_NAME)
     else:
         result_db = server_instance.create(RESULT_DB_NAME)
 
     save_result(result_db,1,server_instance)
     save_result(result_db,2, server_instance)
     save_result(result_db,3,server_instance)
-
+    create_View.create_view(server_instance, RESULT_DB_NAME, "get_doc", None)
+    view = create_View.get_view(server_instance, RESULT_DB_NAME, "get_doc/get_doc",None)
     end = time.clock() - start
+    print("It is running at " + time.strftime("%Y-%m-%d %H:%M"))
     print(end)
