@@ -63,5 +63,8 @@ nohup sh /data/workspace/apache-couchdb-2.1.1/rel/couchdb/bin/couchdb 2>&1 &
 # 只需要在master上执行
 curl -X PUT "http://admin:admin@${couchdb1_name}:5986/_nodes/${couchdb2_name}@${couchdb2_ip}" -d {}
 
-curl -X PUT "http://admin:cdurq48YWLWtZtd@115.146.84.167:5986/_nodes/115.146.85.170@115.146.85.170" -d {}
+curl -X PUT "http://admin:cdurq48YWLWtZtd@115.146.84.167:5986/_nodes/115.146.85.170@115.146.86.29" -d {}
 
+curl -X PUT "http://admin:admin@115.146.86.21:5986/_nodes/couchdb@115.146.86.29" -d {}
+
+curl -X GET admin:admin@localhost:5984/_membership

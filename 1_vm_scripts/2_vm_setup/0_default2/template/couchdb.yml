@@ -87,7 +87,7 @@
        sudo rm -rf /usr/lib/erlang/man
        ./configure && make release
        cd /data/workspace/apache-couchdb-2.1.1/rel/couchdb/etc
-       sed -i "s/;admin = mysecretpassword/admin = admin/g" local.ini
+       sed -i "s/;admin = mysecretpassword/admin = cdurq48YWLWtZtd/g" local.ini
        sed -i 's/127.0.0.1/0.0.0.0/g' default.ini
        cd /data/workspace/apache-couchdb-2.1.1/rel/couchdb/releases/2.1.1;rm -rf sys.config
        echo '[' >> sys.config
