@@ -4,8 +4,8 @@ import mel_lga_name as ndata
 import time
 start = time.clock()
 
-PROCESSED_DB_NAME = "processed_data3_improved"
-RESULT_DB_NAME = "result_data_emoji3"
+PROCESSED_DB_NAME = "tagged_tweet"
+RESULT_DB_NAME = "final_result"
 
 
 
@@ -133,7 +133,7 @@ def save_result(result_db0, group_level, server):
 
 
 if __name__ == "__main__":
-    server_instance = couchdb.Server('http://admin:admin@115.146.86.185:5984/')
+    server_instance = couchdb.Server('http://admin:admin@改:5984/')
     if RESULT_DB_NAME in server_instance:
         result_db = server_instance[RESULT_DB_NAME]
     else:
