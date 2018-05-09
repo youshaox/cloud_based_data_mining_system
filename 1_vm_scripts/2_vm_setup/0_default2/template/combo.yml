@@ -36,6 +36,9 @@
        mkfs.ext4 /dev/vdc
        mount /dev/vdc /data
        sleep 3
+   - name: change owner of directory to ubuntu
+     become: true
+     command: chown -R ubuntu:ubuntu /data
 # 1.2.3 mkdir the workspace
    - name: mkdir the /data/workspace
      become: true
