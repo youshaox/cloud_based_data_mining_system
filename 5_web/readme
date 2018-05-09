@@ -1,0 +1,12 @@
+views:
+-index.ejs for rendering to html.
+
+public:
+-JS and CSS files
+
+routes:
+-index.js: route the url path and design web service
+
+bin:
+to launch the web
+- pm2 start www
