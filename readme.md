@@ -18,6 +18,10 @@ group 25
 Our project website is:
 http://115.146.84.168:3000/
 
+Real-time website is (using temporary VM):
+http://115.146.86.107:3000/
+
 For testing purpose, please install the prerequisites in each components.
 
 ##  Youtube Videos link:
+https://youtu.be/YRHSBluQmdk
