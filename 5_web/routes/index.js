@@ -1,11 +1,3 @@
-//-------------------------------
-//Jiaheng Zhu    848432
-//Youshao Xiao   876548
-//Miaomiao Zhang 895216
-//Haimei Liu     895804
-//Lina Zhou      941539
-//-------------------------------
-
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -28,7 +20,7 @@ router.get('/', function(req, res, next) {
 	var all_data = [];
 
 	var aurin_url = 'http://115.146.86.138:5984/aurin/_design/au/_view/view';
-	var twitter_url = 'http://115.146.86.21:5984/final_result/_design/try/_view/viewResult';
+	var twitter_url = 'http://115.146.86.21:5984/result_data_emoji2/_design/try/_view/view';
 
 	rp(aurin_url)
 	    .then(function(response) {
