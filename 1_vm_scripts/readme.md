@@ -4,3 +4,5 @@ There are two configure.json template in the directory "2_vm_setup/0_default2/1_
 
 The difference is whether attach a volume to the instance when creating it.
 
+
+
