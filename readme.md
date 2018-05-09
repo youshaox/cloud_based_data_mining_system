@@ -9,10 +9,10 @@
 * Miaomiao Zhang - 895216
 
 ## IP Address List (username is `ubuntu`)
-115.146.86.21 combo(couchdb + crawler + sentimental analyser)
-115.146.85.176 combo(couchdb + crawler + sentimental analyser)
-115.146.86.29 combo(couchdb + crawler + sentimental analyser)
-115.146.84.168 node.js
+* 115.146.86.21 combo(couchdb + crawler + sentimental analyser)
+* 115.146.85.176 combo(couchdb + crawler + sentimental analyser)
+* 115.146.86.29 combo(couchdb + crawler + sentimental analyser)
+* 115.146.84.168 node.js
 
 # Testing
 Our project website is:
