@@ -42,3 +42,8 @@ This module uses the MapReduce function to access and aggregate the processed tw
 
 Using this funciton, the result_data will be runned every one minute
 
+# Testing
+```
+python3 aggregrate_result.py
+```
+
