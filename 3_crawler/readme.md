@@ -1,5 +1,10 @@
 # Twitter Harvester
 
+**There are two verison of crawler.** 
+
+1. The old dierectoy contains only the crawler. It will only save the raw tweets to the couchDB.
+2. The current file path contains the improved crawler (integrated the analysis to each tweet), which will processe each tweet (sentimental analysis, calculate the state or district in Melbourne, and emoji ). The processed result will be saved to "processed_data3" database.
+
 Twitter Harvester consists of four files: 
 
 1. configure.json is responsible for the configuragtion info.

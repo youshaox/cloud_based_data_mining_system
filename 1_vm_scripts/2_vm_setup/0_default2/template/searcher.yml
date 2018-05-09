@@ -31,14 +31,6 @@
        owner: ubuntu
        group: ubuntu
        mode: 0755
-# 1.2.2 mount the volume on the directory
-## todo 是否开机重启
-#   - name: mount the volume at /data
-#     become: true
-#     shell: |
-#       sudo mkfs.ext4 /dev/vdc
-#       mount /dev/vdc /data
-# 1.2.3 mkdir the workspace
    - name: mkdir the /data/workspace
      become: true
      file:
@@ -67,6 +59,7 @@
        - Shapely
        - Point
        - pandas
+       - emoji
 # 2 specific: crawler-searcher
 ## 2.1 install the searcher related packages
    - name: install the searcher-related packages

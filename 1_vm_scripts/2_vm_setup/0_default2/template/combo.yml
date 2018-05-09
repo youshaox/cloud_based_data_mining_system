@@ -67,6 +67,7 @@
        - Point
        - pandas
        - tweepy
+       - emoji
 # 2 specific: couchdb
 ## 2.1 apt-get install couchdb related packages
    - name: install the packages needed by couchdb

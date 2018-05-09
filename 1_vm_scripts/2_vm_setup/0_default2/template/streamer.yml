@@ -63,10 +63,7 @@
        - Shapely
        - Point
        - pandas
-#   - name: textblob.download_corpora
-#     become: true
-#     command: python3 -m textblob.download_corpora
-
+       - emoji
 # 2 specific: crawler-streamer
 ## 2.1 install the streamer related packages
    - name: run the streamer
