@@ -1,4 +1,11 @@
 """
+group 25
+* Youshao Xiao - 876548
+* Jiaheng Zhu - 1211955
+* Lina Zhou - 941539
+* Haimei Liu - 895804
+* Miaomiao Zhang - 895216
+
 Use Twitter search APIs find tweets from specific location.
 Raw tweets are stored in specified couchDB databse.
 This twitter searcher prevents the duplicate dataset return by the API server by using the upper bound and lower bound parameter.

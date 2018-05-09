@@ -1,4 +1,11 @@
 """
+group 25
+* Youshao Xiao - 876548
+* Jiaheng Zhu - 1211955
+* Lina Zhou - 941539
+* Haimei Liu - 895804
+* Miaomiao Zhang - 895216
+
 Main script to call either harvester.
 Usage: python3 harvester.py <config> <mode> <auth_index>
 Where: <config>     -- A json file with configuration information.

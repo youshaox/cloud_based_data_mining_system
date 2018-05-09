@@ -1,4 +1,11 @@
 """
+group 25
+* Youshao Xiao - 876548
+* Jiaheng Zhu - 1211955
+* Lina Zhou - 941539
+* Haimei Liu - 895804
+* Miaomiao Zhang - 895216
+
 Script for controller of the instances, volumes and snapshots.
 Usage: python3 <controller.py> <action> <value_type> <value> <target>
 Where: <action>         -- create / terminate / delete / attach / recover

@@ -1,4 +1,11 @@
 """
+group 25
+* Youshao Xiao - 876548
+* Jiaheng Zhu - 1211955
+* Lina Zhou - 941539
+* Haimei Liu - 895804
+* Miaomiao Zhang - 895216
+
 Script for dynamic deployment.
 Usage: python3 <deploy.py> <configure> <sys_type> <number_of_instances>
 Where: <config>              -- configuration file
