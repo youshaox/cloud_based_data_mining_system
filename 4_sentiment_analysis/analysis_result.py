@@ -1,7 +1,15 @@
 """
+group 25
+* Youshao Xiao - 876548
+* Jiaheng Zhu - 848432
+* Lina Zhou - 941539
+* Haimei Liu - 895804
+* Miaomiao Zhang - 895216
+
 # calculate the sentiment result and the mobile system result in states, victoria and melbourne
 # write result in json file
-# {"area name": [average sentiment score, iOS system percentage, android system percentage}
+# {"area name": [average sentiment score, iOS system percentage, android system percentage, number of valid tweets, 
+most frequently used emoji, emoji frequency}
 # create 3 result file:
 # state_sentiment_iOS_android.json
 # victoria_sentiment_iOS_android.json
