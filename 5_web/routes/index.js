@@ -1,3 +1,11 @@
+//-------------------------------
+//Jiaheng Zhu    848432
+//Youshao Xiao   876548
+//Miaomiao Zhang 895216
+//Haimei Liu     895804
+//Lina Zhou      941539
+//-------------------------------
+
 var express = require('express');
 var router = express.Router();
 var request = require('request');
