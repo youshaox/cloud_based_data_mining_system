@@ -5,6 +5,8 @@
 # Haimei Liu - 895804
 # Miaomiao Zhang - 895216
 
+# this file used to test the create_View class
+# also declare all views will be used in the project
 import couchdb
 import create_View
 
