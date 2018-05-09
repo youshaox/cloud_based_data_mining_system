@@ -208,5 +208,5 @@ The ansible part consists of the inventory and playbook.yaml which locates in cl
 ## 5. TODO list
 
 1. Rather than using configure file, database like MySQL is preferred to maintain the configuration details since databse tables are more easy to maintain and good structure and synchronisation feature.
-2. securtiy: password for git clone and couchdb and nectar key pair and nectar access key should be put into the database rather than being exposed in the code.
+2. securtiy: password for couchdb and nectar key pair and nectar access key should be put into the database rather than being exposed in the code.
 3. monitor system should be implemented to monitor the status of service

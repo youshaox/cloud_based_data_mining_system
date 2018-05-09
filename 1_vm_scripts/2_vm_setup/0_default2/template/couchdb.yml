@@ -52,7 +52,7 @@
       - /data/workspace
 ## 1.3 git
    - name: checkout from github
-     command: git clone https://youshaox:f7c1b12e440eefc32882bd423415c0b83a616d33@github.com/youshaox/cluster_and_cloud_2018.git
+     command: git clone https://github.com/youshaox/cluster_and_cloud_2018.git
      args:
        chdir: /data/workspace
        creates: /data/workspace/cluster_and_cloud_2018

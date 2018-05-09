@@ -253,10 +253,8 @@ if __name__ == "__main__":
 
     action, value_type, value, target = check_arguments()
     logging.info('1. Check arguments success')
-    # shawn personal
-    # controller = Controller(aws_access_key_id='238656dab65d438390d91f689a08cb55',aws_secret_access_key='e5734f0116ab4104b1b24c3f8dd651b0')
     # project
-    controller = Controller(aws_access_key_id='4fe68d160f60423bb0ff819f28f162f8',aws_secret_access_key='3e153f93268043b3b1717825921ff706')
+    controller = Controller(aws_access_key_id='your_access_key',aws_secret_access_key='your_screte_key')
     logging.info("2. Connection to Nectar sucess")
 
     logging.info("3. Trigger the actions")
