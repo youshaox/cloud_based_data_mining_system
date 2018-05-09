@@ -1,9 +1,10 @@
-group 25
-* Youshao Xiao - 876548
-* Jiaheng Zhu - 848432
-* Lina Zhou - 941539
-* Haimei Liu - 895804
-* Miaomiao Zhang - 895216
+//group 25
+//* Youshao Xiao - 876548
+//* Jiaheng Zhu - 848432
+//* Lina Zhou - 941539
+//* Haimei Liu - 895804
+//* Miaomiao Zhang - 895216
+
 // Map function to find  position of tweets
 // _count will be used as a reduce function
 // group_level = 1 for the number of tweets on each state
