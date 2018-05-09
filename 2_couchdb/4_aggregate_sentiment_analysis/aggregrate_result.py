@@ -1,3 +1,11 @@
+"""
+group 25
+* Youshao Xiao - 876548
+* Jiaheng Zhu - 848432
+* Lina Zhou - 941539
+* Haimei Liu - 895804
+* Miaomiao Zhang - 895216
+"""
 import couchdb
 import create_View
 import mel_lga_name as ndata
