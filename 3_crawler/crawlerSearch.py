@@ -7,6 +7,8 @@ This twitter searcher prevents the duplicate dataset return by the API server by
 import logging
 import tweepy
 import couchdb
+import tag_tweet
+
 
 class TwitterSearcher():
     """Use Twitter search APIs find tweets from specific location."""
@@ -26,7 +28,7 @@ class TwitterSearcher():
         """
         # default no lower bound.
         lower_id = None
-        # default no upper bound.
+        # default no upper bounc.
         upper_id = -1
 
         # Track number of tweets returned in total.
@@ -82,12 +84,14 @@ class TwitterSearcher():
                     jtweet = tweet._json
                     if tweet.coordinates or tweet.place:
                         # store tweets with geo code.
-                        jtweet['_id'] = jtweet['id_str']
-                        try:
-                            self.db.save(jtweet)
-                        except couchdb.http.ResourceConflict:
-                            logging.info("Ignored duplicate tweet.")
-
+                        njtweet = tag_tweet.tag_tweets(jtweet)
+                        if njtweet is not None:
+                            # print(njtweet)
+                            njtweet['_id'] = jtweet['id_str']
+                            try:
+                                self.db.save(njtweet)
+                            except couchdb.http.ResourceConflict:
+                                logging.info("Ignored duplicate tweet.")
                 # Output current number of tweets.
                 tweet_count += len(new_tweets)
                 logging.info("Downloaded {0} tweets".format(tweet_count))

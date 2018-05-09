@@ -3,7 +3,7 @@ import logging
 import json
 import couchdb
 from tweepy.streaming import StreamListener
-
+import tag_tweet
 
 class TwitterStreamListener(StreamListener):
     """Listen using Twitter Streaming API."""
@@ -15,12 +15,20 @@ class TwitterStreamListener(StreamListener):
     def on_data(self, data):
         """Store tweet, if not already seen."""
         jtweet = json.loads(data)
-        jtweet['_id'] = jtweet['id_str']
-        try:
-            self.db.save(jtweet)
-        except couchdb.http.ResourceConflict:
-            logging.info("Ignored duplicate tweet.")
+
+        # get tagged tweet as njtweet
+        njtweet = tag_tweet.tag_tweets(jtweet)
+
+        # store valid tagged tweet
+        if njtweet is not None:
+            njtweet['_id'] = jtweet['id_str']
+            try:
+                # print(njtweet)
+                self.db.save(njtweet)
+            except couchdb.http.ResourceConflict:
+                logging.info("Ignored duplicate tweet.")
 
     def on_error(self, status_code):
         """Log error message."""
         logging.error(status_code)
+

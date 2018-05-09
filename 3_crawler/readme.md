@@ -87,6 +87,3 @@ python3 crawler.py configure.json stream 0
 # use the search api with the authoriation key 1
 python3 crawler.py configure.json search 1
 ```
-
-
-
