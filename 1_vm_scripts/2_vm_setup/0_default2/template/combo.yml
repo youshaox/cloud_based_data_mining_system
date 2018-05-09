@@ -160,5 +160,5 @@
    - name: run the streamer, seacher
      ignore_errors: True
      shell: |
-       cd /data/log/stream;nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json stream 0 &
+       cd /data/log/streamer;nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json stream 0 &
        cd /data/log/searcher;nohup python3 /data/workspace/cluster_and_cloud_2018/3_crawler/crawler.py /data/workspace/cluster_and_cloud_2018/3_crawler/configure.json search 1 &
