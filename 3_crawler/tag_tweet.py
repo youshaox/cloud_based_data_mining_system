@@ -18,9 +18,10 @@ import mel_lga_name as ndata
 import emoji
 import emoji_unicode_ranking as eur
 
-STATE_GEO_FILE_NAME = "geojson/australia_state.geojson"
-MEL_DIST_GEO_FILE_NAME = "geojson/melbourne_geo.json"
-VIC_DIST_GEO_FILE_NAME = "geojson/vic_lga_gov.json"
+HOME = "/data/workspace/cluster_and_cloud_2018/3_crawler/"
+STATE_GEO_FILE_NAME = HOME + "geojson/australia_state.geojson"
+MEL_DIST_GEO_FILE_NAME = HOME + "geojson/melbourne_geo.json"
+VIC_DIST_GEO_FILE_NAME = HOME + "geojson/vic_lga_gov.json"
 
 
 def extract_emojis(str):
