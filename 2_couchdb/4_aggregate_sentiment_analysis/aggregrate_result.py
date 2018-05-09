@@ -4,7 +4,7 @@ import mel_lga_name as ndata
 import time
 start = time.clock()
 
-PROCESSED_DB_NAME = "processed_data3"
+PROCESSED_DB_NAME = "processed_data3_improved"
 RESULT_DB_NAME = "result_data_emoji3"
 
 
@@ -95,9 +95,9 @@ def save_result(result_db0, group_level, server):
             temp = ''
 
             for row4 in view_emojiv:
-                if row4.key[1] == key2:
+                if row4.key[0] == key2:
                     #print(row4.key[1])
-                    dict0[row4.key[2]] = row4.value
+                    dict0[row4.key[1]] = row4.value
 
             if dict0:
                 #print(dict0)
@@ -119,8 +119,9 @@ def save_result(result_db0, group_level, server):
             temp = ''
 
             for row5 in view_emojim:
-                if row5.key[2] == key3:
-                    dict0[row5.key[3]] = row5.value
+                #print(row5)
+                if row5.key[0] == key3:
+                    dict0[row5.key[1]] = row5.value
             if dict0:
                 #print(dict0)
                 temp = max(dict0, key=lambda x: dict0[x])
@@ -132,7 +133,7 @@ def save_result(result_db0, group_level, server):
 
 
 if __name__ == "__main__":
-    server_instance = couchdb.Server('http://admin:admin@115.146.86.21:5984/')
+    server_instance = couchdb.Server('http://admin:admin@115.146.86.185:5984/')
     if RESULT_DB_NAME in server_instance:
         result_db = server_instance[RESULT_DB_NAME]
     else:

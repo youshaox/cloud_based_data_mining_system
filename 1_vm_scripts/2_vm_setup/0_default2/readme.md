@@ -199,9 +199,7 @@ There deploy.py will automatically generate the inventory file and call the corr
 The ansible part consists of the inventory and playbook.yaml which locates in cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/template:
 
 1. combo.yml: playbook to run the couchdb + streamer + searcher
-   * there are two versions: combo_with_volume and combo_without_volume (whether mount the volume on the directory). If you wanna to test either, just copy the required templates to cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/template.
 2. couchdb.yml: playbook to run the couchdb
-   * there are two versions: couchdb_with_volume and couchdb_without_volume (whether mount the volume on the directory). If you wanna to test either, just copy the required templates to cluster_and_cloud_2018/1_vm_scripts/2_vm_setup/0_default2/template.
 3. searcher.yml: playbook to run the searcher 
 4. streamer.yml: playbook to run the streamer
 5. webserver.yml: playbook to run the webserver
