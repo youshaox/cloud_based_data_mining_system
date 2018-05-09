@@ -1,4 +1,13 @@
+"""
+group 25
+* Youshao Xiao - 876548
+* Jiaheng Zhu - 848432
+* Lina Zhou - 941539
+* Haimei Liu - 895804
+* Miaomiao Zhang - 895216
 
+String of the name of different areas
+"""
 STATE_NAME = ['NEW SOUTH WALES', 'VICTORIA', 'QUEENSLAND', 'SOUTH AUSTRALIA',
          'TASMANIA', 'WESTERN AUSTRALIA', 'AUSTRALIAN CAPITAL TERRITORY', 'NORTHERN TERRITORY']
 SHORT_FOR_STATE = ['NSW', 'VIC', 'QLD', 'SA', 'TAS', 'WA', 'ACT', 'NT']
