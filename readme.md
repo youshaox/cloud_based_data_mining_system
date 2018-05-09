@@ -22,6 +22,7 @@ Real-time website is (using temporary VM):
 http://115.146.86.107:3000/
 
 For testing purpose, please install the prerequisites in each components.
+Our key pair and access key to nectar is removed for security reason.
 
 ##  Youtube Videos link:
 https://youtu.be/YRHSBluQmdk
