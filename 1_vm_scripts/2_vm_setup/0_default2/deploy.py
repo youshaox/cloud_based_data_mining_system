@@ -178,7 +178,7 @@ def get_volume_size(jconfig):
     """
     jinstance_info_list = jconfig['sys_types']
     for jinstance_info in jinstance_info_list:
-        print(jinstance_info)
+        # print(jinstance_info)
         if jinstance_info['type'] in 'couchdb' or jinstance_info['type'] in 'combo':
             # print("+" + jinstance_info)
             n_volume_size = jinstance_info['volume_size']
@@ -357,7 +357,7 @@ if __name__ == "__main__":
     inventory_filename, inventory_list = generate_inventory(instance_info_list)
     logging.info("Waiting for a while for the open of the port 22")
 
-    time.sleep(SLEEP_TIME*12)
+    time.sleep(SLEEP_TIME*14)
     logging.info("5. Orchestrate the servers")
     orchestrate(inventory_filename, sys_type, inventory_list)
 

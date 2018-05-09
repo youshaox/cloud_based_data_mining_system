@@ -22,7 +22,6 @@
       "instance_type":"m1.medium",
       "image_id":"ami-190a1773",
       "placement":"melbourne-qh2",
-      "volume_size":"70",
       "security_groups":["ssh","default"]
     },
     {

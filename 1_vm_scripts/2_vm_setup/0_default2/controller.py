@@ -141,7 +141,7 @@ class Controller():
                         time.sleep(SLEEP_TIME)
                         volume.update()
             if self.ec2_conn.delete_volume(volume_id):
-                # todo 等delete完以后再退出
+                # todo exit wafter the deleteing finish
                 logging.info("Succussfully delete the volume" + volume_id)
             else:
                 logging.error("Fail to delete the volume " + volume_id)
@@ -176,6 +176,15 @@ class Controller():
             logging.error("Recover snapshot: fail in attach the new volume:" + str(new_vol.id))
 
 def run(controller, action, value_type, value, target):
+    """
+    run the actual command
+    :param controller:
+    :param action:
+    :param value_type:
+    :param value:
+    :param target:
+    :return:
+    """
     controller = controller
     if value_type == "instance":
         if action == "create":
@@ -237,13 +246,8 @@ if __name__ == "__main__":
 
     action, value_type, value, target = check_arguments()
     logging.info('1. Check arguments success')
-
     # shawn personal
     # controller = Controller(aws_access_key_id='238656dab65d438390d91f689a08cb55',aws_secret_access_key='e5734f0116ab4104b1b24c3f8dd651b0')
-    # miao miao
-    # controller = Controller(aws_access_key_id='d39e2b6c96124c3cbd44749c7aa730b5',aws_secret_access_key='512ad49874cf4d8eba84ec7c526cb3a5')
-    # mia
-    # controller = Controller(aws_access_key_id='04908217f41748f28077b2c0f6bffa32',aws_secret_access_key='4c29e65c91fe4f7c8323e554df848eef')
     # project
     controller = Controller(aws_access_key_id='4fe68d160f60423bb0ff819f28f162f8',aws_secret_access_key='3e153f93268043b3b1717825921ff706')
     logging.info("2. Connection to Nectar sucess")
