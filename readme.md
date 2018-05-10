@@ -27,7 +27,7 @@ Our key pair and access key to nectar is removed for security reason.
 ##  Youtube Videos link:
 https://youtu.be/YRHSBluQmdk
 
-## directory structure
+## Directory structure
 1. 1_vm_scripts contains the code for dynamic deployment
 2. 2_couchDB contains the code for map-reduce view
 3. 3_crawler contains the code for twitter harvester
